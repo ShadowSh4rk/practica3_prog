@@ -1,3 +1,4 @@
+package dades;
 /**
  * Representa un usuari registrat que pot apuntar-se a activitats.
  * 

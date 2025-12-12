@@ -1,3 +1,4 @@
+package dades;
 /**
  * 
  * Representa el personal tècnic i de gestió.

@@ -1,3 +1,5 @@
+package dades;
+
 import java.time.LocalDate;
 
 public class Activitats {

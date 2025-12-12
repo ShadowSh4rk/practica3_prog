@@ -1,3 +1,5 @@
+package dades;
+
 /**
  * 
  * Representa un estudiant matriculat a un ensenyament URV.

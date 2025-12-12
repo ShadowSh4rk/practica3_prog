@@ -1,4 +1,4 @@
-PDI.java
+package dades;
 /**
  * 
  * Representa el personal docent i investigador.

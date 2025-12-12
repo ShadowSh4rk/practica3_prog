@@ -1,3 +1,5 @@
+package dades;
+
 /**
  * Classe de gestió de la llista d'usuaris.
  * 
