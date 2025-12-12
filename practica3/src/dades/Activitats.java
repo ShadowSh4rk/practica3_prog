@@ -1,19 +1,19 @@
 package dades;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-public class Activitats {
+public abstract class Activitats {
 private String nom;    //nom de l'activitat
 private String[]colectius;   //PDI, PTGAS, Estudiants
-private LocalDate dataIniciInscripcio; 
-private LocalDate dataFiInscripcio; 
+private Date dataIniciInscripcio; 
+private Date dataFiInscripcio; 
 private String tipus; // UnDia, Periodica, Online
 
-    public Activitats(String nom, String[]colectius, LocalDate dataIniciInscripcio, LocalDate dataFiInscripcio, String tipus){
-        this.nom=nom;
-        this.colectius=colectius; 
-        this.dataIniciInscripcio=dataIniciInscripcio; 
-        this.dataFiInscripcio=dataFiInscripcio;
-        this.tipus=tipus; 
+    public Activitats(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, String tipus) {
+        this.nom = nom;
+        this.colectius = colectius; 
+        this.dataIniciInscripcio = dataIniciInscripcio; 
+        this.dataFiInscripcio = dataFiInscripcio;
+        this.tipus = tipus; 
     }
 }

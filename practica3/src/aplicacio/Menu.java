@@ -8,7 +8,7 @@
  * Apunts:
  *  - Potser hi ha opcions que no cal que cridin a una funció, però al principi anem a posar-ho a totes les opcions
  */
-
+package aplicacio;
 
 import java.util.Scanner;
 
