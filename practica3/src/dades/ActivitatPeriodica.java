@@ -9,7 +9,6 @@ public class ActivitatPeriodica extends Activitats{
     private int numSetmanes;
     private String centre; 
     private String ciutat; 
-    private int limitPlaces;
     private double preuTotal; 
 
     public ActivitatPeriodica(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, 

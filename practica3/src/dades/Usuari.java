@@ -9,7 +9,7 @@ package dades;
  *  Només existeixen usuaris dels tipus PDI, PTGAS i Estudiant.
  */
 
-public abstract class Usuari {
+public abstract class Usuari implements Laos{
 
     // alies identificador de l'usuari
 

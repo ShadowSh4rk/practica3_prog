@@ -12,11 +12,11 @@ package aplicacio;
 
 import java.util.Scanner;
 
-
 public class Menu {
     static Scanner teclat = new Scanner(System.in);
 
     public static void main(String[] args) {
+
         mostraMenu();
         int opcio = Integer.parseInt(teclat.nextLine());
         while (opcio != 22) {

@@ -6,7 +6,6 @@ public class ActivitatUnDia extends Activitats {
     private Date data; 
     //private LocalTime horari; 
     private String ciutat; 
-    private int limitPlaces;
     private double preu; 
 
     public ActivitatUnDia(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date data, /*LocalTime horari,*/ String ciutat, int limitPlaces, double preu) {
