@@ -10,7 +10,14 @@
  */
 package aplicacio;
 
+import java.util.*;
+
 import java.util.Scanner;
+
+import dades.Inscripcio;
+import excepcions.ActivitatNoFinalitzada;
+import excepcions.ForaDeRang;
+import excepcions.NoInscrit;
 
 public class Menu {
     static Scanner teclat = new Scanner(System.in);
@@ -287,6 +294,27 @@ public class Menu {
         //  En cas de les activitats en línia donar de baixa si el número d'inscrits és inferior a 20 persones.
         
     }
+
+    //control valoracio
+        public static void assignarValoracio (Inscripcio inscri, int valoracio) throws ActivitatNoFinalitzada, ForaDeRang, NoInscrit{
+            Date n1 = new Date();
+
+            if(n1.before(inscri.getActivitats().getDataFiActivitat())){
+                throw new ActivitatNoFinalitzada();
+            }
+
+            if ((valoracio<0)||(valoracio>10)){
+                throw new ForaDeRang();
+            }
+
+            //falta fer-ho (cal llegir del fitxer)
+            if (true){
+                throw new NoInscrit();
+            }
+
+            //si tot esta be, afegim la valoracio
+            inscri.setValoracio(valoracio);
+        }
 
     
 }

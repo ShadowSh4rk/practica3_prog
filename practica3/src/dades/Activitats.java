@@ -7,6 +7,7 @@ private String nom;    //nom de l'activitat
 private String[]colectius;   //PDI, PTGAS, Estudiants
 private Date dataIniciInscripcio; 
 private Date dataFiInscripcio; 
+private Date dataFiActivitat;
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
 
@@ -29,5 +30,13 @@ private String tipus; // UnDia, Periodica, Online
 
     public int getLimitPlaces() {
         return limitPlaces;
+    }
+
+    public Date getDataFiInscripcio() {
+        return dataFiInscripcio;
+    }
+
+    public Date getDataFiActivitat() {
+        return dataFiActivitat;
     }
 }
