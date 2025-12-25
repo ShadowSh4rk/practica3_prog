@@ -1,10 +1,12 @@
 package dades;
 
+import java.util.*;
+
 public class Inscripcio implements Laos{
     private String nomActivitat;
     private String nomInscrit;
-    private int dataInscripcio;
-    private int nInscripcio; //per mantenir l'index!!
+    private Date dataInscripcio;
+    private int valoracio;
 
     //===============
 
@@ -20,17 +22,26 @@ public class Inscripcio implements Laos{
      * @param nomActivitat
      * @param nomInscrit
      * @param dataInscripcio
-     * @param nInscripcio
      */
-    public Inscripcio(String nomActivitat, String nomInscrit, int dataInscripcio, int nInscripcio) {
+    public Inscripcio(String nomActivitat, String nomInscrit, Date dataInscripcio) {
         this.nomActivitat = nomActivitat;
         this.nomInscrit = nomInscrit;
         this.dataInscripcio = dataInscripcio;
-        this.nInscripcio = nInscripcio;
+        valoracio = 0;
+    }
+
+    public Date getDataInscripcio() {
+        return dataInscripcio;
+    }
+
+    //setter per valoracio
+
+    public void setValoracio(int valoracio){
+        this.valoracio = valoracio;
     }
 
     public Inscripcio copia(){
-        Inscripcio duplicat = new Inscripcio(nomActivitat, nomInscrit, dataInscripcio, nInscripcio);
+        Inscripcio duplicat = new Inscripcio(nomActivitat, nomInscrit, dataInscripcio);
         return duplicat;
     }
 
