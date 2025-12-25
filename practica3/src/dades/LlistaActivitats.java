@@ -1,5 +1,7 @@
 package dades;
 
+import excepcions.ActivitatInexistentException;
+
 public class LlistaActivitats {
 
     private Activitats [] llista; 
@@ -65,7 +67,7 @@ public class LlistaActivitats {
     public Activitats obtenirPerNom(String nom) throws ActivitatInexistentException{
         Activitats a = buscarPerNom(nom);
         if(a==null){
-            throw new ActivitatInexistentException("No existeix cap activitat amb el nom: "+nom);
+            throw new ActivitatInexistentException(nom);
         }
         return a; 
     }
