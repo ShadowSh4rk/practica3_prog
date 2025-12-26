@@ -3,21 +3,39 @@ package dades;
  * 
  * Representa el personal docent i investigador.
  * 
- * 
- *  departament (DEIM, DEEEA, DEQ, ...)
- *   campus on treballa
  */
 
 public class PDI extends Usuari {
+    private String nomDepartament;
+    private String campus;
 
-    // departament
+    /**
+     * 
+     * @param alies identifica a l'usuari
+     * @param adrecaCorreu nom de l'adreça del correu electrònic fins abans de l'@
+     * @param nomDepartament el nom del departament on treballa
+     * @param campus el campus on treballa
+     */
+    public PDI(String alies, String adrecaCorreu, String nomDepartament, String campus) {
+        super(alies, adrecaCorreu);
+        this.nomDepartament = nomDepartament;
+        this.campus = campus;
+    }
 
-    // campus de treball
+    /**
+     * 
+     * @return retorna el nom del departament
+     */
+    public String getNomDepartament() {
+        return nomDepartament;
+    }
 
+    /**
+     * 
+     * @return retorna el nom del campus on treballa
+    */
+    public String getCampusTreballen() {
+        return campus;
+    }
 
-    // capçalera del constructor
-    // public PDI(String alies, String correu, String departament, String campus);
-
-
-    // mètodes específics per PDI si cal
 }

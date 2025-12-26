@@ -13,11 +13,29 @@ public class ActivitatOnline extends Activitats {
         this.enllac = enllac; 
     }
 
+    /**
+     * Retorna l'enllaç per accedir a l'activitat.
+     * @return Enllaç de l'activitat
+     */
+    public String getEnllac(){
+        return enllac; 
+    }
+
+    /**
+     * Les activitats online no tenen classe presencial, sempre retorna false.
+     * @param avui Data a comprovar
+     * @return false
+     */
     @Override
     public int teClasseAvui(Date avui){
         return false; 
     }
 
+    /**
+     * Comprova si l'activitat està activa avui, tenint en compte la data d'inici i el període de visualització.
+     * @param avui Data a comprovar
+     * @return true si l'activitat està disponible avui, false altrament
+     */
     @Override
     public int esActivaAvui(Date avui){
         Date dataFi=new Date(dataInici.getDia()+periodeVisualitzacio, dataInici.getMes(), dataInici.getAny());

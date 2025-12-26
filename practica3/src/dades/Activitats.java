@@ -27,18 +27,34 @@ private String tipus; // UnDia, Periodica, Online
         return dataFiInscripcio; 
     }
 
+    /**
+     * Retorna els col·lectius als quals s'ofereix l'activitat
+     * @return Array de col·lectius
+     */
     public String [] getColectius(){
         return colectius; 
     }
 
+    /**
+     * Retorna el tipus d'activitat: "UnDia", "Periodica", "Online"
+     * @return Tipus d'activitat
+     */
     public String getTipus() {
         return tipus;
     }
 
+     /**
+     * Retorna el nom de l'activitat.
+     * @return Nom de l'activitat
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * Retorna el límit de places disponibles.
+     * @return Límite de places
+     */
     public int getLimitPlaces() {
         return limitPlaces;
     }
@@ -47,6 +63,11 @@ private String tipus; // UnDia, Periodica, Online
         return !avui.before(dataIniciInscripcio) && !avui.after(dataFiInscripcio); 
     }
 
+    /**
+     * Comprova si l'activitat accepta un col·lectiu determinat.
+     * @param col Nom del col·lectiu a comprovar
+     * @return true si l'activitat accepta el col·lectiu, false altrament
+     */
     public boolean acceptaColectiu(String col){
         for(int i=0; i<colectius.length; i++){
             if(colectius[i].equalsIgnoreCase(col)){
@@ -60,6 +81,10 @@ private String tipus; // UnDia, Periodica, Online
     public abstract int esActivaAvui(Date avui); 
     public abstract double getPreu(); 
 
+    /**
+     * Retorna una representació en String de l'activitat.
+     * @return Nom de l'activitat i tipus entre parèntesis
+     */
     @Override 
     public String toString(){
         return nom+" (" +tipus+ ")"; 

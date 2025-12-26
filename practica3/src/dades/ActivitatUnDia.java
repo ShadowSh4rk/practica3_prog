@@ -16,11 +16,19 @@ public class ActivitatUnDia extends Activitats {
         this.limitPlaces=limitPlaces;
         this.preu = preu; 
     }
-
+    /**
+     * Retorna la ciutat on es realitza l'activitat.
+     *
+     * @return Nom de la ciutat
+     */
     public String getCiutat(){
         return ciutat; 
     }
-
+    /**
+     * Retorna l'horari de l'activitat.
+     *
+     * @return Horari en format cadena (ex. "10:00-12:00")
+     */
     public String getHorari(){
         return horari; 
     }
@@ -36,10 +44,22 @@ public class ActivitatUnDia extends Activitats {
         return avui.compareTo(data); 
     }
 
+    /**
+     * Indica si l'activitat està activa en la data indicada.
+     *
+     * @param avui Data a comprovar
+     * @return true si l'activitat està activa avui, false en cas contrari
+     */
     @Override
     public int esActivaAvui(Date avui){ 
         return avui.compareTo(data);
     }
+
+    /**
+     * Retorna el preu de l'activitat.
+     *
+     * @return Preu
+     */
 
     @Override
     public double getPreu(){
