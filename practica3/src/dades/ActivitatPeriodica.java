@@ -1,16 +1,18 @@
 package dades;
 
+import java.util.*;
+
 public class ActivitatPeriodica extends Activitats{
     private String diaSetmana;
     //private LocalTime horari; 
-    private Data dataInici;
+    private Date dataInici;
     private int numSetmanes;
     private String centre; 
     private String ciutat; 
     private double preuTotal; 
 
-    public ActivitatPeriodica(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, 
-        String diaSetmana, /*LocalTime horari,*/ Data dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
+    public ActivitatPeriodica(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, 
+        String diaSetmana, /*LocalTime horari,*/ Date dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
             super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Periodica");
             this.diaSetmana=diaSetmana;
             //this.horari=horari; 

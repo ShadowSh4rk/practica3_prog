@@ -1,12 +1,14 @@
 package dades;
 
+import java.util.*;
+
 public class ActivitatUnDia extends Activitats {
-    private Data data; 
+    private Date data; 
     private String horari; 
     private String ciutat; 
     private double preu; 
 
-    public ActivitatUnDia(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data data, String horari, String ciutat, int limitPlaces, double preu) {
+    public ActivitatUnDia(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date data, String horari, String ciutat, int limitPlaces, double preu) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "UnDia");
         this.data = data;
         this.horari = horari;
@@ -23,18 +25,20 @@ public class ActivitatUnDia extends Activitats {
         return horari; 
     }
 
-    public Data getData(){
+    public Date getData(){
         return data; 
     }
 
+    //compareTo: si retorna 0, son iguals. Si retorna menor a 0 es anterior i si retorna major a 0 es posterior
+
     @Override
-    public boolean teClasseAvui(Data avui){
-        return avui.esIgual(data); 
+    public int teClasseAvui(Date avui){
+        return avui.compareTo(data); 
     }
 
     @Override
-    public boolean esActivaAvui(Data avui){
-        return avui.esIgual(data);
+    public int esActivaAvui(Date avui){ 
+        return avui.compareTo(data);
     }
 
     @Override

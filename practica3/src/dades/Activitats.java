@@ -1,14 +1,16 @@
 package dades;
 
+import java.util.*;
+
 public abstract class Activitats implements Laos {
 private String nom;    //nom de l'activitat
 private String[]colectius;   //PDI, PTGAS, Estudiants
-protected Data dataIniciInscripcio; 
-protected Data dataFiInscripcio; 
+protected Date dataIniciInscripcio; 
+protected Date dataFiInscripcio; 
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
 
-    public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
+    public Activitats(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, String tipus) {
         this.nom = nom;
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
@@ -17,11 +19,11 @@ private String tipus; // UnDia, Periodica, Online
         this.tipus = tipus;
     }
 
-    public Data getDataIniciInscripcio(){
+    public Date getDataIniciInscripcio(){
         return dataIniciInscripcio; 
     }
 
-    public Data getDataFiInscripcio(){
+    public Date getDataFiInscripcio(){
         return dataFiInscripcio; 
     }
 
@@ -41,8 +43,8 @@ private String tipus; // UnDia, Periodica, Online
         return limitPlaces;
     }
 
-    public boolean esEnPeriodeInscripcio(Data avui){
-        return !avui.esAnterior(dataIniciInscripcio) && !avui.esPosterior(dataFiInscripcio); 
+    public boolean esEnPeriodeInscripcio(Date avui){
+        return !avui.before(dataIniciInscripcio) && !avui.after(dataFiInscripcio); 
     }
 
     public boolean acceptaColectiu(String col){
@@ -54,8 +56,8 @@ private String tipus; // UnDia, Periodica, Online
         return false; 
     }
 
-    public abstract boolean teClasseAvui(Data avui);
-    public abstract boolean esActivaAvui(Data avui); 
+    public abstract int teClasseAvui(Date avui);
+    public abstract int esActivaAvui(Date avui); 
     public abstract double getPreu(); 
 
     @Override 

@@ -1,11 +1,12 @@
 package dades;
-import java.util.Date;
+import java.util.*;
+
 public class ActivitatOnline extends Activitats {
     private Date dataInici;
     private int periodeVisualitzacio;
     private String enllac; 
 
-    public ActivitatOnline(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date edataInici, int periodeVisualitzacio, String enllac) {
+    public ActivitatOnline(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date dataInici, int periodeVisualitzacio, String enllac) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Online");
         this.dataInici = dataInici;
         this.periodeVisualitzacio = periodeVisualitzacio;
@@ -13,14 +14,13 @@ public class ActivitatOnline extends Activitats {
     }
 
     @Override
-    public boolean teClasseAvui(Date avui){
+    public int teClasseAvui(Date avui){
         return false; 
     }
 
     @Override
-    public boolean esActivaAvui(Date avui){
-        Date dataFi=new Date(dataInici.getDia()+periodeVisualitzacio, dataInici,getMes(), dataInici.getAny());
-dataInici.
+    public int esActivaAvui(Date avui){
+        Date dataFi=new Date(dataInici.getDia()+periodeVisualitzacio, dataInici.getMes(), dataInici.getAny());
     }
 
 }
