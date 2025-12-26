@@ -1,9 +1,7 @@
 package dades;
 /**
  * 
- * Representa el personal tècnic i de gestió.
- * 
- *  - campus on treballa
+ * Representa el personal tècnic i de gestió
  */
 
 public class PTGAS extends Usuari {
