@@ -9,8 +9,6 @@ package dades;
  *  afegir nous usuaris
  */
 
-import java.util.*;
-
 public class LlistaUsuaris {
 
     private Usuari[] llista;
