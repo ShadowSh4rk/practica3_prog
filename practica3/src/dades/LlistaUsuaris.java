@@ -9,15 +9,50 @@ package dades;
  *  afegir nous usuaris
  */
 
+import java.util.*;
+
 public class LlistaUsuaris {
 
-    // estructura on es guardaran tots els usuaris registrats
+    private Usuari[] llista;
+    private int numUsuaris;
 
-    // capçalera per afegir un usuari
-    // public void afegirUsuari(Usuari u);
+    /**
+     * 
+     * @param mida la mida de la llista
+     */
+    public LlistaUsuaris(int mida) {
+        llista = new Usuari[mida];
+        numUsuaris = 0;
+    }
 
-    // capçalera per buscar un usuari per alies
-    // public Usuari buscar(String alies);
+    /**
+     * 
+     * @param u un usuari nou de la classe Usuari
+     */
+    public void afegir(Usuari u) {
+        if (numUsuaris < llista.length) {
+            llista[numUsuaris] = u;
+            numUsuaris++;
+        }
+    }
 
+    /**
+     * 
+     * @param pos posició de l'usuari en la llista
+     * @return retorna la llista amb els usuaris
+     */
+    public Usuari getUsuari(int pos) {
+        if (pos < 0 || pos >= numUsuaris) {
+            return null;
+        }
+        return llista[pos];
+    }
+
+    /**
+     * 
+     * @return retorna el número d'usuaris
+     */
+    public int getNumUsuaris() {
+        return numUsuaris;
+    }
 }
-
