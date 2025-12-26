@@ -9,7 +9,7 @@ package dades;
  *  Només existeixen usuaris dels tipus PDI, PTGAS i Estudiant.
  */
 
-package dades;
+
 public abstract class Usuari {
     protected String alies;
     protected String adrecaCorreu; 
