@@ -88,4 +88,28 @@ public class ActivitatUnDia extends Activitats {
     public double getPreu(){
         return preu; 
     }
+
+    /**
+    * Retorna una representació en format de línia de text de l'activitat d'un dia,
+    * preparada per ser guardada en el fitxer de dades.
+    *
+    * El format és:
+    * UnDia;[dades comunes de Activitats];dia;mes;any;horari;ciutat;preu
+    *
+    * On super.toString() aporta:
+    * nom;colectius;dataIniciInscripcio;dataFiInscripcio;limitPlaces
+    *
+    * @return Cadena de text amb tots els atributs necessaris per reconstruir l'activitat.
+    */
+    @Override
+    public String toString() {
+    return "UnDia;" + super.toString() + ";" +
+           data.getDia() + ";" + data.getMes() + ";" + data.getAny() + ";" +
+           horari + ";" +
+           ciutat + ";" +
+           preu;
+}
+
+
+    
 }
