@@ -130,7 +130,19 @@ private String tipus; // UnDia, Periodica, Online
      * @return Nom de l'activitat i tipus entre parèntesis
      */
     @Override 
-    public String toString(){
-        return nom+" (" +tipus+ ")"; 
-    }
+    public String toString() {
+        // Convertir el array de col·lectius a un String "PDI,PTGAS,Estudiants" 
+        String col = ""; 
+        for (int i = 0; i < colectius.length; i++) { 
+            col += colectius[i]; 
+            if (i < colectius.length - 1) { 
+                col += ","; // añadir coma entre elementos 
+                } 
+            }
+    return nom + ";" + col + ";" + dataIniciInscripcio.getDia() + ";" 
+    + dataIniciInscripcio.getMes() + ";" + dataIniciInscripcio.getAny() + ";" 
+    + dataFiInscripcio.getDia() + ";" + dataFiInscripcio.getMes() + ";" 
+    + dataFiInscripcio.getAny() + ";" + limitPlaces; 
 }
+ }
+    
