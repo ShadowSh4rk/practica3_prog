@@ -1,5 +1,8 @@
 package dades;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class LlistaInscripcions {
@@ -13,7 +16,10 @@ public class LlistaInscripcions {
      * afegeix una nova inscripcio a la llista
      * @param dada
      */
-    public void afegir(Inscripcio dada) {
+    public void afegir(Inscripcio dada) throws IOException {
+
+        BufferedWriter escriptura = new BufferedWriter(new FileWriter("FitxerInscripcions.txt"));
+
         Activitats activitat = dada.getActivitats();
         Date n1 = dada.getDataInscripcio();
         if (nIns<activitat.getLimitPlaces()){ //si hi ha lloc dins la llista d'inscripcions, afegim l'inscripcio
@@ -33,7 +39,10 @@ public class LlistaInscripcions {
             }
             //pas 3: col·locar la dada a afegir i incrementar nombre d'elements
             llistaInscri[i] = dada.copia();
+            escriptura.write(llistaInscri[i] + ";");
             nIns++;
+
+            escriptura.close();
 
         }else{ //si no hi ha lloc, mirem si la podem afegir a la llista d'espera
 

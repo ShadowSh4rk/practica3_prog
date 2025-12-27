@@ -1,40 +1,18 @@
 package dades;
 
-/**
- * Representa una activitat periòdica del programa Benestar URV.
- * Aquestes activitats es duen a terme un dia concret de la setmana i horari,
- * durant un nombre determinat de setmanes consecutives.
- * Té un límit de places i un preu total.
- */
+import java.util.*;
 
 public class ActivitatPeriodica extends Activitats{
-    private String diaSetmana; // Dia de la setmana en què es fa la classe
-    private String horari;  // Horari de la classe
-    private Data dataInici; // Data d'inici de la primera sessió
-    private int numSetmanes; // Nombre de setmanes que dura l'activitat
-    private String centre;  // Nom del centre on es fa l'activitat
-    private String ciutat;  // Ciutat on es realitza l'activitat
-    private double preuTotal;  // Preu total de l'activitat
+    private String diaSetmana;
+    //private LocalTime horari; 
+    private Date dataInici;
+    private int numSetmanes;
+    private String centre; 
+    private String ciutat; 
+    private double preuTotal; 
 
-    /**
-     * Constructor de l'activitat periòdica.
-     *
-     * @param nom Nom de l'activitat
-     * @param colectius Col·lectius als quals s'ofereix l'activitat
-     * @param dataIniciInscripcio Data d'inici del període d'inscripció
-     * @param dataFiInscripcio Data final del període d'inscripció
-     * @param diaSetmana Dia de la setmana en què es fa la classe
-     * @param horari Horari de la classe
-     * @param dataInici Data d'inici de la primera sessió
-     * @param numSetmanes Nombre de setmanes que dura l'activitat
-     * @param centre Nom del centre on es fa l'activitat
-     * @param ciutat Ciutat on es realitza l'activitat
-     * @param limitPlaces Límit de places disponibles
-     * @param preuTotal Preu total de l'activitat
-     */
-
-    public ActivitatPeriodica(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, 
-        String diaSetmana, String horari, Data dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
+    public ActivitatPeriodica(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, 
+        String diaSetmana, /*LocalTime horari,*/ Date dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
             super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Periodica");
             this.diaSetmana=diaSetmana;
             this.horari=horari; 

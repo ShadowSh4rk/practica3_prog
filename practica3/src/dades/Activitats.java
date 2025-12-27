@@ -1,29 +1,16 @@
 package dades;
 
-/**
- *Classe abstracta que representa una activitat del programa Benestar URV.
- *Les activitats poden ser d'un dia, periodiques o online
- *  
- */
+import java.util.*;
 
 public abstract class Activitats implements Laos {
-private String nom;    //nom de l'activitat (unic)
-private String[]colectius;   //Col·lectius que poden accedir: PDI, PTGAS, Estudiants
-protected Data dataIniciInscripcio; 
-protected Data dataFiInscripcio; 
-protected int limitPlaces; //Nombre maxim de places disponibles
+private String nom;    //nom de l'activitat
+private String[]colectius;   //PDI, PTGAS, Estudiants
+protected Date dataIniciInscripcio; 
+protected Date dataFiInscripcio; 
+protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
 
-/**
- * Constructor de la classe Activitats
- * 
- * @param nom Nom de l'activitat
- * @param colectius Array amb els col·lectius als quals s'ofereix
- * @param dataIniciInscripcio Data d'inici del periode d'inscripcio
- * @param dataFiInscripcio Dara final del periode d'inscripcio
- * @param tipus Tipus de l'activitat: "UnDia", "Periodica" o "Online"
- */
-    public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
+    public Activitats(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, String tipus) {
         this.nom = nom;
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
@@ -32,19 +19,11 @@ private String tipus; // UnDia, Periodica, Online
         this.tipus = tipus;
     }
 
-    /**
-     * Retorna la data d'inici del periode d'inscripcio
-     * @return Data d'inici d'inscripcio
-     */
-    public Data getDataIniciInscripcio(){
+    public Date getDataIniciInscripcio(){
         return dataIniciInscripcio; 
     }
 
-    /**
-     * Retorna la data final del periode d'inscripcio
-     * @return Data final d'inscripcio
-     */
-    public Data getDataFiInscripcio(){
+    public Date getDataFiInscripcio(){
         return dataFiInscripcio; 
     }
 
@@ -80,13 +59,8 @@ private String tipus; // UnDia, Periodica, Online
         return limitPlaces;
     }
 
-    /**
-     * Comprova si l'activitat està dins del període d'inscripció per a la data indicada.
-     * @param avui Data a comprovar
-     * @return true si la data està dins del període d'inscripció, false altrament
-     */
-    public boolean esEnPeriodeInscripcio(Data avui){
-        return !avui.esAnterior(dataIniciInscripcio) && !avui.esPosterior(dataFiInscripcio); 
+    public boolean esEnPeriodeInscripcio(Date avui){
+        return !avui.before(dataIniciInscripcio) && !avui.after(dataFiInscripcio); 
     }
 
     /**
@@ -103,26 +77,8 @@ private String tipus; // UnDia, Periodica, Online
         return false; 
     }
 
-    /**
-     * Comprova si hi ha classe avui (només rellevant per activitats presencials).
-     * Les subclasses han d'implementar aquest mètode segons el tipus d'activitat.
-     * @param avui Data a comprovar
-     * @return true si hi ha classe avui, false altrament
-     */
-    public abstract boolean teClasseAvui(Data avui);
-    
-    /**
-     * Comprova si l'activitat està activa avui.
-     * Les subclasses han d'implementar aquest mètode segons el tipus d'activitat.
-     * @param avui Data a comprovar
-     * @return true si l'activitat està activa avui, false altrament
-     */
-    public abstract boolean esActivaAvui(Data avui); 
-    /**
-     * Retorna el preu de l'activitat.
-     * Les subclasses han d'implementar aquest mètode segons el tipus d'activitat.
-     * @return Preu de l'activitat
-     */
+    public abstract int teClasseAvui(Date avui);
+    public abstract int esActivaAvui(Date avui); 
     public abstract double getPreu(); 
 
     /**

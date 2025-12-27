@@ -1,29 +1,14 @@
 package dades;
 
-/**
- * Representa una activitat que es realitza en un sol dia.
- */
+import java.util.*;
 
 public class ActivitatUnDia extends Activitats {
-    private Data data; 
+    private Date data; 
     private String horari; 
     private String ciutat; 
     private double preu; 
 
-     /**
-     * Constructor de l'activitat d'un dia.
-     *
-     * @param nom Nom de l'activitat
-     * @param colectius Col·lectius a qui s'ofereix (PDI, PTGAS, Estudiants)
-     * @param dataIniciInscripcio Data d'inici del període d'inscripció
-     * @param dataFiInscripcio Data final del període d'inscripció
-     * @param data Data en què es realitza l'activitat
-     * @param horari Horari de l'activitat
-     * @param ciutat Ciutat on es realitza
-     * @param limitPlaces Límits de places disponibles
-     * @param preu Preu de l'activitat
-     */
-    public ActivitatUnDia(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data data, String horari, String ciutat, int limitPlaces, double preu) {
+    public ActivitatUnDia(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date data, String horari, String ciutat, int limitPlaces, double preu) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "UnDia");
         this.data = data;
         this.horari = horari;
@@ -48,23 +33,15 @@ public class ActivitatUnDia extends Activitats {
         return horari; 
     }
 
-    /**
-     * Retorna la data en què es realitza l'activitat.
-     *
-     * @return Data de l'activitat
-     */ 
-    public Data getData(){
+    public Date getData(){
         return data; 
     }
-    /**
-     * Indica si hi ha classe en la data indicada.
-     *
-     * @param avui Data a comprovar
-     * @return true si hi ha classe avui, false en cas contrari
-     */
+
+    //compareTo: si retorna 0, son iguals. Si retorna menor a 0 es anterior i si retorna major a 0 es posterior
+
     @Override
-    public boolean teClasseAvui(Data avui){
-        return avui.esIgual(data); 
+    public int teClasseAvui(Date avui){
+        return avui.compareTo(data); 
     }
 
     /**
@@ -74,8 +51,8 @@ public class ActivitatUnDia extends Activitats {
      * @return true si l'activitat està activa avui, false en cas contrari
      */
     @Override
-    public boolean esActivaAvui(Data avui){
-        return avui.esIgual(data);
+    public int esActivaAvui(Date avui){ 
+        return avui.compareTo(data);
     }
 
     /**
