@@ -68,4 +68,25 @@ public class ActivitatOnline extends Activitats {
         return 0; 
     }
 
+    /**
+    * Retorna una representació en format de línia de text de l'activitat online,
+    * preparada per ser guardada en el fitxer de dades.
+    * 
+    * El format és:
+    * Online;[dades comunes de Activitats];dia;mes;any;periodeVisualitzacio;enllac
+    *
+    * On super.toString() aporta:
+    * nom;colectius;dataIniciInscripcio;dataFiInscripcio;limitPlaces
+    *
+    * @return Cadena de text amb tots els atributs necessaris per reconstruir l'activitat.
+    */
+    @Override
+    public String toString() {
+    return "Online;" + super.toString() + ";" +
+           dataInici.getDia() + ";" + dataInici.getMes() + ";" + dataInici.getAny() + ";" +
+           periodeVisualitzacio + ";" +
+           enllac;
+}
+
+
 }
