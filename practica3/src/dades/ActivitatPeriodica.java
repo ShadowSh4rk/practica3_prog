@@ -135,4 +135,29 @@ public class ActivitatPeriodica extends Activitats{
         public String getDiaSetmana(){
             return diaSetmana; 
         }
+
+    /**
+    * Retorna una representació en format de línia de text de l'activitat periòdica,
+     * preparada per ser guardada en el fitxer de dades.
+     *
+    * El format és:
+    * Periodica;[dades comunes de Activitats];diaSetmana;horari;dia;mes;any;numSetmanes;centre;ciutat;preuTotal
+    *
+    * On super.toString() aporta:
+    * nom;colectius;dataIniciInscripcio;dataFiInscripcio;limitPlaces
+    *
+    * @return Cadena de text amb tots els atributs necessaris per reconstruir l'activitat.
+    */
+    @Override
+    public String toString() {
+    return "Periodica;" + super.toString() + ";" +
+           diaSetmana + ";" +
+           horari + ";" +
+           dataInici.getDia() + ";" + dataInici.getMes() + ";" + dataInici.getAny() + ";" +
+           numSetmanes + ";" +
+           centre + ";" +
+           ciutat + ";" +
+           preuTotal;
+}
+
 }
