@@ -1,14 +1,12 @@
 package dades;
 
-import java.util.*;
-
 public class ActivitatUnDia extends Activitats {
-    private Date data; 
+    private Data data; 
     private String horari; 
     private String ciutat; 
     private double preu; 
 
-    public ActivitatUnDia(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, Date data, String horari, String ciutat, int limitPlaces, double preu) {
+    public ActivitatUnDia(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data data, String horari, String ciutat, int limitPlaces, double preu) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "UnDia");
         this.data = data;
         this.horari = horari;
@@ -33,15 +31,14 @@ public class ActivitatUnDia extends Activitats {
         return horari; 
     }
 
-    public Date getData(){
+    public Data getData(){
         return data; 
     }
 
-    //compareTo: si retorna 0, son iguals. Si retorna menor a 0 es anterior i si retorna major a 0 es posterior
 
     @Override
-    public int teClasseAvui(Date avui){
-        return avui.compareTo(data); 
+    public boolean teClasseAvui(Data avui){
+        return avui.esIgual(data); 
     }
 
     /**
@@ -51,8 +48,8 @@ public class ActivitatUnDia extends Activitats {
      * @return true si l'activitat està activa avui, false en cas contrari
      */
     @Override
-    public int esActivaAvui(Date avui){ 
-        return avui.compareTo(data);
+    public boolean esActivaAvui(Data avui){ 
+        return avui.esIgual(data);
     }
 
     /**
@@ -64,6 +61,10 @@ public class ActivitatUnDia extends Activitats {
     @Override
     public double getPreu(){
         return preu; 
+    }
+
+    public boolean haAcabat(Data avui){
+        return avui.esPosterior(data);
     }
 
     /**

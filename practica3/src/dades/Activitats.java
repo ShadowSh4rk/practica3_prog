@@ -1,29 +1,37 @@
 package dades;
 
-import java.util.*;
+import java.io.*;
 
-public abstract class Activitats implements Laos {
+public abstract class Activitats{
 private String nom;    //nom de l'activitat
 private String[]colectius;   //PDI, PTGAS, Estudiants
-protected Date dataIniciInscripcio; 
-protected Date dataFiInscripcio; 
+protected Data dataIniciInscripcio; 
+protected Data dataFiInscripcio; 
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
+//========
+    private Inscripcio[] llistaInscri;
+    private Inscripcio[] llistaEspera;
+    private int nIns; //nombre d'inscripcio (index llista inscripcio)
+    private int nEsp; //nombre d'espera (index llista espera)
+    private static final int limitEspera = 10;
 
-    public Activitats(String nom, String[]colectius, Date dataIniciInscripcio, Date dataFiInscripcio, String tipus) {
+    public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
         this.nom = nom;
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
         this.dataFiInscripcio = dataFiInscripcio;
         this.limitPlaces = Integer.MAX_VALUE;
         this.tipus = tipus;
+        nIns = 0;
+        nEsp = 0;
     }
 
-    public Date getDataIniciInscripcio(){
+    public Data getDataIniciInscripcio(){
         return dataIniciInscripcio; 
     }
 
-    public Date getDataFiInscripcio(){
+    public Data getDataFiInscripcio(){
         return dataFiInscripcio; 
     }
 
@@ -59,8 +67,8 @@ private String tipus; // UnDia, Periodica, Online
         return limitPlaces;
     }
 
-    public boolean esEnPeriodeInscripcio(Date avui){
-        return !avui.before(dataIniciInscripcio) && !avui.after(dataFiInscripcio); 
+    public boolean esEnPeriodeInscripcio(Data avui){
+        return !avui.esAnterior(dataIniciInscripcio) && !avui.esPosterior(dataFiInscripcio); 
     }
 
     /**
@@ -77,8 +85,9 @@ private String tipus; // UnDia, Periodica, Online
         return false; 
     }
 
-    public abstract int teClasseAvui(Date avui);
-    public abstract int esActivaAvui(Date avui); 
+    public abstract boolean teClasseAvui(Data avui);
+    public abstract boolean haAcabat(Data avui);
+    public abstract boolean esActivaAvui(Data avui); 
     public abstract double getPreu(); 
 
     /**
@@ -100,5 +109,159 @@ private String tipus; // UnDia, Periodica, Online
     + dataFiInscripcio.getDia() + ";" + dataFiInscripcio.getMes() + ";" 
     + dataFiInscripcio.getAny() + ";" + limitPlaces; 
 }
- }
+
+//GESTIO DE LA LLISTA D'INSCRIPCIONS
+
+/**
+     * afegeix una nova inscripcio a la llista
+     * @param dada
+     */
+    public void afegir(Inscripcio dada) throws IOException {
+
+        Activitats activitat = dada.getActivitats();
+        Data n1 = dada.getDataInscripcio();
+        if (nIns<activitat.getLimitPlaces()){ //si hi ha lloc dins la llista d'inscripcions, afegim l'inscripcio
+            //AFEGIM PER DATA D'INSCRIPCIO
+            //pas 1: buscar el lloc 
+            int i=0;
+            boolean trobat = false;
+            while(i<nIns && trobat == false){
+                if(n1.esPosterior(llistaInscri[i].getDataInscripcio()) && n1.esAnterior(llistaInscri[i+1].getDataInscripcio())){
+                    trobat = true;
+                }
+                i++;
+            }
+            //pas 2: crear el lloc (desplaçar les dades de després cap a la dreta)
+            for (int j=nIns; j>i; j--){
+                llistaInscri[i+1]=llistaInscri[i];
+            }
+            //pas 3: col·locar la dada a afegir i incrementar nombre d'elements
+            llistaInscri[i] = dada.copia();
+            nIns++;
+
+
+        }else{ //si no hi ha lloc, mirem si la podem afegir a la llista d'espera
+
+            if(nEsp<limitEspera){ 
+                //AFEGIM PER DATA D'INSCRIPCIO
+                //pas 1: buscar el lloc 
+                int i=0;
+                boolean trobat = false;
+                while(i<nEsp && trobat == false){
+                    if(n1.esPosterior(llistaEspera[i].getDataInscripcio()) && n1.esAnterior(llistaEspera[i+1].getDataInscripcio())){
+                        trobat = true;
+                    }
+                    i++;
+                }
+                //pas 2: crear el lloc (desplaçar les dades cap a la dreta)
+                for (int j=nIns; j>i; j--){
+                    llistaEspera[i+1]=llistaEspera[i];
+                }
+                //pas 3: col·locar la dada a afegir i incrementar nombre d'elements
+                llistaEspera[i] = dada.copia();
+                nEsp++;
+            }
+        }
+    }
+    
+    
+
+    /**
+     * 
+     * @param dada
+     */
+    public void cancelar(Inscripcio dada){
+        //busquem la dada
+        int i=0;
+        boolean trobat = false;
+        while(i<nIns && trobat == false){
+            if(llistaInscri[i]==dada){
+                trobat = true;
+            }
+            i++;
+        }
+
+        //desplaçem les dades a l'esquerra
+        while (i<nIns){
+            llistaInscri[i]=llistaInscri[i+1];
+            i++;
+        }
+
+        //si hi ha inscripcions a la llista d'espera, n'afegim una 
+        if(nEsp>0){
+            Data n1 = llistaEspera[0].getDataInscripcio();
+            i=0;
+            trobat = false;
+            while(i<nIns && trobat == false){
+                if(n1.esPosterior(llistaInscri[i].getDataInscripcio()) && n1.esAnterior(llistaInscri[i+1].getDataInscripcio())){
+                    trobat = true;
+                }
+                i++;
+            }
+            //pas 2: crear el lloc (desplaçar les dades de després cap a la dreta)
+            for (int j=nIns; j>i; j--){
+                llistaInscri[i+1]=llistaInscri[i];
+            }
+            //pas 3: col·locar la dada a afegir i decrementar elements de la llista d'espera
+            llistaInscri[i] = llistaEspera[0].copia();
+            nEsp--;
+
+        }else{ //si no, decrementem el nombre d'elements a la llista d'inscripcions
+            nIns--;
+        }
+
+    }
+
+    //GESTIO FITXER SERIALITZAT
+
+    public static void storeData (Inscripcio[] llistaInscri) {
+        ObjectOutputStream outputFile;
+        try {
+            outputFile = new ObjectOutputStream(new FileOutputStream("llistaInscripcions.ser"));
+            for (int i=0; i<llistaInscri.length; i++) {
+            outputFile.writeObject(llistaInscri[i]);
+            }
+            outputFile.close();
+        }
+        catch (IOException e) {
+            System.out.println("Error en l'arxiu de sortida.");
+        }
+    }
+
+    public static void readData (Inscripcio[] llistaInscri) {
+        ObjectInputStream inputFile;
+        try {
+            inputFile = new ObjectInputStream(new FileInputStream("llistaInscripcions.ser"));
+            for (int i=0; i<llistaInscri.length; i++) {
+                llistaInscri[i]=(Inscripcio)inputFile.readObject();
+            }
+            inputFile.close();
+        }
+        catch (IOException e) {
+            System.out.println("Error en l'arxiu d'entrada.");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Error, no es troba la classe Inscripcio."+e);
+        }
+        catch (ClassCastException e){
+            System.out.println("Error, el format de l'arxiu no és correcte per la definició actual de la classe Inscripcio."+e);
+        }
+    }
+
+    public boolean estaInscrit(String nom){
+        boolean trobat = false;
+        int i=0;
+        while (i<llistaInscri.length && !trobat) {
+            if(llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)){
+                trobat = true;
+            }
+            else{
+                i++;
+            }
+        }
+        return trobat;
+    }
+
+
+    }
     

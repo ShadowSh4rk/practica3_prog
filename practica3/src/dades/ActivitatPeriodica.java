@@ -1,27 +1,28 @@
 package dades;
 
-import java.util.*;
-
 public class ActivitatPeriodica extends Activitats{
     private String diaSetmana;
     //private LocalTime horari; 
-    private Date dataInici;
+    private Data dataInici;
     private int numSetmanes;
     private String centre; 
     private String ciutat; 
     private double preuTotal; 
 
-    public ActivitatPeriodica(String nom, String[] colectius, Date dataIniciInscripcio, Date dataFiInscripcio, 
-        String diaSetmana, /*LocalTime horari,*/ Date dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
+    private Data dataFi;
+
+    public ActivitatPeriodica(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String diaSetmana, /*LocalTime horari,*/ Data dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
             super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Periodica");
             this.diaSetmana=diaSetmana;
-            this.horari=horari; 
+            //this.horari=horari; 
             this.dataInici=dataInici;
             this.numSetmanes=numSetmanes;
             this.centre=centre;
             this.ciutat=ciutat;
             this.limitPlaces=limitPlaces; 
             this.preuTotal=preuTotal;
+
+            dataFi = dataInici.afegirDies(numSetmanes*7);
         }
 
     /**
@@ -48,8 +49,6 @@ public class ActivitatPeriodica extends Activitats{
      */
         @Override
         public boolean esActivaAvui(Data avui){
-            int diesTotals=numSetmanes*7; 
-            Data dataFi = dataInici.afegirDies(diesTotals); 
             return !avui.esAnterior(dataInici) && !avui.esPosterior(dataFi);
         }
 
@@ -84,10 +83,10 @@ public class ActivitatPeriodica extends Activitats{
     * Retorna l'horari de la classe.
     * 
     * @return horari en format cadena (ex. "18:00-20:00")
-    */
+    
         public String getHorari(){
             return horari;
-        }
+        } */
 
     /**
     * Retorna el nombre de setmanes que dura l'activitat.
@@ -105,6 +104,11 @@ public class ActivitatPeriodica extends Activitats{
         public Data getDataInici(){
             return dataInici; 
         }
+
+    public boolean haAcabat(Data avui){
+        return avui.esPosterior(dataFi);
+    }
+
     /**
     * Retorna el dia de la setmana en què es realitza l'activitat.
     * 
@@ -130,7 +134,7 @@ public class ActivitatPeriodica extends Activitats{
     public String toString() {
     return "Periodica;" + super.toString() + ";" +
            diaSetmana + ";" +
-           horari + ";" +
+           //horari + ";" +
            dataInici.getDia() + ";" + dataInici.getMes() + ";" + dataInici.getAny() + ";" +
            numSetmanes + ";" +
            centre + ";" +
