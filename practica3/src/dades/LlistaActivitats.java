@@ -1,5 +1,9 @@
 package dades;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import excepcions.ActivitatInexistentException;
 
 public class LlistaActivitats {
@@ -121,5 +125,15 @@ public class LlistaActivitats {
             }
         }
         return res; 
+    }
+
+    public void escriuFitxerActivitats() throws IOException{
+        BufferedWriter escriptura = new BufferedWriter(new FileWriter("FitxerLlistaActivitats.txt"));
+
+        for(int i=0; i<llista.length; i++){
+            escriptura.write(llista[i] + ";");
+        }
+
+        escriptura.close();
     }
 }

@@ -1,5 +1,9 @@
 package dades;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Classe de gestió de la llista d'usuaris.
  * 
@@ -52,5 +56,15 @@ public class LlistaUsuaris {
      */
     public int getNumUsuaris() {
         return numUsuaris;
+    }
+
+    public void escriuFitxerUsuaris() throws IOException{
+        BufferedWriter escriptura = new BufferedWriter(new FileWriter("FitxerLlistaUsuaris.txt"));
+
+        for(int i=0; i<llista.length; i++){
+            escriptura.write(llista[i] + ";");
+        }
+
+        escriptura.close();
     }
 }
