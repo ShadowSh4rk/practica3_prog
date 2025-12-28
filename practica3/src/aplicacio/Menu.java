@@ -12,8 +12,12 @@ package aplicacio;
 
 import java.util.Scanner;
 
+import dades.*;
+
 public class Menu {
     static Scanner teclat = new Scanner(System.in);
+
+    public static Data avui = new Data(0, 0, 0);
 
     public static void main(String[] args) {
 
@@ -178,7 +182,16 @@ public class Menu {
 
     public static void opcio1() {
         // 1. Indicar la data del dia d'avui, és a dir, hem de poder escriure en quina data volem estar
+        System.out.println("indica el dia");
+        avui.setDia(Integer.parseInt(teclat.nextLine()));
 
+        System.out.println("indica el mes");
+        avui.setMes(Integer.parseInt(teclat.nextLine()));
+        
+        System.out.println("indica l'any");
+        avui.setAny(Integer.parseInt(teclat.nextLine()));
+
+        System.out.println("la data del dia d'avui es"+avui);
     }
 
     public static void opcio2() {

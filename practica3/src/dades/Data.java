@@ -76,6 +76,30 @@ public class Data {
     }
 
     /**
+     * modifica l'atribut dia
+     * @param dia
+     */
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    /**
+     * modifica l'atribut mes
+     * @param mes
+     */
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    /**
+     * modifica l'atribut any
+     * @param any
+     */
+    public void setAny(int any) {
+        this.any = any;
+    }
+
+    /**
      * Retorna l'any de la data
      * @return Data com a cadena
      */
