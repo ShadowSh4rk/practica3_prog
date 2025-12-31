@@ -73,6 +73,14 @@ private String tipus; // UnDia, Periodica, Online
         return limitPlaces;
     }
 
+    public int getnIns() {
+        return nIns;
+    }
+
+    public int getnEsp() {
+        return nEsp;
+    }
+
     public boolean esEnPeriodeInscripcio(Data avui){
         return !avui.esAnterior(dataIniciInscripcio) && !avui.esPosterior(dataFiInscripcio); 
     }

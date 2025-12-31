@@ -10,6 +10,10 @@
  */
 package aplicacio;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import dades.*;
@@ -17,9 +21,16 @@ import dades.*;
 public class Menu {
     static Scanner teclat = new Scanner(System.in);
 
-    public static Data avui = new Data(0, 0, 0);
+    public static Data avui = new Data(31, 12, 2025);
+    public static LlistaActivitats llistaAct;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        int numLinies = llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
+
+        afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
+
+        avui = new Data(31, 12, 2025);
 
         mostraMenu();
         int opcio = Integer.parseInt(teclat.nextLine());
@@ -191,7 +202,7 @@ public class Menu {
         System.out.println("indica l'any");
         avui.setAny(Integer.parseInt(teclat.nextLine()));
 
-        System.out.println("la data del dia d'avui es"+avui);
+        System.out.println("la data del dia d'avui es "+avui);
     }
 
     public static void opcio2() {
@@ -207,8 +218,44 @@ public class Menu {
         if (opcio != 3) {
             switch (opcio) {
                 case 1:
-                    System.out.println("printeja activitats");
-                    //...
+                    System.out.println("quines activitats vols mostrar?");
+                    System.out.println("\t[1] Un dia");
+                    System.out.println("\t[2] Periodiques");
+                    System.out.println("\t[3] Online");
+                    System.out.println("\t[4] Totes les activitats");
+
+                    int seleccionaTipus = Integer.parseInt(teclat.nextLine());
+                    switch (seleccionaTipus){
+                        case 1:
+                            for(int i=0; i<llistaAct.getNumActivitats(); i++){
+                                if(llistaAct.getActivitat(i).getTipus().equalsIgnoreCase("undia")){
+                                    System.out.println(llistaAct.getActivitat(i));
+                                }
+                            }
+                            break;
+                        case 2:
+                            for(int i=0; i<llistaAct.getNumActivitats(); i++){
+                                if(llistaAct.getActivitat(i).getTipus().equalsIgnoreCase("periodica")){
+                                    System.out.println(llistaAct.getActivitat(i));
+                                }
+                            }
+                            break;
+                        case 3:
+                            for(int i=0; i<llistaAct.getNumActivitats(); i++){
+                                if(llistaAct.getActivitat(i).getTipus().equalsIgnoreCase("online")){
+                                    System.out.println(llistaAct.getActivitat(i));
+                                }
+                            }
+                            break;
+                        case 4:
+                            for(int i=0; i<llistaAct.getNumActivitats(); i++){
+                                System.out.println(llistaAct.getActivitat(i));
+                            }
+                            break;
+                        default:
+                            System.out.println("opcio invalida");
+                            break;
+                    }
                     break;
                 
                 case 2:
@@ -228,29 +275,74 @@ public class Menu {
     public static void opcio3() {
         // 3. Mostrar la informació de les activitats que es troben en període d'inscripció i si encara hi ha places disponibles
         System.out.println("activitats que es troben en període d'inscripcio:");
-        
 
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            if(llistaAct.getActivitat(i).esEnPeriodeInscripcio(avui)){
+                System.out.println(llistaAct.getActivitat(i));
+                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns();
+                if(places!=0){
+                    System.out.println("te "+places+" places disponibles");
+                }else{
+                    System.out.println("no te places disponibles");
+                }
+            }
+        }
     }
 
     public static void opcio4() {
         // 4. Mostrar la informació de les activitats que tenen classe en la data d'avui (s'ha d'haver fet la opció 1 prèviament)
         //  De cada activitat es mostrarà tota la seva informació, si ha omplert places per la seva capacitat i si hi ha llista d'espera
 
+        System.out.println("activitats que tenen classe a la data d'avui:");
+
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            if(llistaAct.getActivitat(i).teClasseAvui(avui)){
+                System.out.println(llistaAct.getActivitat(i));
+                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns();
+                if(places!=0){
+                    System.out.println("te "+places+" places disponibles");
+                }else{
+                    System.out.println("no te places disponibles");
+                }
+                int llistaEsp = llistaAct.getActivitat(i).getnEsp();
+                if(llistaEsp!=0){
+                    System.out.println("hi ha una llista d'espera de "+llistaEsp+" places");
+                }else{
+                    System.out.println("no hi ha llista d'espera");
+                }
+            }
+        }
+
     }
 
     public static void opcio5() {
-        // 5. Mostrar el nom de les acrtivitats que estan actives en la data d'avui, no cal que hi hagi classe en la data indicada,
+        // 5. Mostrar el nom de les activitats que estan actives en la data d'avui, no cal que hi hagi classe en la data indicada,
         //  però si que la data d'avui estigui en el període de l'activitat, entre la data inicial i la final
 
+        System.out.println("activitats actives a la data d'avui:");
+
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            if(llistaAct.getActivitat(i).esActivaAvui(avui)){
+                System.out.println(llistaAct.getActivitat(i).getNom());
+            }
+        }
     }
 
     public static void opcio6() {
         // 6. Mostrar el nom de les activitats que tenen places disponibles (tant si estan encara en termini d'inscripció o no)
-        
+        System.out.println("activitats amb places disponibles:");
+
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            if((llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns())!=0){
+                System.out.println(llistaAct.getActivitat(i).getNom()+" te "+llistaAct.getActivitat(i).getnIns()+" places");
+            }
+        }
     }
 
     public static void opcio7() {
         // 7. Mostrar el detall d'informació d'una activitat a partir del seu nom
+        System.out.println("\tintrodueix el nom de l'activitat:");
+        llistaAct.buscarPerNom(teclat.nextLine());
         
     }
     
@@ -326,6 +418,100 @@ public class Menu {
         // Donar de baixa les activitats que ja han acabat el període d'inscripció i no han arribat a omplir el 10% de les places que s'oferien.
         //  En cas de les activitats en línia donar de baixa si el número d'inscrits és inferior a 20 persones.
         
+    }
+
+    private static int llegeixLiniesFitxer(String nomFitxer) throws IOException{
+        BufferedReader lectura;
+        int numLinies = 0;
+        try{
+            lectura = new BufferedReader(new FileReader(nomFitxer));
+
+            while(lectura.readLine()!=null){
+                numLinies++;
+            }
+            lectura.close();
+
+        }catch(FileNotFoundException e){
+            System.out.println("fitxer no trobat, no es pot llegir");
+        }catch(IOException e){
+            System.out.println("altres errors al llegir el fitxer");
+        }
+        return numLinies;
+    }
+
+    private static void afegeixActivitatsDesdeFitxer(int numActivitats, LlistaActivitats llista) throws IOException{
+        BufferedReader lectura;
+
+        try{ //control de si podem obrir o no el fitxer
+            lectura = new BufferedReader(new FileReader("FitxerLlistaActivitats.txt"));
+            String linia;
+            String [] trossos, trossosCol, col;
+            int i=0;
+
+            linia = lectura.readLine();
+            while(linia!=null && i>numActivitats){
+                    trossos = linia.split(";");
+
+                    Activitats activitat;
+
+                    String tipus = trossos [0];
+
+                    //====== en comu ====
+                    String nom = trossos[1];
+                    trossosCol = trossos[2].split(",");
+                    col = new String[trossosCol.length];
+                    for(int j=0; i<trossosCol.length; j++){
+                        col[j]=trossosCol[j];
+                    }
+
+                    Data iniciInscri = new Data(Integer.parseInt(trossos[3]), Integer.parseInt(trossos[4]), Integer.parseInt(trossos[5]));
+                    Data fiInscri = new Data(Integer.parseInt(trossos[6]), Integer.parseInt(trossos[7]), Integer.parseInt(trossos[8]));
+
+                    int limPlaces = Integer.parseInt(trossos[9]);
+
+                    //====== per separat ====
+
+                    if (tipus.equalsIgnoreCase("undia")){
+                        Data data = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
+
+                        String ciutat = trossos[13];
+                        double preu = Double.parseDouble(trossos[14]);
+
+                        activitat = new ActivitatUnDia(nom, col, iniciInscri, fiInscri, data, ciutat, limPlaces, preu);
+                        
+                    }else if(tipus.equalsIgnoreCase("periodica")){
+                        String diaSetmana = trossos[10];
+                        //horari
+                        Data dataIni = new Data(Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]), Integer.parseInt(trossos[13]));
+                        int numSetmanes = Integer.parseInt(trossos[14]);
+                        String centre = trossos[15];
+                        String ciutat = trossos [16];
+                        double preuTotal = Double.parseDouble(trossos[17]);
+
+                        activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, dataIni, numSetmanes, centre, ciutat, limPlaces, preuTotal);
+
+                    }else{ //activitatOnline
+                        Data dataIni = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
+
+                        int periodeVis = Integer.parseInt(trossos[13]);
+                        String enllac = trossos[14];
+
+                        activitat = new ActivitatOnline(nom, col, iniciInscri, fiInscri, dataIni, periodeVis, enllac);
+                    }
+
+                    llista.afegir(activitat);
+                    i++;
+
+                    linia = lectura.readLine();
+            }
+
+            lectura.close();
+
+        }catch(FileNotFoundException e){
+            System.out.println("fitxer no trobat, no es pot llegir");
+        }catch(IOException e){
+            System.out.println("altres errors al llegir el fitxer");
+        }
     }
     
 }
