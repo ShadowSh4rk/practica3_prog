@@ -198,10 +198,37 @@ public class Menu {
         // 2. Mostrar les dades de les llistes. Es demanarà de quina llista es vol mostrar la informació. 
         //  En cas de llistes amb elements de diferent tipus, es demanarà també si es volen mostrar tots o només els d'un tipus
 
+        System.out.println("de quina llista vols mostrar informació?");
+        System.out.println("\t[1] Activitats");
+        System.out.println("\t[2] Usuaris");
+        System.out.println("\t[3] Cancel·la accio");
+
+        int opcio = Integer.parseInt(teclat.nextLine());
+        if (opcio != 3) {
+            switch (opcio) {
+                case 1:
+                    System.out.println("printeja activitats");
+                    //...
+                    break;
+                
+                case 2:
+                    System.out.println("printeja usuaris");
+                    //...
+                    break;
+                
+                default:
+                    System.out.println("opcio no valida");
+                    break;
+            }
+        }
+
+
     }
 
     public static void opcio3() {
         // 3. Mostrar la informació de les activitats que es troben en període d'inscripció i si encara hi ha places disponibles
+        System.out.println("activitats que es troben en període d'inscripcio:");
+        
 
     }
 

@@ -6,10 +6,10 @@ public class ActivitatUnDia extends Activitats {
     private String ciutat; 
     private double preu; 
 
-    public ActivitatUnDia(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data data, String horari, String ciutat, int limitPlaces, double preu) {
+    public ActivitatUnDia(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data data, /*String horari,*/ String ciutat, int limitPlaces, double preu) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "UnDia");
         this.data = data;
-        this.horari = horari;
+        //this.horari = horari;
         this.ciutat = ciutat; 
         this.limitPlaces=limitPlaces;
         this.preu = preu; 
@@ -83,7 +83,7 @@ public class ActivitatUnDia extends Activitats {
     public String toString() {
     return "UnDia;" + super.toString() + ";" +
            data.getDia() + ";" + data.getMes() + ";" + data.getAny() + ";" +
-           horari + ";" +
+           //horari + ";" +
            ciutat + ";" +
            preu;
 }

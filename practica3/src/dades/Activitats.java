@@ -23,6 +23,12 @@ private String tipus; // UnDia, Periodica, Online
         this.dataFiInscripcio = dataFiInscripcio;
         this.limitPlaces = Integer.MAX_VALUE;
         this.tipus = tipus;
+
+        //inicialitzem llistes (inscripcions i espera)
+        llistaInscri = new Inscripcio[limitPlaces];
+        llistaEspera = new Inscripcio[limitEspera];
+
+        //inicialitzem els indexos de les llistes
         nIns = 0;
         nEsp = 0;
     }
@@ -107,7 +113,7 @@ private String tipus; // UnDia, Periodica, Online
     return nom + ";" + col + ";" + dataIniciInscripcio.getDia() + ";" 
     + dataIniciInscripcio.getMes() + ";" + dataIniciInscripcio.getAny() + ";" 
     + dataFiInscripcio.getDia() + ";" + dataFiInscripcio.getMes() + ";" 
-    + dataFiInscripcio.getAny() + ";" + limitPlaces; 
+    + dataFiInscripcio.getAny() + ";" + limitPlaces;
 }
 
 //GESTIO DE LA LLISTA D'INSCRIPCIONS
