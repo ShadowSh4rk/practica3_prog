@@ -67,4 +67,24 @@ public class LlistaUsuaris {
 
         escriptura.close();
     }
+
+    /**
+     * Mètode per consultar si hi ha cap usuari amb l'alies indicat per paràmetre.
+     *  El mètode retorna la primera instància trobada o null si no hi ha cap.
+     * @param alies
+     * @return
+     */
+    public Usuari buscarPerNom(String alies){
+        Usuari usuari = null;
+
+        int i = 0;
+        while ((i < numUsuaris) && (usuari == null)) {
+            // Si trobem un usuari el alies del qual coincideix amb l'alies passat per paràmetre, podem aturar el bucle
+            if (llista[i].getAlies().equalsIgnoreCase(alies)) usuari = llista[i];
+
+            i++;
+        }
+
+        return usuari;
+    }
 }

@@ -23,6 +23,7 @@ public class Menu {
 
     public static Data avui = new Data(31, 12, 2025);
     public static LlistaActivitats llistaAct;
+    public static LlistaUsuaris llistaUsu;
 
     public static void main(String[] args) throws IOException {
 
@@ -348,7 +349,8 @@ public class Menu {
     
     public static void opcio8() {
         // 8. Mostrar el detall d'informació d'un usuari a partir del seu nom
-        
+        System.out.println("\tintrodueix el nom de l'usuari:");
+        llistaUsu.buscarPerNom(teclat.nextLine());
     }
 
     public static void opcio9() {

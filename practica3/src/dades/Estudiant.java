@@ -39,7 +39,17 @@ public class Estudiant extends Usuari {
         return anyInici;
     }
 
+    /**
+     * toString: Mètode per mostrar la informació d'un usuari estudiant.
+     * @return Cadena de text amb el contingut de l'estudiant.
+     */
+    @Override
+    public String toString() {
+        return (
+            super.toString()+"\n"+  // Crida al toString() d'usuari
+            "Tipus: Estudiant"+
+            "Ensenyament"+ensenyament+
+            "Any inici:"+anyInici
+        );
+    }
 }
-
-
-

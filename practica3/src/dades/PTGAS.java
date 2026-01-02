@@ -27,4 +27,16 @@ public class PTGAS extends Usuari {
         return campus;
     }
 
+    /**
+     * toString: Mètode per mostrar la informació d'un usuari PTGAS.
+     * @return Cadena de text amb el contingut del PTGAS.
+     */
+    @Override
+    public String toString() {
+        return (
+            super.toString()+"\n"+  // Crida al toString() d'usuari
+            "Tipus: PTGAS (Personal Tècnic i de Gestió)"+
+            "Campus Treball: "+campus
+        );
+    }
 }

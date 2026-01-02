@@ -40,4 +40,14 @@ public abstract class Usuari {
         return adrecaCorreu;
     }
 
+    /**
+     * toString: Mètode per mostrar la informació bàsica d'un usuari.
+     * @return Cadena de text amb el contingut de l'usuari.
+     */
+    public String toString() {
+        return (
+            "Usuari: "+alies+"\n"+
+            "Adreça: "+adrecaCorreu
+        );
+    }
 }
