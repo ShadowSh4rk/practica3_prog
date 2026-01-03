@@ -366,14 +366,87 @@ public class Menu {
         
     }
 
-    public static void opcio11() {
+    public static void opcio11(Activitats act) {
         // 11. Mostrar els usuaris que estan apuntats a una activitat i quins estan en llista d'espera.
-        
-    }
+        System.out.println("Activitat: " + act.getNom());
+        boolean hiHaInscrits = false;
 
-    public static void opcio12() {
+        // Recorrem la llista d'inscrits
+        for (int i = 0; i < act.nIns; i++) {
+            if (act.llistaInscri[i].getActivitats().equals(act)) {
+                System.out.println("Inscrit: " + act.llistaInscri[i].getAlies());
+                hiHaInscrits = true;
+            }
+        }
+
+        if (!hiHaInscrits) {
+            System.out.println("No hi ha usuaris inscrits en aquesta activitat.");
+        }
+
+        System.out.println("\nUsuaris en llista d'espera:");
+        boolean hiHaEspera = false;
+
+        // Recorrem la llista d'espera
+        for (int i = 0; i < act.nEsp; i++) {
+            if (act.llistaEspera[i].getActivitats().equals(act)) {
+                System.out.println("Espera: " + act.llistaEspera[i].getAlies());
+                    hiHaEspera = true;
+            }
+        }
+
+        if (!hiHaEspera) {
+        System.out.println("No hi ha usuaris en llista d'espera.");
+        }
+}
+
+
+
+    public static void opcio12(Activitats act, Usuari u) {
         // 12. Eliminar un usuari d'una activitat. Si hi ha llista d'espera, ek primer de la llista passa a formar part dels usuaris que poden accedir a l'activitat
-    }
+
+        boolean trobat = false;
+        int pos = 0;
+        int i = 0;
+
+        // 1. Buscar la posició de l'usuari dins dels inscrits
+        while (i < act.nIns && trobat == false) {
+            if (act.llistaInscri[i].getActivitats().equals(act) &&
+                act.llistaInscri[i].getAlies().equals(u.getAlies())) {
+                pos = i;
+                trobat = true;
+            }
+            i++;
+        }
+
+        // 2. Si s'ha trobat, eliminar-lo desplaçant la resta
+        if (trobat == true) {
+
+            for (int j = pos; j < act.nIns - 1; j++) {
+                act.llistaInscri[j] = act.llistaInscri[j + 1];
+            }
+        act.nIns--;  
+
+        System.out.println("Usuari eliminat correctament.");
+
+        } else {
+            System.out.println("Usuari no trobat a l'activitat.");
+        }
+
+        // 3. Si hi ha algú a la llista d'espera, pujar-lo a la llista d'inscrits
+        if (act.nEsp > 0) {
+
+            act.llistaInscri[act.nIns] = act.llistaEspera[0];  
+            act.nIns++;  // incrementem el comptador d'inscrits
+
+       
+            for (int j = 0; j < act.nEsp - 1; j++) {
+                act.llistaEspera[j] = act.llistaEspera[j + 1];
+            }
+            act.nEsp--;  
+        }
+
+}    
+
 
     public static void opcio13() {
         // 13. Afegir una nova activitat d'un dia
