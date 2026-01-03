@@ -3,6 +3,7 @@ package aplicacio;
 
 import javax.swing.*;
 import java.awt.*;
+import dades.Data;
 
 
 /**
@@ -15,12 +16,10 @@ public class Visualitzacio extends JFrame {
     private JPanel panellSuperior;              // Panell que conté el contingut de la capçalera superior
     private JButton botoEsquerra, botoDreta;    // Botons que permeten passar al any anterior o seguent
     private JButton[][] botonsAny;              // Botons que permeten clicar els mesos
-    private JButton[] botonsMes;                // Botons que permeten clicar els dies
+    private JButton[][] botonsMes;              // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;            // Text que indica l'any, mes i/o dia en el que ens trobem
     private int anyActual;  // Any seleccionat a la finestra
-    private int mesActual;  // Mes seleccionat a la finestra
-
-    private String nomMesos[] = {"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Septembre", "Octubre", "Novembre", "Desembre"};
+    private int mesActual;  // Mes seleccionat a la finestra (1: Gener i 12: Desembre)
 
 
     /**
@@ -37,7 +36,7 @@ public class Visualitzacio extends JFrame {
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
 
         this.anyActual = Integer.parseInt(any);         // Convertim l'any a un enter
-        this.mesActual = 0;
+        this.mesActual = 1;
 
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
@@ -104,12 +103,12 @@ public class Visualitzacio extends JFrame {
         panellAny.setBounds(50, 50, 400, 200);
 
         // Creació dels botons per a cada mes
-        int index = 0;  // Index del mes
+        int index = 1;  // Index del mes
         for (int i = 0; i < 4; i++) {   // Files
             for (int j = 0; j < 3; j++) {   // Columnes
-                botonsAny[i][j] = new JButton(nomMesos[index]);                     // Creem botó amb el nom del mes corresponent
-                botonsAny[i][j].addActionListener(new AccioBotonsMes(this, index)); // Afegim la interactivitat del botó
-                panellAny.add(botonsAny[i][j]);                                     // Afegim el botó al panell
+                botonsAny[i][j] = new JButton(Data.nomMes(3*i + j + 1));                // Creem botó amb el nom del mes corresponent
+                botonsAny[i][j].addActionListener(new AccioBotonsMes(this, index));     // Afegim la interactivitat del botó
+                panellAny.add(botonsAny[i][j]);                                         // Afegim el botó al panell
                 index++;    // Incrementem l'index de mes
             }
         }
@@ -144,16 +143,64 @@ public class Visualitzacio extends JFrame {
      */
     public void afegirMes(int mes) {
         this.mesActual = mes;
-        etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+nomMesos[mesActual]);
+        etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mes));
     }
 
     /**
-     * Mètode que actualitzarà la visualització del panell de Mes per a visualitzar els dies del mes
+     * Mètode que actualitzarà la visualització del panell de Mes per a visualitzar els dies del mes seleccionat
      * 
      * To-do: TOT
      */
     public void visualitzarMes() {
-        panellMes.setVisible(true);
+        panellPrincipal.remove(panellMes);  // Eliminem el panell Mes anterior
+
+        int diesMes = Data.diesDelMes(mesActual, anyActual);    // Càlcul del nombre de dies total que té el mes seleccionat
+        Data data_ini = new Data(1, mesActual, anyActual);  // Variable Data amb el valor del primer dia del mes
+        String dia_ini = data_ini.getDiaSetmana();              // Mitjançant la funció obtenim el nom del dia de la setmana en que comença el mes  
+
+        int offset_ini = 0;
+        switch (dia_ini) {
+            case "Dimarts": offset_ini = 1;
+                break;
+            case "Dimecres": offset_ini = 2;
+                break;
+            case "Dijous": offset_ini = 3;
+                break;
+            case "Divendres": offset_ini = 4;
+                break;
+            case "Dissabte": offset_ini = 5;
+                break;
+            case "Diumenge": offset_ini = 6;
+                break;
+            default: break;
+
+        }
+
+        int n_columnes = 7; // Nombre de columnes
+        int n_files = 6;    // Nombre de files
+
+        panellMes = new JPanel(new GridLayout(n_files, n_columnes, 10, 10));
+
+        botonsMes = new JButton[n_files][n_columnes];
+
+        int dia = 1;
+        int offset_botons = 0;
+        for (int i = 0; i < n_files; i++) {
+            for (int j = 0; j < n_columnes; j++) {
+                if ((offset_botons < offset_ini) || (dia > diesMes)) {
+                    botonsMes[i][j] = new JButton(" ");
+                    offset_botons++;
+                }
+                else if (dia <= diesMes) {
+                    botonsMes[i][j] = new JButton(Integer.toString(dia));
+                    botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24));
+                    dia++;
+                }
+                panellMes.add(botonsMes[i][j]);
+            }
+        }
+
+        panellPrincipal.add(panellMes);
     }
 
 

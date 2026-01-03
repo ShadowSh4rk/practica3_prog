@@ -10,6 +10,7 @@ public class Data {
     private int mes;
     private int any;
 
+    
     /**
      * Crea una data amb el dia, mes i any indicats.
      *
@@ -48,7 +49,7 @@ public class Data {
      * @param any Any a comprovar
      * @return true si és de traspàs, false si no
      */
-    private boolean esAnyDeTraspas(int any){
+    private static boolean esAnyDeTraspas(int any){
         return (any%4==0 && any%100!=0) || (any%400==0); 
     }
 
@@ -154,7 +155,7 @@ public class Data {
      * @param any Any
      * @return Nombre de dies del mes
      */
-    private int diesDelMes(int mes, int any) {
+    public static int diesDelMes(int mes, int any) {
         switch (mes) {
             case 2:
                 return esAnyDeTraspas(any) ? 29 : 28;
@@ -231,4 +232,32 @@ public class Data {
         return dies[resultat];
     }
 
+    /**
+     * Mètode per a obtenir el nom d'un mes respecte el seu index, on 1 és gener i 12 és desembre.
+     * @param i index del mes
+     * @return nom del mes corresponent
+     */
+    public static String nomMes(int i) {
+        String mes = null;
+
+        switch (i) {
+            case 1:  mes = "Gener"; break;
+            case 2:  mes = "Febrer"; break;
+            case 3:  mes = "Març"; break;
+            case 4:  mes = "Abril"; break;
+            case 5:  mes = "Maig"; break;
+            case 6:  mes = "Juny"; break;
+            case 7:  mes = "Juliol"; break;
+            case 8:  mes = "Agost"; break;
+            case 9:  mes = "Septembre"; break;
+            case 10:  mes = "Octubre"; break;
+            case 11: mes = "Novembre"; break;
+            case 12: mes = "Desembre"; break;
+            default:
+                break;
+        }
+        return mes;
     }
+
+
+}
