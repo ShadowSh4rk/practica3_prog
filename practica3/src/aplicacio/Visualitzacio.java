@@ -25,19 +25,21 @@ public class Visualitzacio extends JFrame {
         panellSuperior = new JPanel();
         panellSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        // Botó de l'esquerra per a decrementar l'any
-        botoEsquerra = new JButton("←");
-        botoEsquerra.setFont(new Font("Calibri", Font.BOLD, 24));
-
-        // Botó de la dreta per a incrementar l'any 
-        botoDreta = new JButton("→");
-        botoDreta.setFont(new Font("Calibri", Font.BOLD, 24));
-
         // Etiqueta de l'any
         etiquetaAny = new JLabel("Any: "+any);
         etiquetaAny.setFont(new Font("Calibri", Font.BOLD, 24));
         etiquetaAny.setForeground(Color.BLACK);
         etiquetaAny.setBounds(0, 10, 500, 30);
+
+        // Botó de l'esquerra per a decrementar l'any
+        botoEsquerra = new JButton("←");
+        botoEsquerra.setFont(new Font("Calibri", Font.BOLD, 24));
+        botoEsquerra.addActionListener(new AccioBotonsAny(this, false));
+
+        // Botó de la dreta per a incrementar l'any 
+        botoDreta = new JButton("→");
+        botoDreta.setFont(new Font("Calibri", Font.BOLD, 24));
+        botoDreta.addActionListener(new AccioBotonsAny(this, true));
 
         // Afegim el botó de l'esquerra, l'etiqueta de l'any i el botó de la dreta
         panellSuperior.add(botoEsquerra);
@@ -67,8 +69,14 @@ public class Visualitzacio extends JFrame {
         }
 
         this.add(panellMesos);      // Afegim el panell de mesos
-        
+
         this.setVisible(true);
+    }
+
+    public void actualitzarAny(boolean esIncrement) {
+        if (esIncrement) anyActual++;
+        else anyActual--;
+        etiquetaAny.setText("Any: "+anyActual);
     }
 
     public static void main(String[] args) {
