@@ -10,10 +10,10 @@ protected Data dataFiInscripcio;
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
 //========
-    private Inscripcio[] llistaInscri;
-    private Inscripcio[] llistaEspera;
-    private int nIns; //nombre d'inscripcio (index llista inscripcio)
-    private int nEsp; //nombre d'espera (index llista espera)
+    protected Inscripcio[] llistaInscri;
+    protected Inscripcio[] llistaEspera;
+    protected int nIns; //nombre d'inscripcio (index llista inscripcio)
+    protected int nEsp; //nombre d'espera (index llista espera)
     private static final int limitEspera = 10;
 
     public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
