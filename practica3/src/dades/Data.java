@@ -202,33 +202,33 @@ public class Data {
      * @return Nom del dia de la setmana
      */
     public String getDiaSetmana() {
-    int diaMes = dia;
-    int mesAny = mes;
-    int anyComplet = any;
+        int diaMes = dia;
+        int mesAny = mes;
+        int anyComplet = any;
 
-    // Ajustar enero y febrero como meses 13 y 14 del año anterior
-    if (mesAny < 3) {
-        mesAny += 12;
-        anyComplet--;
+        // Ajustar enero y febrero como meses 13 y 14 del año anterior
+        if (mesAny < 3) {
+            mesAny += 12;
+            anyComplet--;
+        }
+
+        int anyDelSegle = anyComplet % 100;   // k
+        int segle = anyComplet / 100;         // j
+
+        // Fórmula de Zeller
+        int resultat = (diaMes 
+                        + (13 * (mesAny + 1)) / 5 
+                        + anyDelSegle 
+                        + (anyDelSegle / 4) 
+                        + (segle / 4) 
+                        + (5 * segle)) % 7;
+
+        String[] dies = {
+            "Dissabte", "Diumenge", "Dilluns", 
+            "Dimarts", "Dimecres", "Dijous", "Divendres"
+        };
+
+        return dies[resultat];
     }
-
-    int anyDelSegle = anyComplet % 100;   // k
-    int segle = anyComplet / 100;         // j
-
-    // Fórmula de Zeller
-    int resultat = (diaMes 
-                    + (13 * (mesAny + 1)) / 5 
-                    + anyDelSegle 
-                    + (anyDelSegle / 4) 
-                    + (segle / 4) 
-                    + (5 * segle)) % 7;
-
-    String[] dies = {
-        "Dissabte", "Diumenge", "Dilluns", 
-        "Dimarts", "Dimecres", "Dijous", "Divendres"
-    };
-
-    return dies[resultat];
-}
 
     }
