@@ -297,9 +297,9 @@ public class Visualitzacio extends JFrame {
     public static void main(String[] args) throws IOException {
         // Codi auxiliar per a provar que es veuen activitats
         String[] miaus = new String[2];
-        ActivitatUnDia aud = new ActivitatUnDia("Yoga", miaus, new Data(11, 9, 2001), new Data(22, 7, 2004), new Data(22, 10, 2025), "Barcelona", 8, 1.99);
+        ActivitatUnDia aud = new ActivitatUnDia("Yoga", miaus, new Data(11, 9, 2001), new Data(22, 7, 2004), new Data(22, 10, 2025), "9:00-18:00", "Barcelona", 8, 1.99);
         ActivitatOnline ao = new ActivitatOnline("Classe Virtual", miaus, new Data(11, 9, 2001), new Data(5, 5, 2005), new Data(1, 1, 2026), 20, "https://meet.com/miaumiaumiau");
-        ActivitatPeriodica ap = new ActivitatPeriodica("Classes de Cuina", miaus, new Data(7, 11, 1917), new Data(30, 12, 1922), "Dilluns", new Data(2, 2, 2026), 3, "Sescelades", "Tarragona", 5, 4.98);
+        ActivitatPeriodica ap = new ActivitatPeriodica("Classes de Cuina", miaus, new Data(7, 11, 1917), new Data(30, 12, 1922), "Dilluns","18:00-20:00", new Data(2, 2, 2026), 3, "Sescelades", "Tarragona", 5, 4.98);
         llistaAct.afegir(aud);
         llistaAct.afegir(ao);
         llistaAct.afegir(ap);
