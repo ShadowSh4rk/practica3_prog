@@ -192,10 +192,8 @@ public class Visualitzacio extends JFrame {
      */
     public void actualitzarAny(boolean esIncrement) {
         // Incrementem lo decrementem l'any corresponentment
-        int any = dataActual.getAny();
-        if (esIncrement) any++;
-        else any--;
-        dataActual.setAny(any);
+        if (esIncrement) dataActual.modificarAny(1);
+        else dataActual.modificarAny(-1);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
         if (dataActual.getMes() == 0) etiquetaSuperior.setText("Any: "+dataActual.getAny());
@@ -213,26 +211,8 @@ public class Visualitzacio extends JFrame {
      */
     public void actualitzarMes(boolean esIncrement) {
         // Incrementem lo decrementem el mes corresponentment
-        int mes = dataActual.getMes();
-        if (esIncrement) {
-            mes++;  // Incrementem el mes
-            if (mes == 13) {    // Si ens hem passat de Desembre
-                int any = dataActual.getAny();
-                any++;      // Augmentem l'any
-                mes = 1;    // Posem mes a Gener
-                dataActual.setAny(any);
-            }
-        }
-        else {
-            mes--;  // Decrementem el mes
-            if (mes == 0) {     // Si ens hem passat de Gener
-                int any = dataActual.getAny();
-                any--;      // Reduim l'any
-                mes = 12;   // Posem mes a Desembre
-                dataActual.setAny(any);
-            }
-        }
-        dataActual.setMes(mes);
+        if (esIncrement) dataActual.modificarMes(1);
+        else dataActual.modificarMes(-1);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
         etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));

@@ -269,5 +269,32 @@ public class Data {
         return mes;
     }
 
+    /**
+     * Mètode per a modificar l'any d'una data amb un valor determinat (incrementar o decrementar)
+     * @param valor
+     */
+    public void modificarAny(int valor) {
+        this.any += valor;  // modifficar l'any
 
+        // Si tenim un mes assignat i no es data vàlida, hem passat d'un 29 de febrer d'un any de traspàs a un 29 de febrer invàlid en un any que no
+        // és de traspàs. Assignem la data al últim dia del més vàlid.
+        if ((this.dia > 0) && (this.mes > 0) && (!esDataValida(this.dia, this.mes, this.any))) this.dia = diesDelMes(this.mes, this.any);
+    }
+
+    /**
+     * Mètode per a modificar el mes d'una data amb un valor determinat (incrementar o decrementar)
+     * @param valor
+     */
+    public void modificarMes(int valor) {
+        this.mes += valor;
+
+        if (this.mes == 13) {
+            this.mes = 1;
+            modificarAny(1);
+        }
+        else if (this.mes == 0) {
+            this.mes = 12;
+            modificarAny(-1);
+        }
+    }
 }
