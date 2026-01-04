@@ -1,1 +1,1 @@
-UnDia;Yoga;null,null;11;9;2001;22;7;2004;8;22;10;2025;9:00-18:00;Barcelona;1.99;
+Online;Classe Virtual;null,null;11;9;2001;5;5;2005;50;1;1;2026;20;https://meet.com/miaumiaumiau;Periodica;Classes de Cuina;null,null;7;11;1917;30;12;1922;5;Dilluns;2;2;2026;3;Sescelades;Tarragona;4.98;UnDia;Yoga;null,null;11;9;2001;22;7;2004;8;22;10;2025;9:00-18:00;Barcelona;1.99;

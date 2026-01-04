@@ -28,6 +28,7 @@ public class Visualitzacio extends JFrame {
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
     private Data dataActual;                        // Data seleccionada a la finestra
+    private boolean mesClicat;
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
     private boolean ocultarUnDia;
@@ -48,6 +49,7 @@ public class Visualitzacio extends JFrame {
         this.setSize(1000, 400);          // Tamany de la finestra
         this.setLocation(getWidth()/2, getHeight()/2);  // Centrar la finestra al centre de la pantalla
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
+        this.mesClicat = false;
 
         this.dataActual = new Data(1, 1, Integer.parseInt(any));
 
@@ -222,7 +224,7 @@ public class Visualitzacio extends JFrame {
         else dataActual.modificarAny(-1);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
-        if (dataActual.getMes() == 0) etiquetaSuperior.setText("Any: "+dataActual.getAny());
+        if (!mesClicat) etiquetaSuperior.setText("Any: "+dataActual.getAny());
         else {
             etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
             visualitzarMes();
@@ -260,6 +262,7 @@ public class Visualitzacio extends JFrame {
     public void visualitzarMes() {
         panellPrincipal.remove(panellMes);  // Esborrem el panell mes anterior
         panellPrincipal.setVisible(false);
+        if (!mesClicat) mesClicat = true;
 
         // La primera vegada que cliquem a un mes, activem la visualització dels botons per a decrementar e incrementar els mesos
         botoEsquerraMes.setVisible(true);
