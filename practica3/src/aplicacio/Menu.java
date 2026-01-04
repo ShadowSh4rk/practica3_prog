@@ -450,16 +450,121 @@ public class Menu {
 
     public static void opcio13() {
         // 13. Afegir una nova activitat d'un dia
+       try{
+        System.out.println("Nom de l'activitat: ");
+        String nom=teclat.nextLine();
+
+        System.out.println("Col·lectius: (separats per comes)");
+        String [] col=teclat.nextLine().split(",");
+
+        System.out.println("Data inici de la inscripcio (dia mes any):");
+        Data iniciIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+        System.out.println("Data fi de la inscripcio (dia mes any):");
+        Data fiIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+    
+        System.out.println("Limit de places: ");
+        int limitPlaces=Integer.parseInt(teclat.nextLine());
+
+        System.out.println("Data de l'activitat (dia mes any)");
+        Data dataAct = new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+        
+        System.out.println("Horari (ex. 10:00-12:00): ");
+        String horari = teclat.nextLine();
+
+        System.out.println("Ciutat:");
+        String ciutat = teclat.nextLine();
+
+        System.out.println("Preu: ");
+        Double preu = Double.parseDouble(teclat.nextLine());
+
+        Activitats act = new ActivitatUnDia(nom, col, iniciIns, fiIns, dataAct, horari, ciutat, limitPlaces, preu);
+
+        llistaAct.afegir(act);
+        System.out.println("Activitat d'un dia s'ha afegit correctament!");
+       }catch(Exception e){
+        System.out.println("Error en afegir activitat d'un dia");
+       }
         
     }
 
     public static void opcio14() {
         // 14. Afegir una nova activitat periòdica
+        try{
+        System.out.println("Nom de l'activitat: ");
+        String nom=teclat.nextLine();
+
+        System.out.println("Col·lectius: (separats per comes)");
+        String [] col=teclat.nextLine().split(",");
+
+        System.out.println("Data inici de la inscripcio (dia mes any):");
+        Data iniciIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+        System.out.println("Data fi de la inscripcio (dia mes any):");
+        Data fiIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+    
+        System.out.println("Límit de places:");
+        int limitPlaces = Integer.parseInt(teclat.nextLine());
+
+        System.out.println("Dia de la setmana:");
+        String diaSetmana = teclat.nextLine();
+
+        System.out.println("Horari (ex. 10:00-12:00): ");
+        String horari = teclat.nextLine();
+
+        System.out.println("Data inici activitat (dia mes any):");
+        Data dataIni = new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+
+        System.out.println("Numero de setmanes: ");
+        int numSetmanes=Integer.parseInt(teclat.nextLine());
+
+        System.out.println("Centre: ");
+        String centre = teclat.nextLine();
         
+        System.out.println("Ciutat:");
+        String ciutat = teclat.nextLine();
+
+        System.out.println("Preu total: ");
+        Double preuTotal = Double.parseDouble(teclat.nextLine());
+
+        Activitats act = new ActivitatPeriodica(nom, col, iniciIns, fiIns, diaSetmana, horari, dataIni, numSetmanes, centre, ciutat, limitPlaces, preuTotal);
+
+        llistaAct.afegir(act);
+        System.out.println("Activitat periodica s'ha afegit correctament!");
+       }catch(Exception e){
+        System.out.println("Error en afegir activitat periodica");
+       }
     }
 
     public static void opcio15() {
         // 15. Afegir una nova activitat en línia
+         try{
+        System.out.println("Nom de l'activitat: ");
+        String nom=teclat.nextLine();
+
+        System.out.println("Col·lectius: (separats per comes)");
+        String [] col=teclat.nextLine().split(",");
+
+        System.out.println("Data inici de la inscripcio (dia mes any):");
+        Data iniciIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+        System.out.println("Data fi de la inscripcio (dia mes any):");
+        Data fiIns=new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+    
+        
+        System.out.println("Data inici activitat (dia mes any):");
+        Data dataIni = new Data(Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()), Integer.parseInt(teclat.nextLine()));
+
+        System.out.println("Període de visualització (dies):");
+        int periode = Integer.parseInt(teclat.nextLine());
+
+        System.out.println("Enllaç:");
+        String enllac = teclat.nextLine();
+        
+        Activitats act = new ActivitatOnline(nom, col, iniciIns, fiIns,dataIni, periode, enllac);
+
+        llistaAct.afegir(act);
+        System.out.println("Activitat online s'ha afegit correctament!");
+       }catch(Exception e){
+        System.out.println("Error en afegir activitat online");
+       }
         
     }
 
