@@ -5,6 +5,7 @@ package aplicacio;
 // IMPORTS JAVA
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 
 // IMPORTS PAQUETS LOCALS
@@ -86,6 +87,12 @@ public class Visualitzacio extends JFrame {
 
         botoData = new JButton("Data");         // Botó per a fixar una nova data a visualitzar
         botoPlaceholder = new JButton("aux");   // Botó temporal
+
+        botoData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                preguntarDades();
+            }
+        });
 
         panellCapçalera = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
@@ -297,6 +304,16 @@ public class Visualitzacio extends JFrame {
         }
 
         panellPrincipal.add(panellMes); // Afegim el nou panellMes al panell principal
+    }
+
+    public void preguntarDades() {
+        EntrarDades d = new EntrarDades(this);
+        if (d.dadesEntrades()) {
+            System.out.println("Nom: " + d.getNom());
+            System.out.println("Cognom: " + d.getCognom());
+            System.out.println("Edat: " + d.getEdat());
+            System.out.println("Sexe: " + d.getSexe());
+        }
     }
 
 
