@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 
 
 /**
- * Clase que implementa la interacció dels botons per a seleccionar un mes d'un any determinat.
+ * Clase que implementa la interacció del botó que indica un mes i any determinats a visualitzar.
  */
 public class AccioBotoData implements ActionListener {
     private Visualitzacio finestra;     // finestra de visualització
 
     /**
-     * Constructor del botó per a seleccionar un mes
+     * Constructor del botó per a seleccionar un mes i un any
      * @param finestra finestra de visualització
      */
     public AccioBotoData(Visualitzacio finestra) {
@@ -20,7 +20,7 @@ public class AccioBotoData implements ActionListener {
     }
 
     /**
-     * En clicar el botó, actualitzem la etiqueta de la capçalera superior i activem la visualització dels dies del mes seleccionat.
+     * En clicar el botó, obrim un diàleg per a preguntar les dades que vol consultar l'usuari.
      */
     public void actionPerformed(ActionEvent evt) {
         finestra.preguntarDades();
