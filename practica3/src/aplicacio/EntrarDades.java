@@ -10,10 +10,8 @@ import javax.swing.*;
  * Clase que implementa la interacció dels botons de la capçalera superior per a incrementar o decrementar un any utilitzant.
  */
 public class EntrarDades extends JDialog {
-  private static final long serialVersionUID = 1L;
-  private JLabel nom, cognom, edat, sexe;
-  private JTextField nomF, cognomF, edatF;
-  private JComboBox sexeC;
+  private JLabel mes;
+  private JComboBox mesC;
 
   private boolean ok;
 
@@ -24,26 +22,14 @@ public class EntrarDades extends JDialog {
     ok = false;
 
     // Creem els components que es veuran
-    nom = new JLabel("Nom:");
-    cognom = new JLabel("Cognom:");
-    edat = new JLabel("Edat:");
-    sexe = new JLabel("Sexe:");
-    nomF = new JTextField(10);
-    cognomF = new JTextField(10);
-    edatF = new JTextField(10);
-    String[] opcions = {"Home","Dona"};
-    sexeC = new JComboBox(opcions);
+    mes = new JLabel("Mes:");
+    String[] opcions = {"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Septembre", "Octubre", "Novembre", "Desembre"};
+    mesC = new JComboBox(opcions);
 
     // Creem el contenidor per als controls
     JPanel controls = new JPanel(new GridLayout(4,2));
-    controls.add(nom);
-    controls.add(nomF);
-    controls.add(cognom);
-    controls.add(cognomF);
-    controls.add(edat);
-    controls.add(edatF);
-    controls.add(sexe);
-    controls.add(sexeC);
+    controls.add(mes);
+    controls.add(mesC);
 
     // Creem els botons Acceptar/Cancelar
     JButton acceptar = new JButton("Acceptar");
@@ -74,6 +60,7 @@ public class EntrarDades extends JDialog {
     pack();
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     setModal(true);
+    setLocationRelativeTo(null);
     setVisible(true);
   }
 
@@ -81,20 +68,8 @@ public class EntrarDades extends JDialog {
     return ok;
   }
 
-  public String getNom() {
-    return nomF.getText();
-  }
-
-  public String getCognom() {
-    return cognomF.getText();
-  }
-
-  public String getSexe() {
-    Object sel = sexeC.getSelectedItem();
+  public String getMes() {
+    Object sel = mesC.getSelectedItem();
     return sel.toString();
-  }
-
-  public int getEdat() {
-    return Integer.parseInt(edatF.getText());
   }
 }
