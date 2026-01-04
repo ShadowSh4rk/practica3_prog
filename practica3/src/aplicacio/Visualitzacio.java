@@ -18,9 +18,12 @@ public class Visualitzacio extends JFrame {
     private JPanel panellPrincipal;                 // Panell per a gestionar la distribució de la pantalla
     private JPanel panellAny;                       // Panell que conté el contingut dels mesos de l'any
     private JPanel panellMes;                       // Panell que conté el contingut dels dies del mes
-    private JPanel panellSuperior;                  // Panell que conté el contingut de la capçalera superior
+    private JPanel panellSuperior;                  // Panell que conté el contingut superior
+    private JPanel panellCapçalera;                 // Panell que conté els botons per a canviar la data en 1 unitat i la etiqueta
     private JButton botoEsquerraAny, botoDretaAny;  // Botons que permeten passar al any anterior o seguent
     private JButton botoEsquerraMes, botoDretaMes;  // Botons que permeten passar al mes anterior o seguent
+    private JButton botoData;                       // Botó que permet obrir una finestra en la que fixar una nova data a visualitzar
+    private JButton botoPlaceholder;                // Botó temporal?
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
@@ -66,17 +69,25 @@ public class Visualitzacio extends JFrame {
 
     // MÉTODES AUXILIARS PER A GESTIONAR LA FINESTRA
     /**
-     * Mètode per a crear la capçalera superior de la finestra, composada de 3 elements:
+     * Mètode per a crear la capçalera superior de la finestra, composada de 7 elements:
+     * - Botó que ens permet fixar una nova data a visualitzar
      * - Botó a l'esquerra que ens permet decrementar l'any seleccionat
+     * - Botó a l'esquerra que ens permet decrementar el mes seleccionat
      * - Etiqueta amb el any, mes i/o dia seleccionat
+     * - Botó a la dreta que ens permet incrementar el mes seleccionat
      * - Botó a la dreta que ens permet incrementar l'any seleccionat
+     * - Botó temporal
      * 
      * To Do: Que fem amb això quan tenim seleccionat un mes o un dia?
      */
     private void crearPanellSuperior() {
         // Crear panell superior que conté botons per modificar l'any i l'etiqueta de l'any
-        panellSuperior = new JPanel();
-        panellSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panellSuperior = new JPanel(new BorderLayout());
+
+        botoData = new JButton("Data");         // Botó per a fixar una nova data a visualitzar
+        botoPlaceholder = new JButton("aux");   // Botó temporal
+
+        panellCapçalera = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         // Etiqueta de l'any i/o mes seleccionat
         etiquetaSuperior = new JLabel("Any: "+dataActual.getAny());
@@ -104,13 +115,18 @@ public class Visualitzacio extends JFrame {
         botoDretaMes.addActionListener(new AccioBotonsIncDecMes(this, true));
 
         // Afegim els botons de l'esquerra, l'etiqueta i el botons de la dreta, els botons dels mesos no tenen visibilitat fins que es clica un mes
-        panellSuperior.add(botoEsquerraAny);
-        panellSuperior.add(botoEsquerraMes);
+        panellCapçalera.add(botoEsquerraAny);
+        panellCapçalera.add(botoEsquerraMes);
         botoEsquerraMes.setVisible(false);  
-        panellSuperior.add(etiquetaSuperior);
-        panellSuperior.add(botoDretaMes);
-        panellSuperior.add(botoDretaAny);
+        panellCapçalera.add(etiquetaSuperior);
+        panellCapçalera.add(botoDretaMes);
+        panellCapçalera.add(botoDretaAny);
         botoDretaMes.setVisible(false);
+
+        // Afegim els 3 elements al panell superior
+        panellSuperior.add(botoData, BorderLayout.WEST);
+        panellSuperior.add(panellCapçalera, BorderLayout.CENTER);
+        panellSuperior.add(botoPlaceholder, BorderLayout.EAST);
     }
 
     /**

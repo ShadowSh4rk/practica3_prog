@@ -286,12 +286,14 @@ public class Data {
      * @param valor
      */
     public void modificarMes(int valor) {
-        this.mes += valor;
+        this.mes += valor;  // modificar el mes
 
+        // Controlem si ens hem passat de desembre
         if (this.mes == 13) {
             this.mes = 1;
             modificarAny(1);
         }
+        // Controlem si ens hem passat de gener
         else if (this.mes == 0) {
             this.mes = 12;
             modificarAny(-1);
