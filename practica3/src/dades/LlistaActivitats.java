@@ -140,4 +140,38 @@ public class LlistaActivitats {
 
         escriptura.close();
     }
+
+    public boolean hiHaActivitat(Data data) {
+
+        boolean trobat = false;
+
+        int i = 0;
+        while ((i < numActivitats) && (!trobat)) {
+            Activitats activitat = llista[i];
+            String tipus = activitat.getTipus();
+
+            switch (tipus) {
+                case "UnDia":
+                    if (activitat.teClasseAvui(data)) trobat = true;
+                    break;
+                case "Periodica":
+                    if (activitat instanceof ActivitatPeriodica) {
+                        ActivitatPeriodica ap = (ActivitatPeriodica) activitat;
+                        if ((data.getDiaSetmana().equalsIgnoreCase(ap.getDiaSetmana()) && (!data.esAnterior(ap.getDataInici())) 
+                            && (!data.esPosterior(ap.getDataInici().afegirDies(7*ap.getNumSetmanes()))))) trobat = true;
+                    }
+                    break;
+                case "Online":
+                    if (activitat instanceof ActivitatOnline) {
+                        ActivitatOnline ao = (ActivitatOnline) activitat;
+                        if (!data.esAnterior(ao.getDataInici()) 
+                            && (!data.esPosterior(ao.getDataInici().afegirDies(ao.getPeriodeVisualitzacio())))) trobat = true;
+                    }
+                    break;
+            }
+            i++;
+        }
+        
+        return trobat;
+    }
 }

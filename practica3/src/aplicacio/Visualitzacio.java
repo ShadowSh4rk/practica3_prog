@@ -3,7 +3,10 @@ package aplicacio;
 
 import javax.swing.*;
 import java.awt.*;
-import dades.Data;
+import java.io.IOException;
+
+import dades.*;
+import aplicacio.Menu;
 
 
 /**
@@ -20,6 +23,8 @@ public class Visualitzacio extends JFrame {
     private JLabel etiquetaSuperior;            // Text que indica l'any, mes i/o dia en el que ens trobem
     private int anyActual;  // Any seleccionat a la finestra
     private int mesActual;  // Mes seleccionat a la finestra (1: Gener i 12: Desembre)
+
+    private static LlistaActivitats llistaAct = new LlistaActivitats(10);
 
 
     /**
@@ -148,8 +153,6 @@ public class Visualitzacio extends JFrame {
 
     /**
      * Mètode que actualitzarà la visualització del panell de Mes per a visualitzar els dies del mes seleccionat
-     * 
-     * To-do: TOT
      */
     public void visualitzarMes() {
         panellPrincipal.remove(panellMes);  // Eliminem el panell Mes anterior
@@ -194,6 +197,11 @@ public class Visualitzacio extends JFrame {
                 else if (dia <= diesMes) {
                     botonsMes[i][j] = new JButton(Integer.toString(dia));
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24));
+                    Data dataDia = new Data(dia, mesActual, anyActual);
+                    if (llistaAct.hiHaActivitat(dataDia)) {
+                        botonsMes[i][j].setBackground(Color.CYAN);
+		                botonsMes[i][j].setOpaque(true);
+                    }
                     dia++;
                 }
                 panellMes.add(botonsMes[i][j]);
@@ -212,8 +220,18 @@ public class Visualitzacio extends JFrame {
      * - Després es selecciona el mes que es vol visualitzar.
      * - Sobre la vista tipus calendari es mostrarà els dies que hi ha activitats.
      * - Al seleccionar un dia, es mostrarà el detall de les activitats del dia.
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        String[] miaus = new String[2];
+        ActivitatUnDia aud = new ActivitatUnDia("Yoga", miaus, new Data(11, 9, 2001), new Data(22, 7, 2004), new Data(22, 10, 2025), "Barcelona", 8, 1.99);
+        ActivitatOnline ao = new ActivitatOnline("Classe Virtual", miaus, new Data(11, 9, 2001), new Data(5, 5, 2005), new Data(1, 1, 2026), 20, "https://meet.com/miaumiaumiau");
+        ActivitatPeriodica ap = new ActivitatPeriodica("Classes de Cuina", miaus, new Data(7, 11, 1917), new Data(30, 12, 1922), "Dilluns", new Data(2, 2, 2026), 3, "Sescelades", "Tarragona", 5, 4.98);
+        llistaAct.afegir(aud);
+        llistaAct.afegir(ao);
+        llistaAct.afegir(ap);
+        System.out.println("DEBUG: Activitats carregades a la llista: " + llistaAct.getNumActivitats());
+
         // Per a començar el codi, primer esperem a que l'usuari indiqui un any valid per a visualitzar.
         String any = JOptionPane.showInputDialog("Indica l'any a visualitzar");
         while ((any == null) || (any.equals(""))) {

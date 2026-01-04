@@ -10,7 +10,7 @@ protected Data dataFiInscripcio;
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
 //========
-    protected Inscripcio[] llistaInscri;
+    public Inscripcio[] llistaInscri;
     protected Inscripcio[] llistaEspera;
     protected int nIns; //nombre d'inscripcio (index llista inscripcio)
     protected int nEsp; //nombre d'espera (index llista espera)
@@ -21,7 +21,7 @@ private String tipus; // UnDia, Periodica, Online
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
         this.dataFiInscripcio = dataFiInscripcio;
-        this.limitPlaces = Integer.MAX_VALUE;
+        this.limitPlaces = 50;  //LOL
         this.tipus = tipus;
 
         //inicialitzem llistes (inscripcions i espera)
@@ -275,7 +275,6 @@ private String tipus; // UnDia, Periodica, Online
         }
         return trobat;
     }
-
 
     }
     

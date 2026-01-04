@@ -495,7 +495,7 @@ public class Menu {
         
     }
 
-    private static int llegeixLiniesFitxer(String nomFitxer) throws IOException{
+    public static int llegeixLiniesFitxer(String nomFitxer) throws IOException{
         BufferedReader lectura;
         int numLinies = 0;
         try{
@@ -514,7 +514,7 @@ public class Menu {
         return numLinies;
     }
 
-    private static void afegeixActivitatsDesdeFitxer(int numActivitats, LlistaActivitats llista) throws IOException{
+    public static void afegeixActivitatsDesdeFitxer(int numActivitats, LlistaActivitats llista) throws IOException{
         BufferedReader lectura;
 
         try{ //control de si podem obrir o no el fitxer

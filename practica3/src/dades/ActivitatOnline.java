@@ -25,6 +25,22 @@ public class ActivitatOnline extends Activitats {
     }
 
     /**
+     * Retorna la data d'inici de l'activitat.
+     * @return Data d'inici de l'activitat
+     */
+    public Data getDataInici() {
+        return dataInici;
+    }
+
+    /**
+     * Retorna el periode de visualització de l'activitat (nombre de dies).
+     * @return Nombre de dies de visualització de l'activitat després de la seva data d'inici
+     */
+    public int getPeriodeVisualitzacio() {
+        return periodeVisualitzacio;
+    }
+
+    /**
      * Les activitats online no tenen classe presencial, sempre retorna false.
      * @param avui Data a comprovar
      * @return false
