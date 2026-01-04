@@ -12,16 +12,18 @@ import dades.*;
  * Classe amb la implementació gràfica del Programa de Benestar URV
  */
 public class Visualitzacio extends JFrame {
-    private JPanel panellPrincipal;             // Panell per a gestionar la distribució de la pantalla
-    private JPanel panellAny;                   // Panell que conté el contingut dels mesos de l'any
-    private JPanel panellMes;                   // Panell que conté el contingut dels dies del mes
-    private JPanel panellSuperior;              // Panell que conté el contingut de la capçalera superior
-    private JButton botoEsquerra, botoDreta;    // Botons que permeten passar al any anterior o seguent
-    private JButton[][] botonsAny;              // Botons que permeten clicar els mesos
-    private JButton[][] botonsMes;              // Botons que permeten clicar els dies
-    private JLabel etiquetaSuperior;            // Text que indica l'any, mes i/o dia en el que ens trobem
+    private JPanel panellPrincipal;                 // Panell per a gestionar la distribució de la pantalla
+    private JPanel panellAny;                       // Panell que conté el contingut dels mesos de l'any
+    private JPanel panellMes;                       // Panell que conté el contingut dels dies del mes
+    private JPanel panellSuperior;                  // Panell que conté el contingut de la capçalera superior
+    private JButton botoEsquerraAny, botoDretaAny;  // Botons que permeten passar al any anterior o seguent
+    private JButton botoEsquerraMes, botoDretaMes;  // Botons que permeten passar al mes anterior o seguent
+    private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
+    private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
+    private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
     private int anyActual;  // Any seleccionat a la finestra
     private int mesActual;  // Mes seleccionat a la finestra (1: Gener i 12: Desembre)
+    private int diaActual;  // Dia seleccionat a la finestra
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
 
@@ -75,25 +77,39 @@ public class Visualitzacio extends JFrame {
         panellSuperior = new JPanel();
         panellSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        // Etiqueta de l'any, mes i/o dia seleccionat
+        // Etiqueta de l'any i/o mes seleccionat
         etiquetaSuperior = new JLabel("Any: "+anyActual);
         etiquetaSuperior.setFont(new Font("Calibri", Font.BOLD, 24));
         etiquetaSuperior.setForeground(Color.BLACK);
 
         // Botó de l'esquerra per a decrementar l'any
-        botoEsquerra = new JButton("-Any");
-        botoEsquerra.setFont(new Font("Calibri", Font.BOLD, 20));
-        botoEsquerra.addActionListener(new AccioBotonsAny(this, false));
+        botoEsquerraAny = new JButton("-Any");
+        botoEsquerraAny.setFont(new Font("Calibri", Font.BOLD, 20));
+        botoEsquerraAny.addActionListener(new AccioBotonsIncDecAny(this, false));
 
         // Botó de la dreta per a incrementar l'any 
-        botoDreta = new JButton("Any+");
-        botoDreta.setFont(new Font("Calibri", Font.BOLD, 20));
-        botoDreta.addActionListener(new AccioBotonsAny(this, true));
+        botoDretaAny = new JButton("Any+");
+        botoDretaAny.setFont(new Font("Calibri", Font.BOLD, 20));
+        botoDretaAny.addActionListener(new AccioBotonsIncDecAny(this, true));
+
+        // Botó de l'esquerra per a decrementar el mes
+        botoEsquerraMes = new JButton("-Mes");
+        botoEsquerraMes.setFont(new Font("Calibri", Font.BOLD, 20));
+        botoEsquerraMes.addActionListener(new AccioBotonsIncDecMes(this, false));
+
+        // Botó de la dreta per a incrementar l'any 
+        botoDretaMes = new JButton("Mes+");
+        botoDretaMes.setFont(new Font("Calibri", Font.BOLD, 20));
+        botoDretaMes.addActionListener(new AccioBotonsIncDecMes(this, true));
 
         // Afegim el botó de l'esquerra, l'etiqueta i el botó de la dreta
-        panellSuperior.add(botoEsquerra);
+        panellSuperior.add(botoEsquerraAny);
+        panellSuperior.add(botoEsquerraMes);
+        botoEsquerraMes.setVisible(false);
         panellSuperior.add(etiquetaSuperior);
-        panellSuperior.add(botoDreta);
+        panellSuperior.add(botoDretaMes);
+        panellSuperior.add(botoDretaAny);
+        botoDretaMes.setVisible(false);
     }
 
     /**
@@ -187,6 +203,34 @@ public class Visualitzacio extends JFrame {
     }
 
     /**
+     * Mètode per a:
+     * - Incrementar el mes si hem apretat el botó dret de la capçalera superior.
+     * - Decrementar el mes si hem apretat el botó esquerra de la capçalera superior.
+     * @param esIncrement boolean que indica si es botó dret o no
+     */
+    public void actualitzarMes(boolean esIncrement) {
+        // Incrementem lo decrementem l'any corresponentment
+        if (esIncrement) {
+            mesActual++;
+            if (mesActual == 13) {
+                anyActual++;
+                mesActual = 1;
+            }
+        }
+        else {
+            mesActual--;
+            if (mesActual == 0) {
+                anyActual--;
+                mesActual = 12;
+            }
+        }
+
+        // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
+        etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mesActual));
+        visualitzarMes();
+    }
+
+    /**
      * Mètode per a afegir el mes seleccionat a l'etiqueta de la capçalera superior, també actualitza la variable mesActual.
      * @param mes index del mes seleccionat
      */
@@ -200,6 +244,10 @@ public class Visualitzacio extends JFrame {
      */
     public void visualitzarMes() {
         panellPrincipal.remove(panellMes);  // Esborrem el panell mes anterior
+
+        // La primera vegada que cliquem a un mes, activem la visualització dels botons per a decrementar e incrementar els mesos
+        botoEsquerraMes.setVisible(true);
+        botoDretaMes.setVisible(true);
 
         int diesMes = Data.diesDelMes(mesActual, anyActual);    // Càlcul del nombre de dies total que té el mes seleccionat
         int offsetIni = calculOffsetMes(mesActual, anyActual);  // Càlcul del nombre de dies de la setmana que hi ha abans del primer dia del mes
