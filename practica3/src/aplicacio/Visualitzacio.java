@@ -6,7 +6,6 @@ import java.awt.*;
 import java.io.IOException;
 
 import dades.*;
-import aplicacio.Menu;
 
 
 /**
@@ -41,7 +40,7 @@ public class Visualitzacio extends JFrame {
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
 
         this.anyActual = Integer.parseInt(any);         // Convertim l'any a un enter
-        this.mesActual = 1;
+        this.mesActual = 0;
 
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
@@ -82,13 +81,13 @@ public class Visualitzacio extends JFrame {
         etiquetaSuperior.setForeground(Color.BLACK);
 
         // Botó de l'esquerra per a decrementar l'any
-        botoEsquerra = new JButton("←");
-        botoEsquerra.setFont(new Font("Calibri", Font.BOLD, 24));
+        botoEsquerra = new JButton("-Any");
+        botoEsquerra.setFont(new Font("Calibri", Font.BOLD, 20));
         botoEsquerra.addActionListener(new AccioBotonsAny(this, false));
 
         // Botó de la dreta per a incrementar l'any 
-        botoDreta = new JButton("→");
-        botoDreta.setFont(new Font("Calibri", Font.BOLD, 24));
+        botoDreta = new JButton("Any+");
+        botoDreta.setFont(new Font("Calibri", Font.BOLD, 20));
         botoDreta.addActionListener(new AccioBotonsAny(this, true));
 
         // Afegim el botó de l'esquerra, l'etiqueta i el botó de la dreta
@@ -113,6 +112,7 @@ public class Visualitzacio extends JFrame {
             for (int j = 0; j < 3; j++) {   // Columnes
                 botonsAny[i][j] = new JButton(Data.nomMes(3*i + j + 1));                // Creem botó amb el nom del mes corresponent
                 botonsAny[i][j].addActionListener(new AccioBotonsMes(this, index));     // Afegim la interactivitat del botó
+                botonsAny[i][j].setFont(new Font("Calibri", Font.BOLD, 20)); // Format pel text del botó
                 panellAny.add(botonsAny[i][j]);                                         // Afegim el botó al panell
                 index++;    // Incrementem l'index de mes
             }
@@ -128,6 +128,43 @@ public class Visualitzacio extends JFrame {
         panellMes.add(new JLabel("Selecciona un mes", JLabel.CENTER));
     }
 
+    /**
+     * Mètode que retorna el nombre de dies de la setmana que hi ha abans del primer dia d'un mes. Per exemple
+     * - Si el primer dia d'un mes és un dijous, retornarà 3
+     * @return nombre de dies de la setmana que hi ha abans del primer dia d'un mes
+     */
+    private int calculOffsetMes(int mesActual, int anyActual) {
+        Data data = new Data(1, mesActual, anyActual);  // Declarem una variable data per al primer dia del mes
+        String diaInicial = data.getDiaSetmana();   // Obtenim un String amb el nom del primer dia del mes
+
+        // Segons el primer dia del mes, modifiquem el valor de offsetInicial
+        int offsetInicial = 0;
+        switch (diaInicial) {
+            case "Dimarts": 
+                offsetInicial = 1;  // Abans: Dilluns (1 dia)
+                break;
+            case "Dimecres": 
+                offsetInicial = 2;  // Abans: Dilluns + Dimarts (2 dies)
+                break;
+            case "Dijous": 
+                offsetInicial = 3;  // Abans: Dilluns + ... + Dimecres (3 dies)
+                break;
+            case "Divendres": 
+                offsetInicial = 4;  // Abans: Dilluns + ... + Dijous (4 dies)
+                break;
+            case "Dissabte": 
+                offsetInicial = 5;  // Abans: Dilluns + ... + Divendres (5 dies)
+                break;
+            case "Diumenge": 
+                offsetInicial = 6;  // Abans: Dilluns + ... + Dissanbte (6 dies)
+                break;
+            default: break;
+        }
+
+        // Retornem el nombre de dies de la setmana que hi ha abans del dia inicial
+        return offsetInicial;
+    }
+
 
     // MÉTODES CREATS PER GESTIONAR FINESTRA DES DE BOTONS
     /**
@@ -137,9 +174,16 @@ public class Visualitzacio extends JFrame {
      * @param esIncrement boolean que indica si es botó dret o no
      */
     public void actualitzarAny(boolean esIncrement) {
+        // Incrementem lo decrementem l'any corresponentment
         if (esIncrement) anyActual++;
         else anyActual--;
-        etiquetaSuperior.setText("Any: "+anyActual);    // Actualitzem text de la capçalera
+
+        // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
+        if (mesActual == 0) etiquetaSuperior.setText("Any: "+anyActual);
+        else {
+            etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mesActual));
+            visualitzarMes();
+        }
     }
 
     /**
@@ -155,60 +199,51 @@ public class Visualitzacio extends JFrame {
      * Mètode que actualitzarà la visualització del panell de Mes per a visualitzar els dies del mes seleccionat
      */
     public void visualitzarMes() {
-        panellPrincipal.remove(panellMes);  // Eliminem el panell Mes anterior
+        panellPrincipal.remove(panellMes);  // Esborrem el panell mes anterior
 
         int diesMes = Data.diesDelMes(mesActual, anyActual);    // Càlcul del nombre de dies total que té el mes seleccionat
-        Data data_ini = new Data(1, mesActual, anyActual);  // Variable Data amb el valor del primer dia del mes
-        String dia_ini = data_ini.getDiaSetmana();              // Mitjançant la funció obtenim el nom del dia de la setmana en que comença el mes  
-
-        int offset_ini = 0;
-        switch (dia_ini) {
-            case "Dimarts": offset_ini = 1;
-                break;
-            case "Dimecres": offset_ini = 2;
-                break;
-            case "Dijous": offset_ini = 3;
-                break;
-            case "Divendres": offset_ini = 4;
-                break;
-            case "Dissabte": offset_ini = 5;
-                break;
-            case "Diumenge": offset_ini = 6;
-                break;
-            default: break;
-
-        }
+        int offsetIni = calculOffsetMes(mesActual, anyActual);  // Càlcul del nombre de dies de la setmana que hi ha abans del primer dia del mes
 
         int n_columnes = 7; // Nombre de columnes
         int n_files = 6;    // Nombre de files
 
+        // Creem el panell corresponent al Mes, amb 6 files de 7 botons cadascuna
         panellMes = new JPanel(new GridLayout(n_files, n_columnes, 10, 10));
-
         botonsMes = new JButton[n_files][n_columnes];
 
-        int dia = 1;
-        int offset_botons = 0;
+        int diaActual = 1;        // Valor del dia
+        int offset = 0;     // Nombre d'offset realitzat
+
+        // Bucle per les files (setmanes)
         for (int i = 0; i < n_files; i++) {
+            // Bucle per els dies
             for (int j = 0; j < n_columnes; j++) {
-                if ((offset_botons < offset_ini) || (dia > diesMes)) {
+                // Primer afegim botons amb text buit si encara no hem arribat al primer dia del mes o si ja hem escrit l'últim dia del mes
+                if ((offset < offsetIni) || (diaActual > diesMes)) {
                     botonsMes[i][j] = new JButton(" ");
-                    offset_botons++;
+                    offset++;
                 }
-                else if (dia <= diesMes) {
-                    botonsMes[i][j] = new JButton(Integer.toString(dia));
-                    botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24));
-                    Data dataDia = new Data(dia, mesActual, anyActual);
-                    if (llistaAct.hiHaActivitat(dataDia)) {
+
+                // Escrivim els botons corresponents als dies del mes
+                else if (diaActual <= diesMes) {
+                    botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
+                    botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
+                    
+                    // Si la data en la que estem conté cap activitat, marquem el botó amb un color
+                    if (llistaAct.hiHaActivitat(new Data(diaActual, mesActual, anyActual))) {
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
-                    dia++;
+
+                    diaActual++;    // Incrementem el dia actual
                 }
+
+                // Afegim el botó buit o amb el dia corresponent
                 panellMes.add(botonsMes[i][j]);
             }
         }
 
-        panellPrincipal.add(panellMes);
+        panellPrincipal.add(panellMes); // Afegim el nou panellMes al panell principal
     }
 
 
