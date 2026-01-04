@@ -263,16 +263,35 @@ public class LlistaActivitats {
      * Mètode per obtenir una llista d'activitats actives o amb classe una data determinada
      * @param data
      * @return
+     * @throws IOException 
      */
-    public LlistaActivitats llistaActivitatsData(Data data) {
+    public LlistaActivitats llistaActivitatsData(Data data, boolean ocultarUnDia, boolean ocultarPeriodic, boolean ocultarOnline) throws IOException {
         LlistaActivitats llistaData = new LlistaActivitats(numActivitats);
 
         for (int i = 0; i < numActivitats; i++) {
-            if ((llista[i].teClasseAvui(data)) || llista[i].esActivaAvui(data)) {
-                try {
-                    llistaData.afegir(llista[i]);
-                } catch (IOException e) {
-                    System.out.println("Error: "+e);
+            Activitats activitat = llista[i];
+            String tipus = activitat.getTipus();
+
+            // Si trobem cap activitat d'un dia en la data i no tenim activat ocultarUnDia retornem true
+            if ((tipus.equalsIgnoreCase("UnDia")) && (!ocultarUnDia)) {
+                if (activitat.teClasseAvui(data)) llistaData.afegir(activitat);
+            }
+
+            // Si trobem cap activitat periòdica i no tenim activat ocularPeriodica retornem true
+            else if ((tipus.equalsIgnoreCase("Periodica")) && (!ocultarPeriodic)) {
+                if (activitat instanceof ActivitatPeriodica) {
+                    ActivitatPeriodica ap = (ActivitatPeriodica) activitat;
+                    if ((data.getDiaSetmana().equalsIgnoreCase(ap.getDiaSetmana()) && (!data.esAnterior(ap.getDataInici())) 
+                        && (!data.esPosterior(ap.getDataInici().afegirDies(7*ap.getNumSetmanes()))))) llistaData.afegir(activitat);
+                }
+            }
+
+            // Si trobem cap activitat online i no tenim activat ocularOnline retornem true
+            else if ((tipus.equalsIgnoreCase("Online")) && (!ocultarOnline)) {
+                if (activitat instanceof ActivitatOnline) {
+                    ActivitatOnline ao = (ActivitatOnline) activitat;
+                    if (!data.esAnterior(ao.getDataInici()) 
+                        && (!data.esPosterior(ao.getDataInici().afegirDies(ao.getPeriodeVisualitzacio())))) llistaData.afegir(activitat);
                 }
             }
         }
