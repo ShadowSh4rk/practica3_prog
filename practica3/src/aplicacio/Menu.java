@@ -673,21 +673,22 @@ public class Menu {
                     if (tipus.equalsIgnoreCase("undia")){
                         Data data = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
 
-                        String ciutat = trossos[13];
-                        double preu = Double.parseDouble(trossos[14]);
+                        String horari = trossos[13];
+                        String ciutat = trossos[14];
+                        double preu = Double.parseDouble(trossos[15]);
 
-                        activitat = new ActivitatUnDia(nom, col, iniciInscri, fiInscri, data, ciutat, limPlaces, preu);
+                        activitat = new ActivitatUnDia(nom, col, iniciInscri, fiInscri, data, horari, ciutat, limPlaces, preu);
                         
                     }else if(tipus.equalsIgnoreCase("periodica")){
                         String diaSetmana = trossos[10];
-                        //horari
-                        Data dataIni = new Data(Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]), Integer.parseInt(trossos[13]));
-                        int numSetmanes = Integer.parseInt(trossos[14]);
-                        String centre = trossos[15];
-                        String ciutat = trossos [16];
-                        double preuTotal = Double.parseDouble(trossos[17]);
+                        String horari = trossos[11];
+                        Data dataIni = new Data(Integer.parseInt(trossos[12]), Integer.parseInt(trossos[13]), Integer.parseInt(trossos[14]));
+                        int numSetmanes = Integer.parseInt(trossos[15]);
+                        String centre = trossos[16];
+                        String ciutat = trossos [17];
+                        double preuTotal = Double.parseDouble(trossos[18]);
 
-                        activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, dataIni, numSetmanes, centre, ciutat, limPlaces, preuTotal);
+                        activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, horari, dataIni, numSetmanes, centre, ciutat, limPlaces, preuTotal);
 
                     }else{ //activitatOnline
                         Data dataIni = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
