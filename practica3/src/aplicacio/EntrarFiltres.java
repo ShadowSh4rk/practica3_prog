@@ -29,19 +29,19 @@ public class EntrarFiltres extends JDialog {
         activitatOnlineC = new JComboBox(opcions);
 
         // Creem el contenidor per als controls
-		controls = new JPanel(new GridLayout(3,3));
+		controls = new JPanel(new GridLayout(3,2));
 		controls.add(activitatUnDia);
 		controls.add(activitatUnDiaC);
 		controls.add(activitatPeriodica);
-		controls.add(activitatUnDiaC);
+		controls.add(activitatPeriodicaC);
         controls.add(activitatOnline);
         controls.add(activitatOnlineC);
 
 		// Creem i afegim la interactivitat dels botons Acceptar/Cancelar
 		acceptar = new JButton("Acceptar");
 		cancelar = new JButton("Cancelar");
-		acceptar.addActionListener(new AccioBotoAcceptarCancelarFiltre(this));
-		cancelar.addActionListener(new AccioBotoAcceptarCancelarFiltre(this));
+		acceptar.addActionListener(new AccioBotoAcceptarCancelarFiltre(this, true));
+		cancelar.addActionListener(new AccioBotoAcceptarCancelarFiltre(this, false));
 
         // Creem un contenidor on posarem els botons Acceptar/Cancelar.
 		botons = new JPanel(new FlowLayout());
@@ -94,4 +94,12 @@ public class EntrarFiltres extends JDialog {
         Object sel = activitatOnlineC.getSelectedItem();
         return sel.toString();
     }
+
+    /**
+	 * Mètode per a posar la variable booleana OK com a cert si hem clicat a un botó acceptar.
+	 * @param ok
+	 */
+	public void setOk(boolean ok) {
+		this.ok = ok;
+	}
 }
