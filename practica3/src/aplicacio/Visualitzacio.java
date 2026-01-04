@@ -295,7 +295,7 @@ public class Visualitzacio extends JFrame {
                     Data data = new Data(diaActual, dataActual.getMes(), dataActual.getAny());
 
                     // Afegim la interactivitat dels botons del dia
-                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data));
+                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, ocultarUnDia, ocultarPeriodic, ocultarOnline));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
                     if (llistaAct.hiHaActivitat(data, ocultarUnDia, ocultarPeriodic, ocultarOnline)) {

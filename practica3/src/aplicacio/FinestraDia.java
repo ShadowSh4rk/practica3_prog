@@ -7,7 +7,7 @@ import dades.*;
 public class FinestraDia extends JFrame {
     JLabel etiquetaSuperior;
 
-    public FinestraDia(Data data) {
+    public FinestraDia(Data data, boolean ocultarUnDia, boolean ocultarPeriodic, boolean ocularOnline) {
         super(data.toString());
         setSize(400, 800);
         setVisible(true);

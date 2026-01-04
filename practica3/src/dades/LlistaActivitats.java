@@ -258,4 +258,25 @@ public class LlistaActivitats {
         
         return trobat;
     }
+
+    /**
+     * Mètode per obtenir una llista d'activitats actives o amb classe una data determinada
+     * @param data
+     * @return
+     */
+    public LlistaActivitats llistaActivitatsData(Data data) {
+        LlistaActivitats llistaData = new LlistaActivitats(numActivitats);
+
+        for (int i = 0; i < numActivitats; i++) {
+            if ((llista[i].teClasseAvui(data)) || llista[i].esActivaAvui(data)) {
+                try {
+                    llistaData.afegir(llista[i]);
+                } catch (IOException e) {
+                    System.out.println("Error: "+e);
+                }
+            }
+        }
+
+        return llistaData;
+    }
 }

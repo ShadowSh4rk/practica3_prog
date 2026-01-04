@@ -13,21 +13,27 @@ import dades.*;
 public class AccioBotonsDia implements ActionListener {
     private Visualitzacio finestra;     // finestra de visualització
     private Data dataActual;
+    private boolean ocultarUnDia;
+    private boolean ocultarPeriodic;
+    private boolean ocultarOnline;
 
     /**
      * Constructor del botó per a seleccionar un mes
      * @param finestra finestra de visualització
      * @param dataActual data específica a visualitzar
      */
-    public AccioBotonsDia(Visualitzacio finestra, Data dataActual) {
+    public AccioBotonsDia(Visualitzacio finestra, Data dataActual, boolean ocultarUnDia, boolean ocultarPeriodic, boolean ocultarOnline) {
         this.finestra = finestra;
         this.dataActual = dataActual;
+        this.ocultarUnDia = ocultarUnDia;
+        this.ocultarPeriodic = ocultarPeriodic;
+        this.ocultarOnline = ocultarOnline;
     }
 
     /**
      * En clicar el botó, actualitzem la etiqueta de la capçalera superior i activem la visualització dels dies del mes seleccionat.
      */
     public void actionPerformed(ActionEvent evt) {
-        new FinestraDia(dataActual);
+        new FinestraDia(dataActual, ocultarUnDia, ocultarPeriodic, ocultarOnline);
     }
 }
