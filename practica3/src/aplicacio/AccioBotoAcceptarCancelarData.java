@@ -8,16 +8,16 @@ import javax.swing.*;
 /**
  * Clase que implementa la interacció dels botons per a acceptar o cancelar en una finestra.
  */
-public class AccioBotoAcceptarCancelar implements ActionListener {
+public class AccioBotoAcceptarCancelarData implements ActionListener {
     private EntrarDadesData dialeg;     // finestra de visualització
     private boolean esAcceptar;         // boolean que indica si el botó es per acceptar les dades o és per cancelar i tancar la finestra
 
     /**
-     * Constructor del botó per a acceptar o cancelar.
+     * Constructor del botó per a acceptar o cancelar en el dialeg per Entrar Data.
      * @param dialeg dialeg on volem acceptar les seves dades o cancelar-lo
      * @param esAcceptar boolean que indica si el botó es per acceptar les dades o és per cancelar i tancar la finestra
      */
-    public AccioBotoAcceptarCancelar(EntrarDadesData dialeg, boolean esAcceptar) {
+    public AccioBotoAcceptarCancelarData(EntrarDadesData dialeg, boolean esAcceptar) {
         this.dialeg = dialeg;
         this.esAcceptar = esAcceptar;
     }

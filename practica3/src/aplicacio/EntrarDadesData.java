@@ -42,8 +42,8 @@ public class EntrarDadesData extends JDialog {
 		// Creem i afegim la interactivitat dels botons Acceptar/Cancelar
 		acceptar = new JButton("Acceptar");
 		cancelar = new JButton("Cancelar");
-		acceptar.addActionListener(new AccioBotoAcceptarCancelar(this, true));
-		cancelar.addActionListener(new AccioBotoAcceptarCancelar(this, false));
+		acceptar.addActionListener(new AccioBotoAcceptarCancelarData(this, true));
+		cancelar.addActionListener(new AccioBotoAcceptarCancelarData(this, false));
 
 		// Creem un contenidor on posarem els botons Acceptar/Cancelar.
 		botons = new JPanel(new FlowLayout());

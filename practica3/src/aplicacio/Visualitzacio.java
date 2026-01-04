@@ -23,7 +23,7 @@ public class Visualitzacio extends JFrame {
     private JButton botoEsquerraAny, botoDretaAny;  // Botons que permeten passar al any anterior o seguent
     private JButton botoEsquerraMes, botoDretaMes;  // Botons que permeten passar al mes anterior o seguent
     private JButton botoData;                       // Botó que permet obrir una finestra en la que fixar una nova data a visualitzar
-    private JButton botoPlaceholder;                // Botó temporal?
+    private JButton botoFiltrar;                    // Botó per filtrar Activitats
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
@@ -86,9 +86,10 @@ public class Visualitzacio extends JFrame {
         panellSuperior = new JPanel(new BorderLayout());
 
         botoData = new JButton("Data");         // Botó per a fixar una nova data a visualitzar
-        botoPlaceholder = new JButton("aux");   // Botó temporal
+        botoFiltrar = new JButton("Filtrar");   // Botó per a filtrar activitats
 
         botoData.addActionListener(new AccioBotoData(this));
+        botoFiltrar.addActionListener(new AccioBotoFiltrar(this));
 
         panellCapçalera = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
@@ -129,7 +130,7 @@ public class Visualitzacio extends JFrame {
         // Afegim els 3 elements al panell superior
         panellSuperior.add(botoData, BorderLayout.WEST);
         panellSuperior.add(panellCapçalera, BorderLayout.CENTER);
-        panellSuperior.add(botoPlaceholder, BorderLayout.EAST);
+        panellSuperior.add(botoFiltrar, BorderLayout.EAST);
     }
 
     /**
@@ -319,6 +320,19 @@ public class Visualitzacio extends JFrame {
             
             etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
             visualitzarMes();
+        }
+    }
+
+    /**
+     * Mètode per a obrir la finestra on es demana a l'usuari introduir els filtres.
+     */
+    public void preguntarFiltres() {
+        // Utilitzem una variable de la Classe EntrarFiltres
+        EntrarFiltres f = new EntrarFiltres(this);
+
+        // Si l'usuari ha introduït els filtres, filtrem la visualització del calendari
+        if (f.dadesEntrades()) {
+            System.out.println("AUD: "+f.getFiltreUnDia()+" AO: "+f.getFiltreOnline()+" AP: "+f.getFiltrePeriodica());
         }
     }
 
