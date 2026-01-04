@@ -1,11 +1,32 @@
 package dades;
 
-public class ActivitatOnline extends Activitats {
-    private Data dataInici;
-    private int periodeVisualitzacio;
-    private String enllac; 
+/**
+ * Classe que representa una activitat en línia.
+ * 
+ * Una activitat en línia té una data d'inici a partir de la qual està disponible
+ * durant un període determinat de dies. No té sessions presencials ni classes
+ * associades a una data concreta.
+ * 
+ */
 
-    private Data dataFi;
+public class ActivitatOnline extends Activitats {
+    private Data dataInici; //data inici de l'activitat online
+    private int periodeVisualitzacio; // Periode de visualitzacio de l'activitat (en dies)
+    private String enllac; // enllaç per accedir al contingut de l'activitat online
+
+    private Data dataFi; //data de finalitzacio de l'activitat online. Es calcula a partir de la data d'inici i el periode de visualitzacio
+
+    /**
+     * Constructor de la classe ActivitatOnline.
+     * 
+     * @param nom Nom de l'activitat
+     * @param colectius Col·lectius als quals va adreçada l'activitat
+     * @param dataIniciInscripcio Data d'inici del període d'inscripció
+     * @param dataFiInscripcio Data de finalització del període d'inscripció
+     * @param dataInici Data d'inici de l'activitat online
+     * @param periodeVisualitzacio Nombre de dies que l'activitat estarà disponible
+     * @param enllac Enllaç per accedir a l'activitat
+     */
 
     public ActivitatOnline(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, Data dataInici, int periodeVisualitzacio, String enllac) {
         super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Online");
@@ -60,10 +81,21 @@ public class ActivitatOnline extends Activitats {
         return ((avui.esPosterior(dataInici))&&(avui.esAnterior(dataFi)));
     }
 
+    /**
+     * Retorna el preu de l'activitat online.
+     * @return 0 
+     */
     public double getPreu(){
-        return 0; 
+        return 0; //Retorna 0 perque en aquest cas no hi ha cost associat
     }
 
+    /**
+     * Comprova si l'activitat online ja ha finalitzat.
+     * 
+     * @param avui Data actual
+     * @return true si l'activitat ha acabat, false altrament
+     */
+    
     public boolean haAcabat(Data avui){
         return avui.esPosterior(dataFi);
     }
