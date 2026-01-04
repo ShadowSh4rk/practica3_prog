@@ -27,7 +27,7 @@ public class Visualitzacio extends JFrame {
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
-    private Data dataActual = new Data(0);      // Data seleccionada a la finestra
+    private Data dataActual;                        // Data seleccionada a la finestra
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
     private boolean ocultarUnDia;
@@ -49,8 +49,7 @@ public class Visualitzacio extends JFrame {
         this.setLocation(getWidth()/2, getHeight()/2);  // Centrar la finestra al centre de la pantalla
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
 
-        this.dataActual.setAny(Integer.parseInt(any));  // Convertim l'any a un enter
-        this.dataActual.setMes(0);
+        this.dataActual = new Data(1, 1, Integer.parseInt(any));
 
         ocultarUnDia = false;
         ocultarPeriodic = false;
@@ -260,6 +259,7 @@ public class Visualitzacio extends JFrame {
      */
     public void visualitzarMes() {
         panellPrincipal.remove(panellMes);  // Esborrem el panell mes anterior
+        panellPrincipal.setVisible(false);
 
         // La primera vegada que cliquem a un mes, activem la visualització dels botons per a decrementar e incrementar els mesos
         botoEsquerraMes.setVisible(true);
@@ -312,6 +312,7 @@ public class Visualitzacio extends JFrame {
         }
 
         panellPrincipal.add(panellMes); // Afegim el nou panellMes al panell principal
+        panellPrincipal.setVisible(true);
     }
 
     /**
@@ -336,7 +337,7 @@ public class Visualitzacio extends JFrame {
      */
     public void preguntarFiltres() {
         // Utilitzem una variable de la Classe EntrarFiltres
-        EntrarFiltres f = new EntrarFiltres(this);
+        EntrarFiltres f = new EntrarFiltres(this, ocultarUnDia, ocultarPeriodic, ocultarOnline);
 
         // Si l'usuari ha introduït els filtres, filtrem la visualització del calendari
         if (f.dadesEntrades()) {

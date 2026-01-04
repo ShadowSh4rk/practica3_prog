@@ -13,7 +13,7 @@ public class EntrarFiltres extends JDialog {
 	private JButton acceptar;
 	private JButton cancelar;
 
-    public EntrarFiltres(JFrame finestraPare) {
+    public EntrarFiltres(JFrame finestraPare, boolean ocultarUnDia, boolean ocultarPeriodica, boolean ocultarOnline) {
         super(finestraPare, "Selecciona els filtres:");
 
         // Inicialment l'usuari no ha entrat dades
@@ -23,10 +23,14 @@ public class EntrarFiltres extends JDialog {
 		activitatUnDia = new JLabel("Activitats d'un dia:");
 		activitatPeriodica = new JLabel("Activitats periòdiques:");
         activitatOnline = new JLabel("Activitats online");
-		String[] opcions = {"Visualitzar", "Ocultar"};
-		activitatUnDiaC = new JComboBox(opcions);
-        activitatPeriodicaC = new JComboBox(opcions);
-        activitatOnlineC = new JComboBox(opcions);
+		String[] opcions1 = {"Visualitzar", "Ocultar"};
+        String[] opcions2 = {"Ocultar", "Visualitzar"};
+        if (!ocultarUnDia) activitatUnDiaC = new JComboBox(opcions1);
+        else activitatUnDiaC = new JComboBox(opcions2);
+        if (!ocultarPeriodica) activitatPeriodicaC = new JComboBox(opcions1);
+        else activitatPeriodicaC = new JComboBox(opcions2);
+        if (!ocultarOnline) activitatOnlineC = new JComboBox(opcions1);
+        else activitatOnlineC = new JComboBox(opcions2);
 
         // Creem el contenidor per als controls
 		controls = new JPanel(new GridLayout(3,2));
