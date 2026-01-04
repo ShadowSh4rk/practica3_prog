@@ -2,6 +2,15 @@ package dades;
 
 import java.io.*;
 
+/**
+ * Classe abstracta que representa una activitat genèrica.
+ * 
+ * Cada activitat té un nom, un tipus (UnDia, Periodica, Online),
+ * un període d'inscripció, un límit de places i llistes d'inscrits i espera.
+ * Les subclasses han de definir com es determina si hi ha classe avui, si ha acabat
+ * i si està activa avui, així com el preu de l'activitat.
+ */
+
 public abstract class Activitats{
 private String nom;    //nom de l'activitat
 private String[]colectius;   //PDI, PTGAS, Estudiants
@@ -9,12 +18,22 @@ protected Data dataIniciInscripcio;
 protected Data dataFiInscripcio; 
 protected int limitPlaces;
 private String tipus; // UnDia, Periodica, Online
-//========
+//Gestio de les inscripcions
     public Inscripcio[] llistaInscri;
     protected Inscripcio[] llistaEspera;
     protected int nIns; //nombre d'inscripcio (index llista inscripcio)
     protected int nEsp; //nombre d'espera (index llista espera)
     private static final int limitEspera = 10;
+
+    /**
+     * Constructor de la classe Activitats.
+     * 
+     * @param nom Nom de l'activitat
+     * @param colectius Array de col·lectius als quals s'ofereix l'activitat
+     * @param dataIniciInscripcio Data d'inici del període d'inscripció
+     * @param dataFiInscripcio Data de fi del període d'inscripció
+     * @param tipus Tipus d'activitat ("UnDia", "Periodica", "Online")
+     */
 
     public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
         this.nom = nom;
@@ -33,10 +52,18 @@ private String tipus; // UnDia, Periodica, Online
         nEsp = 0;
     }
 
+    /**
+     * 
+     * @return Data d'inici del periode d'inscripcions
+     */
     public Data getDataIniciInscripcio(){
         return dataIniciInscripcio; 
     }
 
+    /**
+     * 
+     * @return Data de fi del periode d'inscripcions
+     */
     public Data getDataFiInscripcio(){
         return dataFiInscripcio; 
     }
@@ -58,7 +85,6 @@ private String tipus; // UnDia, Periodica, Online
     }
 
      /**
-     * Retorna el nom de l'activitat.
      * @return Nom de l'activitat
      */
     public String getNom() {
@@ -66,21 +92,31 @@ private String tipus; // UnDia, Periodica, Online
     }
 
     /**
-     * Retorna el límit de places disponibles.
-     * @return Límite de places
+     * @return Límit de places
      */
     public int getLimitPlaces() {
         return limitPlaces;
     }
 
+    /**
+     * @return Nombre actual d'inscrits
+     */
     public int getnIns() {
         return nIns;
     }
 
+    /**
+     * @return Nombre d'inscrits en llista d'espera
+     */
     public int getnEsp() {
         return nEsp;
     }
 
+     /**
+     * Comprova si l'activitat està dins del període d'inscripció per a una data determinada
+     * @param avui Data a comprovar
+     * @return true si avui està dins del període, false altrament
+     */
     public boolean esEnPeriodeInscripcio(Data avui){
         return !avui.esAnterior(dataIniciInscripcio) && !avui.esPosterior(dataFiInscripcio); 
     }
@@ -99,14 +135,35 @@ private String tipus; // UnDia, Periodica, Online
         return false; 
     }
 
+    /**
+     * Determina si hi ha classe avui (ha de ser implementat per les subclasses)
+     * @param avui
+     * @return boolea que retorna si te classe o no avui
+     */
     public abstract boolean teClasseAvui(Data avui);
+
+    /**
+     * Determina si l'activitat ha acabat (ha de ser implementat per les subclasses)
+     * @param avui
+     * @return boolea que retorna si l'activitat ha finalitzat o no
+     */
     public abstract boolean haAcabat(Data avui);
+
+    /**
+     * Determina si l'activitat esta activa avui (ha de ser implementat per les subclasses)
+     * @param avui
+     * @return boolea que retorna si l'activitat esta activa en la data actual o no
+     */
     public abstract boolean esActivaAvui(Data avui); 
+
+    /**
+     * @return preu de l'activitat (ha de ser implementat per les subclasses)
+     */
     public abstract double getPreu(); 
 
     /**
      * Retorna una representació en String de l'activitat.
-     * @return Nom de l'activitat i tipus entre parèntesis
+     * @return nom;col·lectius;dataIniciInscripcio;dataFiInscripcio;limitPlaces
      */
     @Override 
     public String toString() {
@@ -182,7 +239,7 @@ private String tipus; // UnDia, Periodica, Online
 
     /**
      * 
-     * @param dada
+     * @param dada Inscipcio a cancel·lar
      */
     public void cancelar(Inscripcio dada){
         //busquem la dada
@@ -228,6 +285,10 @@ private String tipus; // UnDia, Periodica, Online
 
     //GESTIO FITXER SERIALITZAT
 
+    /**
+     * Desa la llista d'inscripcions en un fitxer .ser
+     * @param llistaInscri Array d'inscripcions a desar
+     */
     public static void storeData (Inscripcio[] llistaInscri) {
         ObjectOutputStream outputFile;
         try {
@@ -242,6 +303,10 @@ private String tipus; // UnDia, Periodica, Online
         }
     }
 
+    /**
+     * Llegeix les inscripcions des d'un fitxer .ser
+     * @param llistaInscri Array on es guardaran les inscripcions llegides
+     */
     public static void readData (Inscripcio[] llistaInscri) {
         ObjectInputStream inputFile;
         try {
@@ -262,6 +327,11 @@ private String tipus; // UnDia, Periodica, Online
         }
     }
 
+    /**
+     * Comprova si un usuari esta inscrit a l'activitat
+     * @param nom Nom de l'usuari a comprovar
+     * @return true si l'usuari esta inscrit, false altrament
+     */
     public boolean estaInscrit(String nom){
         boolean trobat = false;
         int i=0;
