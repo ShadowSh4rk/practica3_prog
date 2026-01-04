@@ -36,7 +36,8 @@ public class Visualitzacio extends JFrame {
      * Mètode constructor per a crear una finestra de visualització de les activitats
      * - Primer s'ha de seleccionar un any inicial
      * - Després, es visualitzarà a l'esquerra els mesos de l'any seleccionat amb la possibilitat d'incrementar o decrementar l'any
-     * - En clicar un mes, es visualitzarà a la dreta els dies del mes seleccionat
+     * - En clicar un mes, es visualitzarà a la dreta els dies del mes seleccionat i tindrem la possibilitat d'incrementar o decrementar el mes
+     * - Tenim un botó a dalt a l'esquerra que ens serveix per indicar en una finestra un mes i any a visualitzar
      */
     public Visualitzacio(String titol, String any) {
         super(titol);   // Assignem el títol de la finestra
@@ -302,14 +303,19 @@ public class Visualitzacio extends JFrame {
     }
 
     /**
-     * 
+     * Mètode per a obrir la finestra on es demana a l'usuari introduir les dades de mes i any per a canviar la visualització.
      */
     public void preguntarDades() {
-        EntrarDades d = new EntrarDades(this);
+        // Utilitzem una variable de la Classe EntrarDadesData
+        EntrarDadesData d = new EntrarDadesData(this);
+
+        // Si l'usuari ha introduït les dades, assignem la nova data i visualitzem el nou mes
         if (d.dadesEntrades()) {
-            //System.out.println("Dia: " + d.getNom());
-            System.out.println("Mes: " + d.getMes());
-            //System.out.println("Any: " + d.getAny());
+            dataActual.setMes(Data.getIndexMes(d.getMes()));
+            dataActual.setAny(d.getAny());
+            
+            etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
+            visualitzarMes();
         }
     }
 
