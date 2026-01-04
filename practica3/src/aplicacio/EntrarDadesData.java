@@ -2,7 +2,6 @@ package aplicacio;
 
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -12,7 +11,6 @@ public class EntrarDadesData extends JDialog {
   	private JLabel mes, any;	// Etiquetes del mes i any
 	private JTextField anyF;
 	private JComboBox mesC;		// Desplegable amb els noms de tots els mesos
-	private int idMes;
 	private boolean ok;			// Variable per a confirmar que l'usuari ha introduït les dades
 
 	private JPanel controls;

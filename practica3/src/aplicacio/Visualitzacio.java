@@ -284,6 +284,9 @@ public class Visualitzacio extends JFrame {
                 else if (diaActual <= diesMes) {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
+
+                    // Afegim la interactivitat dels botons del dia
+                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, new Data(diaActual, dataActual.getMes(), dataActual.getAny())));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
                     if (llistaAct.hiHaActivitat(new Data(diaActual, dataActual.getMes(), dataActual.getAny()))) {
