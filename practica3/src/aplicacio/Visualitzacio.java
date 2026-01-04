@@ -18,9 +18,12 @@ public class Visualitzacio extends JFrame {
     private JPanel panellPrincipal;                 // Panell per a gestionar la distribució de la pantalla
     private JPanel panellAny;                       // Panell que conté el contingut dels mesos de l'any
     private JPanel panellMes;                       // Panell que conté el contingut dels dies del mes
-    private JPanel panellSuperior;                  // Panell que conté el contingut de la capçalera superior
+    private JPanel panellSuperior;                  // Panell que conté el contingut superior
+    private JPanel panellCapçalera;                 // Panell que conté els botons per a canviar la data en 1 unitat i la etiqueta
     private JButton botoEsquerraAny, botoDretaAny;  // Botons que permeten passar al any anterior o seguent
     private JButton botoEsquerraMes, botoDretaMes;  // Botons que permeten passar al mes anterior o seguent
+    private JButton botoData;                       // Botó que permet obrir una finestra en la que fixar una nova data a visualitzar
+    private JButton botoPlaceholder;                // Botó temporal?
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
@@ -33,7 +36,8 @@ public class Visualitzacio extends JFrame {
      * Mètode constructor per a crear una finestra de visualització de les activitats
      * - Primer s'ha de seleccionar un any inicial
      * - Després, es visualitzarà a l'esquerra els mesos de l'any seleccionat amb la possibilitat d'incrementar o decrementar l'any
-     * - En clicar un mes, es visualitzarà a la dreta els dies del mes seleccionat
+     * - En clicar un mes, es visualitzarà a la dreta els dies del mes seleccionat i tindrem la possibilitat d'incrementar o decrementar el mes
+     * - Tenim un botó a dalt a l'esquerra que ens serveix per indicar en una finestra un mes i any a visualitzar
      */
     public Visualitzacio(String titol, String any) {
         super(titol);   // Assignem el títol de la finestra
@@ -66,17 +70,27 @@ public class Visualitzacio extends JFrame {
 
     // MÉTODES AUXILIARS PER A GESTIONAR LA FINESTRA
     /**
-     * Mètode per a crear la capçalera superior de la finestra, composada de 3 elements:
+     * Mètode per a crear la capçalera superior de la finestra, composada de 7 elements:
+     * - Botó que ens permet fixar una nova data a visualitzar
      * - Botó a l'esquerra que ens permet decrementar l'any seleccionat
+     * - Botó a l'esquerra que ens permet decrementar el mes seleccionat
      * - Etiqueta amb el any, mes i/o dia seleccionat
+     * - Botó a la dreta que ens permet incrementar el mes seleccionat
      * - Botó a la dreta que ens permet incrementar l'any seleccionat
+     * - Botó temporal
      * 
      * To Do: Que fem amb això quan tenim seleccionat un mes o un dia?
      */
     private void crearPanellSuperior() {
         // Crear panell superior que conté botons per modificar l'any i l'etiqueta de l'any
-        panellSuperior = new JPanel();
-        panellSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panellSuperior = new JPanel(new BorderLayout());
+
+        botoData = new JButton("Data");         // Botó per a fixar una nova data a visualitzar
+        botoPlaceholder = new JButton("aux");   // Botó temporal
+
+        botoData.addActionListener(new AccioBotoData(this));
+
+        panellCapçalera = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         // Etiqueta de l'any i/o mes seleccionat
         etiquetaSuperior = new JLabel("Any: "+dataActual.getAny());
@@ -104,13 +118,18 @@ public class Visualitzacio extends JFrame {
         botoDretaMes.addActionListener(new AccioBotonsIncDecMes(this, true));
 
         // Afegim els botons de l'esquerra, l'etiqueta i el botons de la dreta, els botons dels mesos no tenen visibilitat fins que es clica un mes
-        panellSuperior.add(botoEsquerraAny);
-        panellSuperior.add(botoEsquerraMes);
+        panellCapçalera.add(botoEsquerraAny);
+        panellCapçalera.add(botoEsquerraMes);
         botoEsquerraMes.setVisible(false);  
-        panellSuperior.add(etiquetaSuperior);
-        panellSuperior.add(botoDretaMes);
-        panellSuperior.add(botoDretaAny);
+        panellCapçalera.add(etiquetaSuperior);
+        panellCapçalera.add(botoDretaMes);
+        panellCapçalera.add(botoDretaAny);
         botoDretaMes.setVisible(false);
+
+        // Afegim els 3 elements al panell superior
+        panellSuperior.add(botoData, BorderLayout.WEST);
+        panellSuperior.add(panellCapçalera, BorderLayout.CENTER);
+        panellSuperior.add(botoPlaceholder, BorderLayout.EAST);
     }
 
     /**
@@ -265,6 +284,9 @@ public class Visualitzacio extends JFrame {
                 else if (diaActual <= diesMes) {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
+
+                    // Afegim la interactivitat dels botons del dia
+                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, new Data(diaActual, dataActual.getMes(), dataActual.getAny())));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
                     if (llistaAct.hiHaActivitat(new Data(diaActual, dataActual.getMes(), dataActual.getAny()))) {
@@ -281,6 +303,23 @@ public class Visualitzacio extends JFrame {
         }
 
         panellPrincipal.add(panellMes); // Afegim el nou panellMes al panell principal
+    }
+
+    /**
+     * Mètode per a obrir la finestra on es demana a l'usuari introduir les dades de mes i any per a canviar la visualització.
+     */
+    public void preguntarDades() {
+        // Utilitzem una variable de la Classe EntrarDadesData
+        EntrarDadesData d = new EntrarDadesData(this);
+
+        // Si l'usuari ha introduït les dades, assignem la nova data i visualitzem el nou mes
+        if (d.dadesEntrades()) {
+            dataActual.setMes(Data.getIndexMes(d.getMes()));
+            dataActual.setAny(d.getAny());
+            
+            etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
+            visualitzarMes();
+        }
     }
 
 

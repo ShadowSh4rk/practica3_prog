@@ -270,6 +270,33 @@ public class Data {
     }
 
     /**
+     * Mètode per a obtenir l'index d'un mes respecte el seu nom, on 1 és gener i 12 és desembre.
+     * @param nomMes nom del mes en català
+     * @return index del mes corresponent (1-12), o -1 si el nom no és vàlid
+     */
+    public static int getIndexMes(String nomMes) {
+        int index = -1;
+
+        switch (nomMes) {
+            case "Gener": index = 1; break;
+            case "Febrer": index = 2; break;
+            case "Març": index = 3; break;
+            case "Abril": index = 4; break;
+            case "Maig": index = 5; break;
+            case "Juny": index = 6; break;
+            case "Juliol": index = 7; break;
+            case "Agost": index = 8; break;
+            case "Septembre": index = 9; break;
+            case "Octubre": index = 10; break;
+            case "Novembre": index = 11; break;
+            case "Desembre": index = 12; break;
+            default:
+                break;
+        }
+        return index;
+    }
+
+    /**
      * Mètode per a modificar l'any d'una data amb un valor determinat (incrementar o decrementar)
      * @param valor
      */
@@ -286,12 +313,14 @@ public class Data {
      * @param valor
      */
     public void modificarMes(int valor) {
-        this.mes += valor;
+        this.mes += valor;  // modificar el mes
 
+        // Controlem si ens hem passat de desembre
         if (this.mes == 13) {
             this.mes = 1;
             modificarAny(1);
         }
+        // Controlem si ens hem passat de gener
         else if (this.mes == 0) {
             this.mes = 12;
             modificarAny(-1);
