@@ -1,20 +1,45 @@
 package dades;
 
+/**
+ * Classe que representa una activitat periòdica.
+ * 
+ * Una activitat periòdica es realitza un dia concret de la setmana durant
+ * un nombre determinat de setmanes consecutives, en un centre i ciutat
+ * determinats.
+ */
+
 public class ActivitatPeriodica extends Activitats{
-    private String diaSetmana;
-    //private LocalTime horari; 
-    private Data dataInici;
-    private int numSetmanes;
-    private String centre; 
-    private String ciutat; 
-    private double preuTotal; 
+    private String diaSetmana; //dia de la setmana en que es realitza l'activitat
+    private String horari;  //horari de l'activitat (exemple: "18:00-20:00")
+    private Data dataInici; //Data inici de la primera sessio de l'activitat
+    private int numSetmanes; //Nombre de setmanes que dura l'activitat
+    private String centre; // Centre on es realitza l'activitat
+    private String ciutat; //Ciutat on es realitza l'activitat
+    private double preuTotal; //Preu total de l'activitat periodica
 
-    private Data dataFi;
+    private Data dataFi; //Data de finalitzacio de l'activitat periodica. Es calcula a partir de la data d'inici i el nombre de setmanes
 
-    public ActivitatPeriodica(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String diaSetmana, /*LocalTime horari,*/ Data dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
+    /**
+     * Constructor de la classe ActivitatPeriodica.
+     * 
+     * @param nom Nom de l'activitat
+     * @param colectius Col·lectius als quals va adreçada l'activitat
+     * @param dataIniciInscripcio Data d'inici del període d'inscripció
+     * @param dataFiInscripcio Data de finalització del període d'inscripció
+     * @param diaSetmana Dia de la setmana en què es realitza l'activitat
+     * @param horari Horari de l'activitat
+     * @param dataInici Data d'inici de la primera sessió
+     * @param numSetmanes Nombre de setmanes que dura l'activitat
+     * @param centre Centre on es realitza l'activitat
+     * @param ciutat Ciutat on es realitza l'activitat
+     * @param limitPlaces Límit de places disponibles
+     * @param preuTotal Preu total de l'activitat
+     */
+
+    public ActivitatPeriodica(String nom, String[] colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String diaSetmana, String horari, Data dataInici, int numSetmanes, String centre, String ciutat, int limitPlaces,double preuTotal) {
             super(nom, colectius, dataIniciInscripcio, dataFiInscripcio, "Periodica");
             this.diaSetmana=diaSetmana;
-            //this.horari=horari; 
+            this.horari=horari; 
             this.dataInici=dataInici;
             this.numSetmanes=numSetmanes;
             this.centre=centre;
@@ -83,12 +108,12 @@ public class ActivitatPeriodica extends Activitats{
     * Retorna l'horari de la classe.
     * 
     * @return horari en format cadena (ex. "18:00-20:00")
-    
+    */
         public String getHorari(){
             return horari;
-        } */
+        } 
 
-    /**
+    /** 
     * Retorna el nombre de setmanes que dura l'activitat.
     * 
     * @return número de setmanes
@@ -105,6 +130,12 @@ public class ActivitatPeriodica extends Activitats{
             return dataInici; 
         }
 
+    /**
+     * Comprova si l'activitat periòdica ja ha finalitzat.
+     * 
+     * @param avui Data actual
+     * @return true si l'activitat ha acabat, false altrament
+     */ 
     public boolean haAcabat(Data avui){
         return avui.esPosterior(dataFi);
     }
