@@ -366,15 +366,25 @@ public class Menu {
         
     }
 
-    public static void opcio11(Activitats act) {
-        // 11. Mostrar els usuaris que estan apuntats a una activitat i quins estan en llista d'espera.
+    public static void opcio11() {
+    // 11. Mostrar els usuaris que estan apuntats a una activitat i quins estan en llista d'espera.
+
+    // Demanem a l'usuari quina activitat vol consultar
+    System.out.println("Introdueix el nom de l'activitat:");
+    String nomAct = teclat.nextLine();
+
+    // Busquem l'activitat dins de la llista
+    Activitats act = llistaAct.buscarPerNom(nomAct);
+
+    if (act != null) {
         System.out.println("Activitat: " + act.getNom());
+
         boolean hiHaInscrits = false;
 
-        // Recorrem la llista d'inscrits
+        // Llista d'inscrits
         for (int i = 0; i < act.nIns; i++) {
-            if (act.llistaInscri[i].getActivitats().equals(act)) {
-                System.out.println("Inscrit: " + act.llistaInscri[i].getAlies());
+            if (act.llistaInscri[i] != null) {
+                System.out.println("Inscrit: " + act.llistaInscri[i].getNomInscrit());
                 hiHaInscrits = true;
             }
         }
@@ -386,66 +396,75 @@ public class Menu {
         System.out.println("\nUsuaris en llista d'espera:");
         boolean hiHaEspera = false;
 
-        // Recorrem la llista d'espera
         for (int i = 0; i < act.nEsp; i++) {
-            if (act.llistaEspera[i].getActivitats().equals(act)) {
-                System.out.println("Espera: " + act.llistaEspera[i].getAlies());
-                    hiHaEspera = true;
+            if (act.llistaEspera[i] != null) {
+                System.out.println("Espera: " + act.llistaEspera[i].getNomInscrit());
+                hiHaEspera = true;
             }
         }
 
         if (!hiHaEspera) {
-        System.out.println("No hi ha usuaris en llista d'espera.");
+            System.out.println("No hi ha usuaris en llista d'espera.");
         }
+
+    } else {
+        System.out.println("No s'ha trobat cap activitat amb aquest nom.");
+    }
 }
 
+    public static void opcio12() {
+    // 12. Eliminar un usuari d'una activitat.
 
+    System.out.println("Introdueix el nom de l'activitat:");
+    String nomAct = teclat.nextLine();
+    Activitats act = llistaAct.buscarPerNom(nomAct);
 
-    public static void opcio12(Activitats act, Usuari u) {
-        // 12. Eliminar un usuari d'una activitat. Si hi ha llista d'espera, ek primer de la llista passa a formar part dels usuaris que poden accedir a l'activitat
+    if (act != null) {
+        System.out.println("Introdueix el nom de l'usuari a eliminar:");
+        String nomUsu = teclat.nextLine();
 
         boolean trobat = false;
         int pos = 0;
-        int i = 0;
 
-        // 1. Buscar la posició de l'usuari dins dels inscrits
-        while (i < act.nIns && trobat == false) {
-            if (act.llistaInscri[i].getActivitats().equals(act) &&
-                act.llistaInscri[i].getAlies().equals(u.getAlies())) {
+        for (int i = 0; i < act.nIns && !trobat; i++) {
+            if (act.llistaInscri[i] != null && act.llistaInscri[i].getNomInscrit().equalsIgnoreCase(nomUsu)) {
                 pos = i;
                 trobat = true;
             }
-            i++;
         }
 
-        // 2. Si s'ha trobat, eliminar-lo desplaçant la resta
-        if (trobat == true) {
-
+        if (trobat) {
+            // Desplacem els elements de la llista d'inscrits cap a l'esquerra
             for (int j = pos; j < act.nIns - 1; j++) {
                 act.llistaInscri[j] = act.llistaInscri[j + 1];
             }
-        act.nIns--;  
+            act.llistaInscri[act.nIns - 1] = null; // netegem últim element
+            act.nIns--;
+            System.out.println("Usuari eliminat correctament.");
 
-        System.out.println("Usuari eliminat correctament.");
+            // Si hi ha llista d'espera, afegim el primer de la llista a la llista d'inscrits
+            if (act.nEsp > 0) {
+                act.llistaInscri[act.nIns] = act.llistaEspera[0];
+                act.nIns++;
+
+                // Desplacem la llista d'espera cap a l'esquerra
+                for (int j = 0; j < act.nEsp - 1; j++) {
+                    act.llistaEspera[j] = act.llistaEspera[j + 1];
+                }
+                act.llistaEspera[act.nEsp - 1] = null; // netegem últim element
+                act.nEsp--;
+            }
 
         } else {
             System.out.println("Usuari no trobat a l'activitat.");
         }
 
-        // 3. Si hi ha algú a la llista d'espera, pujar-lo a la llista d'inscrits
-        if (act.nEsp > 0) {
+    } else {
+        System.out.println("No s'ha trobat cap activitat amb aquest nom.");
+    }
+}
 
-            act.llistaInscri[act.nIns] = act.llistaEspera[0];  
-            act.nIns++;  // incrementem el comptador d'inscrits
 
-       
-            for (int j = 0; j < act.nEsp - 1; j++) {
-                act.llistaEspera[j] = act.llistaEspera[j + 1];
-            }
-            act.nEsp--;  
-        }
-
-}    
 
 
     public static void opcio13() {
