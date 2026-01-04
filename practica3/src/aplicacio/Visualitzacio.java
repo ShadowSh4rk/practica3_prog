@@ -86,8 +86,6 @@ public class Visualitzacio extends JFrame {
      * - Botó a la dreta que ens permet incrementar el mes seleccionat
      * - Botó a la dreta que ens permet incrementar l'any seleccionat
      * - Botó temporal
-     * 
-     * To Do: Que fem amb això quan tenim seleccionat un mes o un dia?
      */
     private void crearPanellSuperior() {
         // Crear panell superior que conté botons per modificar l'any i l'etiqueta de l'any
@@ -296,12 +294,12 @@ public class Visualitzacio extends JFrame {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
                     Data data = new Data(diaActual, dataActual.getMes(), dataActual.getAny());
-
-                    // Afegim la interactivitat dels botons del dia
-                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, llistaAct, ocultarUnDia, ocultarPeriodic, ocultarOnline));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
                     if (llistaAct.hiHaActivitat(data, ocultarUnDia, ocultarPeriodic, ocultarOnline)) {
+                        // Afegim la interactivitat dels botons del dia
+                        botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, llistaAct, ocultarUnDia, ocultarPeriodic, ocultarOnline));
+
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
