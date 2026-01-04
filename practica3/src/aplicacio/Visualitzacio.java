@@ -1,10 +1,13 @@
+// PAQUET
 package aplicacio;
 
 
+// IMPORTS JAVA
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+// IMPORTS PAQUETS LOCALS
 import dades.*;
 
 
@@ -21,9 +24,7 @@ public class Visualitzacio extends JFrame {
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
-    private int anyActual;  // Any seleccionat a la finestra
-    private int mesActual;  // Mes seleccionat a la finestra (1: Gener i 12: Desembre)
-    private int diaActual;  // Dia seleccionat a la finestra
+    private Data dataActual = new Data(0);      // Data seleccionada a la finestra
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
 
@@ -41,8 +42,8 @@ public class Visualitzacio extends JFrame {
         this.setLocation(getWidth()/2, getHeight()/2);  // Centrar la finestra al centre de la pantalla
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
 
-        this.anyActual = Integer.parseInt(any);         // Convertim l'any a un enter
-        this.mesActual = 0;
+        this.dataActual.setAny(Integer.parseInt(any));  // Convertim l'any a un enter
+        this.dataActual.setMes(0);
 
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
@@ -78,7 +79,7 @@ public class Visualitzacio extends JFrame {
         panellSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         // Etiqueta de l'any i/o mes seleccionat
-        etiquetaSuperior = new JLabel("Any: "+anyActual);
+        etiquetaSuperior = new JLabel("Any: "+dataActual.getAny());
         etiquetaSuperior.setFont(new Font("Calibri", Font.BOLD, 24));
         etiquetaSuperior.setForeground(Color.BLACK);
 
@@ -102,10 +103,10 @@ public class Visualitzacio extends JFrame {
         botoDretaMes.setFont(new Font("Calibri", Font.BOLD, 20));
         botoDretaMes.addActionListener(new AccioBotonsIncDecMes(this, true));
 
-        // Afegim el botó de l'esquerra, l'etiqueta i el botó de la dreta
+        // Afegim els botons de l'esquerra, l'etiqueta i el botons de la dreta, els botons dels mesos no tenen visibilitat fins que es clica un mes
         panellSuperior.add(botoEsquerraAny);
         panellSuperior.add(botoEsquerraMes);
-        botoEsquerraMes.setVisible(false);
+        botoEsquerraMes.setVisible(false);  
         panellSuperior.add(etiquetaSuperior);
         panellSuperior.add(botoDretaMes);
         panellSuperior.add(botoDretaAny);
@@ -191,13 +192,15 @@ public class Visualitzacio extends JFrame {
      */
     public void actualitzarAny(boolean esIncrement) {
         // Incrementem lo decrementem l'any corresponentment
-        if (esIncrement) anyActual++;
-        else anyActual--;
+        int any = dataActual.getAny();
+        if (esIncrement) any++;
+        else any--;
+        dataActual.setAny(any);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
-        if (mesActual == 0) etiquetaSuperior.setText("Any: "+anyActual);
+        if (dataActual.getMes() == 0) etiquetaSuperior.setText("Any: "+dataActual.getAny());
         else {
-            etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mesActual));
+            etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
             visualitzarMes();
         }
     }
@@ -209,24 +212,30 @@ public class Visualitzacio extends JFrame {
      * @param esIncrement boolean que indica si es botó dret o no
      */
     public void actualitzarMes(boolean esIncrement) {
-        // Incrementem lo decrementem l'any corresponentment
+        // Incrementem lo decrementem el mes corresponentment
+        int mes = dataActual.getMes();
         if (esIncrement) {
-            mesActual++;
-            if (mesActual == 13) {
-                anyActual++;
-                mesActual = 1;
+            mes++;  // Incrementem el mes
+            if (mes == 13) {    // Si ens hem passat de Desembre
+                int any = dataActual.getAny();
+                any++;      // Augmentem l'any
+                mes = 1;    // Posem mes a Gener
+                dataActual.setAny(any);
             }
         }
         else {
-            mesActual--;
-            if (mesActual == 0) {
-                anyActual--;
-                mesActual = 12;
+            mes--;  // Decrementem el mes
+            if (mes == 0) {     // Si ens hem passat de Gener
+                int any = dataActual.getAny();
+                any--;      // Reduim l'any
+                mes = 12;   // Posem mes a Desembre
+                dataActual.setAny(any);
             }
         }
+        dataActual.setMes(mes);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
-        etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mesActual));
+        etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
         visualitzarMes();
     }
 
@@ -235,8 +244,8 @@ public class Visualitzacio extends JFrame {
      * @param mes index del mes seleccionat
      */
     public void afegirMes(int mes) {
-        this.mesActual = mes;
-        etiquetaSuperior.setText("Any: "+anyActual+" - Mes: "+Data.nomMes(mes));
+        this.dataActual.setMes(mes);
+        etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
     }
 
     /**
@@ -249,8 +258,8 @@ public class Visualitzacio extends JFrame {
         botoEsquerraMes.setVisible(true);
         botoDretaMes.setVisible(true);
 
-        int diesMes = Data.diesDelMes(mesActual, anyActual);    // Càlcul del nombre de dies total que té el mes seleccionat
-        int offsetIni = calculOffsetMes(mesActual, anyActual);  // Càlcul del nombre de dies de la setmana que hi ha abans del primer dia del mes
+        int diesMes = Data.diesDelMes(dataActual.getMes(), dataActual.getAny());    // Càlcul del nombre de dies total que té el mes seleccionat
+        int offsetIni = calculOffsetMes(dataActual.getMes(), dataActual.getAny());  // Càlcul del nombre de dies de la setmana que hi ha abans del primer dia del mes
 
         int n_columnes = 7; // Nombre de columnes
         int n_files = 6;    // Nombre de files
@@ -260,7 +269,7 @@ public class Visualitzacio extends JFrame {
         botonsMes = new JButton[n_files][n_columnes];
 
         int diaActual = 1;        // Valor del dia
-        int offset = 0;     // Nombre d'offset realitzat
+        int offset = 0;           // Nombre d'offset realitzat
 
         // Bucle per les files (setmanes)
         for (int i = 0; i < n_files; i++) {
@@ -278,7 +287,7 @@ public class Visualitzacio extends JFrame {
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
-                    if (llistaAct.hiHaActivitat(new Data(diaActual, mesActual, anyActual))) {
+                    if (llistaAct.hiHaActivitat(new Data(diaActual, dataActual.getMes(), dataActual.getAny()))) {
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
@@ -306,6 +315,7 @@ public class Visualitzacio extends JFrame {
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
+        // Codi auxiliar per a provar que es veuen activitats
         String[] miaus = new String[2];
         ActivitatUnDia aud = new ActivitatUnDia("Yoga", miaus, new Data(11, 9, 2001), new Data(22, 7, 2004), new Data(22, 10, 2025), "Barcelona", 8, 1.99);
         ActivitatOnline ao = new ActivitatOnline("Classe Virtual", miaus, new Data(11, 9, 2001), new Data(5, 5, 2005), new Data(1, 1, 2026), 20, "https://meet.com/miaumiaumiau");

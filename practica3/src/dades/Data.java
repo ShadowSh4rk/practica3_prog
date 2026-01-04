@@ -29,6 +29,16 @@ public class Data {
     }
 
     /**
+     * Constructor de data auxiliar, utilitzat al codi de visualització per treballar amb la classe Data tot i que inicialment no tenim el dia, mes
+     *  i el any assignats. S'utilitza el paràmetre mes per a inicialitzar la data amb (mes = 0), que indica que encara l'usuari no ha clicat cap mes
+     *  per a visualitzar.
+     * @param mes Mes de la data
+     */
+    public Data(int mes) {
+        this.mes = mes;
+    }
+
+    /**
      * Comprova si una data és vàlida.
      *
      * @param dia Dia
