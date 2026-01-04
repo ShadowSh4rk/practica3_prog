@@ -30,6 +30,9 @@ public class Visualitzacio extends JFrame {
     private Data dataActual = new Data(0);      // Data seleccionada a la finestra
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
+    private boolean ocultarUnDia;
+    private boolean ocultarPeriodic;
+    private boolean ocultarOnline;
 
 
     /**
@@ -48,6 +51,10 @@ public class Visualitzacio extends JFrame {
 
         this.dataActual.setAny(Integer.parseInt(any));  // Convertim l'any a un enter
         this.dataActual.setMes(0);
+
+        ocultarUnDia = false;
+        ocultarPeriodic = false;
+        ocultarOnline = false;
 
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
@@ -285,12 +292,13 @@ public class Visualitzacio extends JFrame {
                 else if (diaActual <= diesMes) {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
+                    Data data = new Data(diaActual, dataActual.getMes(), dataActual.getAny());
 
                     // Afegim la interactivitat dels botons del dia
-                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, new Data(diaActual, dataActual.getMes(), dataActual.getAny())));
+                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
-                    if (llistaAct.hiHaActivitat(new Data(diaActual, dataActual.getMes(), dataActual.getAny()))) {
+                    if (llistaAct.hiHaActivitat(data, ocultarUnDia, ocultarPeriodic, ocultarOnline)) {
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
@@ -332,7 +340,19 @@ public class Visualitzacio extends JFrame {
 
         // Si l'usuari ha introduït els filtres, filtrem la visualització del calendari
         if (f.dadesEntrades()) {
-            System.out.println("AUD: "+f.getFiltreUnDia()+" AO: "+f.getFiltreOnline()+" AP: "+f.getFiltrePeriodica());
+            // Actualitzem filtre Activitats Un Dia
+            if (f.getFiltreUnDia().equalsIgnoreCase("Ocultar")) ocultarUnDia = true;
+            else if (f.getFiltreUnDia().equalsIgnoreCase("Visualitzar")) ocultarUnDia = false;
+
+            // Actualitzem filtre Activitats Periodiques
+            if (f.getFiltrePeriodica().equalsIgnoreCase("Ocultar")) ocultarPeriodic = true;
+            else if (f.getFiltrePeriodica().equalsIgnoreCase("Visualitzar")) ocultarPeriodic = false;
+
+            // Actualitzem filtre Activitats Online
+            if (f.getFiltreOnline().equalsIgnoreCase("Ocultar")) ocultarOnline = true;
+            else if (f.getFiltreOnline().equalsIgnoreCase("Visualitzar")) ocultarOnline = false;
+
+            visualitzarMes();
         }
     }
 
