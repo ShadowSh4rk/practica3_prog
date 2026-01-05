@@ -36,6 +36,15 @@ private String tipus; // UnDia, Periodica, Online
      */
 
     public Activitats(String nom, String[]colectius, Data dataIniciInscripcio, Data dataFiInscripcio, String tipus) {
+       
+        if (colectius == null || colectius.length == 0) {
+        throw new IllegalArgumentException("Els col·lectius no poden ser null ni buits");
+        }
+        
+        if (dataFiInscripcio.esAnterior(dataIniciInscripcio)) {
+        throw new IllegalArgumentException("La data de fi d'inscripció no pot ser anterior a la data d'inici");
+         }
+       
         this.nom = nom;
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
