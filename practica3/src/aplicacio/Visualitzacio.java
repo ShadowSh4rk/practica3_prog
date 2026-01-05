@@ -27,9 +27,13 @@ public class Visualitzacio extends JFrame {
     private JButton[][] botonsAny;                  // Botons que permeten clicar els mesos
     private JButton[][] botonsMes;                  // Botons que permeten clicar els dies
     private JLabel etiquetaSuperior;                // Text que indica l'any, mes i/o dia en el que ens trobem
-    private Data dataActual = new Data(0);      // Data seleccionada a la finestra
+    private Data dataActual;                        // Data seleccionada a la finestra
+    private boolean mesClicat;
 
     private static LlistaActivitats llistaAct = new LlistaActivitats(10);
+    private boolean ocultarUnDia;
+    private boolean ocultarPeriodic;
+    private boolean ocultarOnline;
 
 
     /**
@@ -45,9 +49,13 @@ public class Visualitzacio extends JFrame {
         this.setSize(1000, 400);          // Tamany de la finestra
         this.setLocation(getWidth()/2, getHeight()/2);  // Centrar la finestra al centre de la pantalla
         this.setLayout(new BorderLayout());             // Disposició dels elements en les direccions cardinals
+        this.mesClicat = false;
 
-        this.dataActual.setAny(Integer.parseInt(any));  // Convertim l'any a un enter
-        this.dataActual.setMes(0);
+        this.dataActual = new Data(1, 1, Integer.parseInt(any));
+
+        ocultarUnDia = false;
+        ocultarPeriodic = false;
+        ocultarOnline = false;
 
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
@@ -78,8 +86,6 @@ public class Visualitzacio extends JFrame {
      * - Botó a la dreta que ens permet incrementar el mes seleccionat
      * - Botó a la dreta que ens permet incrementar l'any seleccionat
      * - Botó temporal
-     * 
-     * To Do: Que fem amb això quan tenim seleccionat un mes o un dia?
      */
     private void crearPanellSuperior() {
         // Crear panell superior que conté botons per modificar l'any i l'etiqueta de l'any
@@ -216,7 +222,7 @@ public class Visualitzacio extends JFrame {
         else dataActual.modificarAny(-1);
 
         // Actualitzem text de la capçalera, depenent de si hem clicat anteriorment un mes o encara no
-        if (dataActual.getMes() == 0) etiquetaSuperior.setText("Any: "+dataActual.getAny());
+        if (!mesClicat) etiquetaSuperior.setText("Any: "+dataActual.getAny());
         else {
             etiquetaSuperior.setText("Any: "+dataActual.getAny()+" - Mes: "+Data.nomMes(dataActual.getMes()));
             visualitzarMes();
@@ -253,6 +259,8 @@ public class Visualitzacio extends JFrame {
      */
     public void visualitzarMes() {
         panellPrincipal.remove(panellMes);  // Esborrem el panell mes anterior
+        panellPrincipal.setVisible(false);
+        if (!mesClicat) mesClicat = true;
 
         // La primera vegada que cliquem a un mes, activem la visualització dels botons per a decrementar e incrementar els mesos
         botoEsquerraMes.setVisible(true);
@@ -285,12 +293,13 @@ public class Visualitzacio extends JFrame {
                 else if (diaActual <= diesMes) {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
-
-                    // Afegim la interactivitat dels botons del dia
-                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, new Data(diaActual, dataActual.getMes(), dataActual.getAny())));
+                    Data data = new Data(diaActual, dataActual.getMes(), dataActual.getAny());
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
-                    if (llistaAct.hiHaActivitat(new Data(diaActual, dataActual.getMes(), dataActual.getAny()))) {
+                    if (llistaAct.hiHaActivitat(data, ocultarUnDia, ocultarPeriodic, ocultarOnline)) {
+                        // Afegim la interactivitat dels botons del dia
+                        botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, llistaAct, ocultarUnDia, ocultarPeriodic, ocultarOnline));
+
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
@@ -304,6 +313,7 @@ public class Visualitzacio extends JFrame {
         }
 
         panellPrincipal.add(panellMes); // Afegim el nou panellMes al panell principal
+        panellPrincipal.setVisible(true);
     }
 
     /**
@@ -328,11 +338,23 @@ public class Visualitzacio extends JFrame {
      */
     public void preguntarFiltres() {
         // Utilitzem una variable de la Classe EntrarFiltres
-        EntrarFiltres f = new EntrarFiltres(this);
+        EntrarFiltres f = new EntrarFiltres(this, ocultarUnDia, ocultarPeriodic, ocultarOnline);
 
         // Si l'usuari ha introduït els filtres, filtrem la visualització del calendari
         if (f.dadesEntrades()) {
-            System.out.println("AUD: "+f.getFiltreUnDia()+" AO: "+f.getFiltreOnline()+" AP: "+f.getFiltrePeriodica());
+            // Actualitzem filtre Activitats Un Dia
+            if (f.getFiltreUnDia().equalsIgnoreCase("Ocultar")) ocultarUnDia = true;
+            else if (f.getFiltreUnDia().equalsIgnoreCase("Visualitzar")) ocultarUnDia = false;
+
+            // Actualitzem filtre Activitats Periodiques
+            if (f.getFiltrePeriodica().equalsIgnoreCase("Ocultar")) ocultarPeriodic = true;
+            else if (f.getFiltrePeriodica().equalsIgnoreCase("Visualitzar")) ocultarPeriodic = false;
+
+            // Actualitzem filtre Activitats Online
+            if (f.getFiltreOnline().equalsIgnoreCase("Ocultar")) ocultarOnline = true;
+            else if (f.getFiltreOnline().equalsIgnoreCase("Visualitzar")) ocultarOnline = false;
+
+            visualitzarMes();
         }
     }
 

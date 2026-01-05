@@ -217,9 +217,12 @@ public class LlistaActivitats {
      * Comprova si hi ha alguna activitat el dia indicat
      * 
      * @param data Data a comprovar
+     * @param ocultarUnDia Boolean que indica si hem d'ignorar les Activitats d'Un Dia (true) o no (false)
+     * @param ocultarPeriodic Boolean que indica si hem d'ignorar les Activitats Periòdiques (true) o no (false)
+     * @param ocultarOnline Boolean que indica si hem d'ignorar les Activitats Online (true) o no (false)
      * @return true si hi ha alguna activitat aquell dia, false altrament 
      */
-    public boolean hiHaActivitat(Data data) {
+    public boolean hiHaActivitat(Data data, boolean ocultarUnDia, boolean ocultarPeriodic, boolean ocultarOnline) {
 
         boolean trobat = false;
 
@@ -228,28 +231,71 @@ public class LlistaActivitats {
             Activitats activitat = llista[i];
             String tipus = activitat.getTipus();
 
-            switch (tipus) {
-                case "UnDia":
-                    if (activitat.teClasseAvui(data)) trobat = true;
-                    break;
-                case "Periodica":
-                    if (activitat instanceof ActivitatPeriodica) {
-                        ActivitatPeriodica ap = (ActivitatPeriodica) activitat;
-                        if ((data.getDiaSetmana().equalsIgnoreCase(ap.getDiaSetmana()) && (!data.esAnterior(ap.getDataInici())) 
-                            && (!data.esPosterior(ap.getDataInici().afegirDies(7*ap.getNumSetmanes()))))) trobat = true;
-                    }
-                    break;
-                case "Online":
-                    if (activitat instanceof ActivitatOnline) {
-                        ActivitatOnline ao = (ActivitatOnline) activitat;
-                        if (!data.esAnterior(ao.getDataInici()) 
-                            && (!data.esPosterior(ao.getDataInici().afegirDies(ao.getPeriodeVisualitzacio())))) trobat = true;
-                    }
-                    break;
+            // Si trobem cap activitat d'un dia en la data i no tenim activat ocultarUnDia retornem true
+            if ((tipus.equalsIgnoreCase("UnDia")) && (!ocultarUnDia)) {
+                if (activitat.teClasseAvui(data)) trobat = true;
+            }
+
+            // Si trobem cap activitat periòdica i no tenim activat ocularPeriodica retornem true
+            else if ((tipus.equalsIgnoreCase("Periodica")) && (!ocultarPeriodic)) {
+                if (activitat instanceof ActivitatPeriodica) {
+                    ActivitatPeriodica ap = (ActivitatPeriodica) activitat;
+                    if ((data.getDiaSetmana().equalsIgnoreCase(ap.getDiaSetmana()) && (!data.esAnterior(ap.getDataInici())) 
+                        && (!data.esPosterior(ap.getDataInici().afegirDies(7*ap.getNumSetmanes()))))) trobat = true;
+                }
+            }
+
+            // Si trobem cap activitat online i no tenim activat ocularOnline retornem true
+            else if ((tipus.equalsIgnoreCase("Online")) && (!ocultarOnline)) {
+                if (activitat instanceof ActivitatOnline) {
+                    ActivitatOnline ao = (ActivitatOnline) activitat;
+                    if (!data.esAnterior(ao.getDataInici()) 
+                        && (!data.esPosterior(ao.getDataInici().afegirDies(ao.getPeriodeVisualitzacio())))) trobat = true;
+                }
             }
             i++;
         }
         
         return trobat;
+    }
+
+    /**
+     * Mètode per obtenir una llista d'activitats actives o amb classe una data determinada
+     * @param data
+     * @return
+     * @throws IOException 
+     */
+    public LlistaActivitats llistaActivitatsData(Data data, boolean ocultarUnDia, boolean ocultarPeriodic, boolean ocultarOnline) throws IOException {
+        LlistaActivitats llistaData = new LlistaActivitats(numActivitats);
+
+        for (int i = 0; i < numActivitats; i++) {
+            Activitats activitat = llista[i];
+            String tipus = activitat.getTipus();
+
+            // Si trobem cap activitat d'un dia en la data i no tenim activat ocultarUnDia retornem true
+            if ((tipus.equalsIgnoreCase("UnDia")) && (!ocultarUnDia)) {
+                if (activitat.teClasseAvui(data)) llistaData.afegir(activitat);
+            }
+
+            // Si trobem cap activitat periòdica i no tenim activat ocularPeriodica retornem true
+            else if ((tipus.equalsIgnoreCase("Periodica")) && (!ocultarPeriodic)) {
+                if (activitat instanceof ActivitatPeriodica) {
+                    ActivitatPeriodica ap = (ActivitatPeriodica) activitat;
+                    if ((data.getDiaSetmana().equalsIgnoreCase(ap.getDiaSetmana()) && (!data.esAnterior(ap.getDataInici())) 
+                        && (!data.esPosterior(ap.getDataInici().afegirDies(7*ap.getNumSetmanes()))))) llistaData.afegir(activitat);
+                }
+            }
+
+            // Si trobem cap activitat online i no tenim activat ocularOnline retornem true
+            else if ((tipus.equalsIgnoreCase("Online")) && (!ocultarOnline)) {
+                if (activitat instanceof ActivitatOnline) {
+                    ActivitatOnline ao = (ActivitatOnline) activitat;
+                    if (!data.esAnterior(ao.getDataInici()) 
+                        && (!data.esPosterior(ao.getDataInici().afegirDies(ao.getPeriodeVisualitzacio())))) llistaData.afegir(activitat);
+                }
+            }
+        }
+
+        return llistaData;
     }
 }

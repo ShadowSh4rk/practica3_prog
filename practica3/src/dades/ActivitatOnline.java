@@ -78,7 +78,7 @@ public class ActivitatOnline extends Activitats {
      */
     @Override
     public boolean esActivaAvui(Data avui){
-        return ((avui.esPosterior(dataInici))&&(avui.esAnterior(dataFi)));
+        return ((avui.esPosterior(dataInici)) && (avui.esAnterior(dataFi)));
     }
 
     /**
