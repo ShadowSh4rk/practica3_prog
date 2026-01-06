@@ -306,6 +306,21 @@ private String tipus; // UnDia, Periodica, Online
     }
 
     /**
+     * Crea una llista de les valoracions d'una activitat
+     * @param nom
+     * @return llista de valoracions de l'activitat
+     */
+    public int[] valoracionsperActivitat(String nom) {
+        int[] aux = new int[nIns];
+        for (int i = 0; i < nIns; i++) {
+            if(llistaInscri[i].getValoracio()!=11){
+                aux[i] = llistaInscri[i].getValoracio();
+            }
+        }
+        return aux;
+    }
+
+    /**
      * obte una inscripcio de la llista d'inscripcions d'una activitat en base al nom de l'usuari
      * @param nomUsu nom de l'usuari
      * @return la inscripcio buscada dins la llista d'inscripcions

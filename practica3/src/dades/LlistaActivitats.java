@@ -234,22 +234,6 @@ public class LlistaActivitats {
     }
 
     /**
-     * Crea una llista de les valoracions de les activitats 
-     * @param nom
-     * @return llista de valoracions de les activitats
-     */
-    public int[] valoracionsActivitats() {
-        int[] aux = new int[numActivitats];
-        for (int i = 0; i < numActivitats; i++) {
-            if (llista[i].haAcabat()) {
-                aux[i] = llista[i].getValoracio();
-            }
-        }
-
-        return aux;
-    }
-
-    /**
      * Escriu la llista completa d'activitats en un fitxer de text.
      * 
      * @throws IOException Si hi ha un error en escriure el fitxer

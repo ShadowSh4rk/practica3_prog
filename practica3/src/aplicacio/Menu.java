@@ -648,13 +648,18 @@ public class Menu {
 
     public static void opcio17() {
         // 17. Mostrar el resum de valoracions de les activitats que ja han acabat
-        llistaAct.valoracionsActivitats();
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            Activitats act = llistaAct.getActivitat(i);
+            if(act.haAcabat(avui)){ //seleccionem les que han acabat
+                act.valoracionsperActivitat(act.getNom()); //obtenim la llista de valoracions
+            }
+        }
         
     }
 
     public static void opcio18() {
         // 18. Mostrar el resum de valoracions que ha fet un usuari
-        System.out.println("introdueix el nom d'usuari:");
+        System.out.println("introdueix el nom d'usuari: ");
         llistaAct.valoracionsperUsuari(teclat.nextLine());
         
     }
