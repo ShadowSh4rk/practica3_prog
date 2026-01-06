@@ -20,7 +20,7 @@ public class EntrarDadesData extends JDialog {
 
 
 	public EntrarDadesData(JFrame finestraPare) {
-		super(finestraPare, "Entrar dades ...");
+		super(finestraPare, "Entrar data ...");
 
 		// Inicialment l'usuari no ha entrat dades
 		ok = false;

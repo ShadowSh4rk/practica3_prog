@@ -31,7 +31,7 @@ public class Visualitzacio extends JFrame {
     private Data dataActual;                        // Data seleccionada a la finestra
     private boolean mesClicat;
 
-    private static LlistaActivitats llistaAct = new LlistaActivitats(10);
+    private LlistaActivitats llistaAct;
     private boolean ocultarUnDia;
     private boolean ocultarPeriodic;
     private boolean ocultarOnline;
@@ -58,6 +58,16 @@ public class Visualitzacio extends JFrame {
         ocultarPeriodic = false;
         ocultarOnline = false;
 
+        // Càrrega d'activitats des de FitxerLlistaActivitats.txt amb gestió d'excepcions
+        int numLinies = 0;
+        try {
+            numLinies = Menu.llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
+            llistaAct = new LlistaActivitats(numLinies);
+            Menu.afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         crearPanellSuperior();      // Creem la capçalera superior
         crearPanellAny();           // Creem la vista dels mesos de l'any
         crearPanellMes();           // Creem la vista dels dies del mes
@@ -77,7 +87,7 @@ public class Visualitzacio extends JFrame {
     }
 
 
-    // MÉTODES AUXILIARS PER A GESTIONAR LA FINESTRA
+    // MÉTODES AUXILIARS PER A GESTIONAR LA FINESTRA PRINCIPAL
     /**
      * Mètode per a crear la capçalera superior de la finestra, composada de 7 elements:
      * - Botó que ens permet fixar una nova data a visualitzar
@@ -295,12 +305,12 @@ public class Visualitzacio extends JFrame {
                     botonsMes[i][j] = new JButton(Integer.toString(diaActual));             // Assignem el número del dia del mes com a text del botó
                     botonsMes[i][j].setFont(new Font("Calibri", Font.BOLD, 24)); // Format pel text del botó
                     Data data = new Data(diaActual, dataActual.getMes(), dataActual.getAny());
+
+                    // Afegim la interactivitat dels botons del dia
+                    botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, llistaAct, ocultarUnDia, ocultarPeriodic, ocultarOnline));
                     
                     // Si la data en la que estem conté cap activitat, marquem el botó amb un color
                     if (llistaAct.hiHaActivitat(data, ocultarUnDia, ocultarPeriodic, ocultarOnline)) {
-                        // Afegim la interactivitat dels botons del dia
-                        botonsMes[i][j].addActionListener(new AccioBotonsDia(this, data, llistaAct, ocultarUnDia, ocultarPeriodic, ocultarOnline));
-
                         botonsMes[i][j].setBackground(Color.CYAN);
 		                botonsMes[i][j].setOpaque(true);
                     }
@@ -368,23 +378,8 @@ public class Visualitzacio extends JFrame {
      * - Després es selecciona el mes que es vol visualitzar.
      * - Sobre la vista tipus calendari es mostrarà els dies que hi ha activitats.
      * - Al seleccionar un dia, es mostrarà el detall de les activitats del dia.
-     * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
-        // Codi auxiliar per a provar que es veuen activitats
-        String[] miaus = new String[2];
-        ActivitatUnDia aud = new ActivitatUnDia("Yoga", miaus, new Data(11, 9, 2001), new Data(22, 7, 2004), new Data(22, 10, 2025), "9:00-18:00", "Barcelona", 8, 1.99);
-        ActivitatOnline ao = new ActivitatOnline("Classe Virtual", miaus, new Data(11, 9, 2001), new Data(5, 5, 2005), new Data(1, 1, 2026), 20, "https://meet.com/miaumiaumiau");
-        ActivitatPeriodica ap = new ActivitatPeriodica("Classes de Cuina", miaus, new Data(7, 11, 1917), new Data(30, 12, 1922), "Dilluns","18:00-20:00", new Data(2, 2, 2026), 3, "Sescelades", "Tarragona", 5, 4.98);
-        llistaAct.afegir(aud);
-        llistaAct.afegir(ao);
-        llistaAct.afegir(ap);
-        System.out.println("DEBUG: Activitats carregades a la llista: " + llistaAct.getNumActivitats());
-
-        int numLinies = Menu.llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
-        Menu.afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
-        System.out.println("DEBUG: Activitats carregades a la llista: " + llistaAct.getNumActivitats());
-
+    public static void main(String[] args) {
         // Per a començar el codi, primer esperem a que l'usuari indiqui un any valid per a visualitzar.
         String any = JOptionPane.showInputDialog("Indica l'any a visualitzar");
         while ((any == null) || (any.equals(""))) {

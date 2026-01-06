@@ -701,80 +701,102 @@ public class Menu {
         return numLinies;
     }
 
+    /**
+     * Métode per a afegir les activitats detallades a un fitxer de text a una LlistaActivitats
+     * @param numActivitats nombre d'Activitats que hi ha a la llista
+     * @param llista llista de fitxers on volem afegir les activitats
+     * @throws IOException
+     */
     public static void afegeixActivitatsDesdeFitxer(int numActivitats, LlistaActivitats llista) throws IOException{
         BufferedReader lectura;
 
-        try{ //control de si podem obrir o no el fitxer
+        // Control per a obrir el fitxer
+        try {
             lectura = new BufferedReader(new FileReader("FitxerLlistaActivitats.txt"));
-            String linia;
-            String [] trossos, trossosCol, col;
-            int i=0;
+            String linia;   // Línia del fitxer
+            String[] trossos, trossosCol, col; 
+            int i = 0;      // Índex de línia
 
-            linia = lectura.readLine();
-            while(linia!=null && i<numActivitats){
+            linia = lectura.readLine(); // Llegim línia, mentre línia no sigui null i tinguem activitats al fitxer
+            while((linia != null) && (i < numActivitats)){
                     trossos = linia.split(";");
 
-                    Activitats activitat;
+                    Activitats activitat;       // Activitat que afegirem a la llista
 
-                    String tipus = trossos [0];
+                    String tipus = trossos [0]; // El primer parámetre indica el tipus d'activitat que tenim (Un Dia / Periodica / Online)
 
-                    //====== en comu ====
-                    String nom = trossos[1];
+                    // Valors en comú entre tipus d'activitats
+                    String nom = trossos[1];                    // Nom de l'activitat
+
+                    // Col·lectius als que interessa l'activitat
                     trossosCol = trossos[2].split(",");
                     col = new String[trossosCol.length];
-                    for(int j=0; j<trossosCol.length; j++){
-                        col[j]=trossosCol[j];
-                    }
+                    for (int j = 0; j < trossosCol.length; j++)col[j]=trossosCol[j];
 
+                    // Data d'inici d'inscripció a l'activitat i finalització
                     Data iniciInscri = new Data(Integer.parseInt(trossos[3]), Integer.parseInt(trossos[4]), Integer.parseInt(trossos[5]));
                     Data fiInscri = new Data(Integer.parseInt(trossos[6]), Integer.parseInt(trossos[7]), Integer.parseInt(trossos[8]));
 
-                    int limPlaces;
+                    // Valors per separat entre activitats: Activitats d'un dia
+                    if (tipus.equalsIgnoreCase("undia")) {
+                        int limPlaces = Integer.parseInt(trossos[9]);   // Límit de places de l'activitat
 
-                    //====== per separat ====
-
-                    if (tipus.equalsIgnoreCase("undia")){
+                        // Data de realització de l'activitat
                         Data data = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
-                        limPlaces = Integer.parseInt(trossos[9]);
-                        String horari = trossos[13];
-                        String ciutat = trossos[14];
-                        double preu = Double.parseDouble(trossos[15]);
 
+                        String horari = trossos[13];                        // Horari de realització de l'activitat
+                        String ciutat = trossos[14];                        // Ciutat on es realitza l'activitat
+                        double preu = Double.parseDouble(trossos[15]);      // Preu per a participar a l'activitat
+
+                        // Creem l'activitat d'un dia
                         activitat = new ActivitatUnDia(nom, col, iniciInscri, fiInscri, data, horari, ciutat, limPlaces, preu);
-                        
-                    }else if(tipus.equalsIgnoreCase("periodica")){
-                        limPlaces = Integer.parseInt(trossos[9]);
-                        String diaSetmana = trossos[10];
-                        String horari = trossos[11];
+                    }
+
+                    // Valors per separat entre activitats: Activitats periòdiques
+                    else if (tipus.equalsIgnoreCase("periodica")) {
+                        int limPlaces = Integer.parseInt(trossos[9]);       // Límit de places de l'activitat
+                        String diaSetmana = trossos[10];                    // Dia de la setmana quan es realitza l'activitat
+                        String horari = trossos[11];                        // Horari en el que es realitza l'activitat
+
+                        // Data de realització de l'activitat
                         Data dataIni = new Data(Integer.parseInt(trossos[12]), Integer.parseInt(trossos[13]), Integer.parseInt(trossos[14]));
-                        int numSetmanes = Integer.parseInt(trossos[15]);
-                        String centre = trossos[16];
-                        String ciutat = trossos [17];
-                        double preuTotal = Double.parseDouble(trossos[18]);
 
-                        activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, horari, dataIni, numSetmanes, centre, ciutat, limPlaces, preuTotal);
+                        int numSetmanes = Integer.parseInt(trossos[15]);    // Nombre de setmanes durant les quals es realitza l'activitat
+                        String centre = trossos[16];                        // Centre on es realitza l'activitat
+                        String ciutat = trossos [17];                       // Ciutat on es realitza l'activitat
+                        double preuTotal = Double.parseDouble(trossos[18]); // Preu tota per a participar a l'activitat
 
-                    }else{ //activitatOnline
+                        // Creem l'activitat periòdica
+                        activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, horari, dataIni, numSetmanes, centre, ciutat, 
+                            limPlaces, preuTotal);
+                    }
+
+                    // Valors per separat entre activitats: Activitats Online
+                    else {
+                        // Data de realització de l'activitat
                         Data dataIni = new Data(Integer.parseInt(trossos[9]), Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]));
 
-                        int periodeVis = Integer.parseInt(trossos[12]);
-                        String enllac = trossos[13];
+                        int periodeVis = Integer.parseInt(trossos[12]);     // Nombre de dies després de l'inici de l'activitat durant la que es pot visualitzar
+                        String enllac = trossos[13];                        // Enllaç de la videotrucada de l'activitat
 
+                        // Creem l'activitat online
                         activitat = new ActivitatOnline(nom, col, iniciInscri, fiInscri, dataIni, periodeVis, enllac);
                     }
 
-                    llista.afegir(activitat);
-                    i++;
+                    llista.afegir(activitat);   // Afegim l'activitat corresponent
+                    i++;                        // Incrementem índex
 
-                    linia = lectura.readLine();
+                    linia = lectura.readLine(); // Llegim línia seguent
             }
 
+            // Tanquem lectura
             lectura.close();
 
-        }catch(FileNotFoundException e){
-            System.out.println("fitxer no trobat, no es pot llegir");
-        }catch(IOException e){
-            System.out.println("altres errors al llegir el fitxer");
+        // Gestió de posibles excepcions
+        } catch (FileNotFoundException e) {
+            System.out.println("Fitxer no trobat, no es pot llegir: "+e);
+        } catch(IOException e) {
+            System.out.println("Altres errors al llegir el fitxer: "+e);
         }
     }
 
