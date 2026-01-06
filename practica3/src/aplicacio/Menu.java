@@ -775,5 +775,15 @@ public class Menu {
             System.out.println("altres errors al llegir el fitxer");
         }
     }
+
+    public static double mitjanaValoracions(int[] llistaValoracions, int numValoracions){
+        int sumatori = 0;
+        for(int i=0; i<numValoracions; i++){
+            sumatori += llistaValoracions[i];
+        }
+    
+        return ((double)(sumatori/numValoracions));
+
+    }
     
 }
