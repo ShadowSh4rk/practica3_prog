@@ -35,7 +35,7 @@ public class Inscripcio implements Serializable{
         this.nomActivitat = nomActivitat;
         this.nomInscrit = nomInscrit;
         this.dataInscripcio = dataInscripcio;
-        valoracio = 0;
+        valoracio = 11;
     }
 
     public Data getDataInscripcio() {

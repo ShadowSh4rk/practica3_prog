@@ -644,17 +644,18 @@ public class Menu {
             System.out.println(e.getMessage());
         }
         
-        
-        
     }
 
     public static void opcio17() {
         // 17. Mostrar el resum de valoracions de les activitats que ja han acabat
+        llistaAct.valoracionsActivitats();
         
     }
 
     public static void opcio18() {
         // 18. Mostrar el resum de valoracions que ha fet un usuari
+        System.out.println("introdueix el nom d'usuari:");
+        llistaAct.valoracionsperUsuari(teclat.nextLine());
         
     }
 

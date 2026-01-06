@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import excepcions.ActivitatInexistentException;
+import excepcions.NoInscrit;
 
 /**
  * Gestiona una llista d'activitats i ofereix funcionalitats
@@ -198,6 +199,11 @@ public class LlistaActivitats {
         return res; 
     }
 
+    /**
+     * Crea una llista dels noms de les activitats a les que un usuari esta inscrit
+     * @param nom
+     * @return llista de noms de les activitats
+     */
     public String[] activitatsUsuari(String nom) {
         String[] aux = new String[numActivitats];
         for (int i = 0; i < numActivitats; i++) {
@@ -205,6 +211,41 @@ public class LlistaActivitats {
                 aux[i] = llista[i].getNom();
             }
         }
+        return aux;
+    }
+
+    /**
+     * Crea una llista de les valoracions de les activitats a les que un usuari esta inscrit
+     * @param nom
+     * @return llista de valoracions de les activitats
+     */
+    public int[] valoracionsperUsuari(String nom) {
+        int[] aux = new int[numActivitats];
+        for (int i = 0; i < numActivitats; i++) {
+            try {
+                if (llista[i].obtenirInscripcioPerNom(nom).getValoracio()!=11) {
+                    aux[i] = llista[i].obtenirInscripcioPerNom(nom).getValoracio();
+                }
+            } catch (NoInscrit e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return aux;
+    }
+
+    /**
+     * Crea una llista de les valoracions de les activitats 
+     * @param nom
+     * @return llista de valoracions de les activitats
+     */
+    public int[] valoracionsActivitats() {
+        int[] aux = new int[numActivitats];
+        for (int i = 0; i < numActivitats; i++) {
+            if (llista[i].haAcabat()) {
+                aux[i] = llista[i].getValoracio();
+            }
+        }
+
         return aux;
     }
 

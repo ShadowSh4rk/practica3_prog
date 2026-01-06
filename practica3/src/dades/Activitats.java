@@ -51,7 +51,7 @@ private String tipus; // UnDia, Periodica, Online
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
         this.dataFiInscripcio = dataFiInscripcio;
-        this.limitPlaces = 50;  //LOL
+        this.limitPlaces = Integer.MAX_VALUE;
         this.tipus = tipus;
 
         //inicialitzem llistes (inscripcions i espera)
@@ -305,6 +305,12 @@ private String tipus; // UnDia, Periodica, Online
 
     }
 
+    /**
+     * obte una inscripcio de la llista d'inscripcions d'una activitat en base al nom de l'usuari
+     * @param nomUsu nom de l'usuari
+     * @return la inscripcio buscada dins la llista d'inscripcions
+     * @throws NoInscrit
+     */
     public Inscripcio obtenirInscripcioPerNom(String nomUsu) throws NoInscrit{
         Inscripcio aux = new Inscripcio(nom, nomUsu, new Data(1, 1, 2100));
         boolean trobat = false;
