@@ -383,5 +383,6 @@ private String tipus; // UnDia, Periodica, Online
         }
         return alies;
     }
+
     }
     

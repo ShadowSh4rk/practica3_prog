@@ -356,6 +356,8 @@ public class Menu {
 
     public static void opcio9() {
         // 9. Mostrar les activitats a les que està apuntat un usuari 
+        System.out.println("\tintrodueix el nom de l'usuari:");
+        llistaAct.activitatsUsuari(teclat.nextLine());
         
     }
 
@@ -498,9 +500,6 @@ public class Menu {
         System.out.println("No s'ha trobat cap activitat amb aquest nom.");
     }
 }
-
-
-
 
     public static void opcio13() {
         // 13. Afegir una nova activitat d'un dia

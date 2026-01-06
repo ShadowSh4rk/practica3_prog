@@ -198,6 +198,16 @@ public class LlistaActivitats {
         return res; 
     }
 
+    public String[] activitatsUsuari(String nom) {
+        String[] aux = new String[numActivitats];
+        for (int i = 0; i < numActivitats; i++) {
+            if (llista[i].estaInscrit(nom)) {
+                aux[i] = llista[i].getNom();
+            }
+        }
+        return aux;
+    }
+
     /**
      * Escriu la llista completa d'activitats en un fitxer de text.
      * 

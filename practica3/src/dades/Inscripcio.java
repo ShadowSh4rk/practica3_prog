@@ -44,6 +44,10 @@ public class Inscripcio implements Serializable{
         return dataInscripcio;
     }
 
+    public String getNomActivitat() {
+        return nomActivitat;
+    }
+
     public String getNomInscrit() {
         return nomInscrit;
     }
