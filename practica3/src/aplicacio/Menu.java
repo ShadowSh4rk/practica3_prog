@@ -623,6 +623,28 @@ public class Menu {
 
     public static void opcio16() {
         // 16. Valorar una activitat per part d'un assistent. Per poder fer la valoració, l'activitat ha d'haver acabat i l'usuari ha d'haver assistit a l'activitat
+        System.out.println("nom de l'activitat a valorar:");
+        Activitats act = llistaAct.buscarPerNom(teclat.nextLine()); //obtenim l'activitat
+
+        System.out.println("nom de l'usuari que la valora:");
+        try {
+            Inscripcio inscri = act.obtenirInscripcioPerNom(teclat.nextLine());
+            try {
+                System.out.println("valoracio (nombre del 0 al 10):");
+                inscri.assignarValoracio(Integer.parseInt(teclat.nextLine()), avui);
+
+            } catch (ActivitatNoFinalitzada e) {
+                System.out.println(e.getMessage());
+
+            } catch (ForaDeRang e){
+                System.out.println(e.getMessage());
+            }
+
+        } catch (NoInscrit e) {
+            System.out.println(e.getMessage());
+        }
+        
+        
         
     }
 

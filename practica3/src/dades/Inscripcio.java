@@ -2,9 +2,7 @@ package dades;
 
 import java.io.Serializable;
 
-import excepcions.ActivitatNoFinalitzada;
-import excepcions.ForaDeRang;
-import excepcions.NoInscrit;
+import excepcions.*;
 
 public class Inscripcio implements Serializable{
     private String nomActivitat;
@@ -63,9 +61,9 @@ public class Inscripcio implements Serializable{
     }
 
     //control valoracio
-        public static void assignarValoracio (Inscripcio inscri, int valoracio, Data avui) throws ActivitatNoFinalitzada, ForaDeRang, NoInscrit{
+        public void assignarValoracio (int valoracio, Data avui) throws ActivitatNoFinalitzada, ForaDeRang{
 
-            if(!inscri.getActivitats().haAcabat(avui)){
+            if(!this.getActivitats().haAcabat(avui)){
                 throw new ActivitatNoFinalitzada();
             }
 
@@ -73,12 +71,8 @@ public class Inscripcio implements Serializable{
                 throw new ForaDeRang();
             }
 
-            if (!inscri.getActivitats().estaInscrit(inscri.getNomInscrit())){
-                throw new NoInscrit();
-            }
-
             //si tot esta be, afegim la valoracio
-            inscri.setValoracio(valoracio);
+            this.setValoracio(valoracio);
         }
 
 

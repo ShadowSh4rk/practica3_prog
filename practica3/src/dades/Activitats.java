@@ -305,6 +305,24 @@ private String tipus; // UnDia, Periodica, Online
 
     }
 
+    public Inscripcio obtenirInscripcioPerNom(String nomUsu) throws NoInscrit{
+        Inscripcio aux = new Inscripcio(nom, nomUsu, new Data(1, 1, 2100));
+        boolean trobat = false;
+        int i=0;
+        while(i<nIns){
+            if((llistaInscri[i].getNomInscrit().equals(nomUsu))){
+                aux = llistaInscri[i].copia();
+                trobat = true;
+            }else{
+                i++;
+            }
+        }
+        if(trobat == false){
+            throw new NoInscrit();
+        }
+        return aux;
+    }
+
     //GESTIO FITXER SERIALITZAT
 
     /**
