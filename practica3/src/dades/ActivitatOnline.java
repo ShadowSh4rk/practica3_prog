@@ -34,7 +34,7 @@ public class ActivitatOnline extends Activitats {
         this.periodeVisualitzacio = periodeVisualitzacio;
         this.enllac = enllac; 
 
-        dataFi=new Data(dataInici.getDia()+periodeVisualitzacio, dataInici.getMes(), dataInici.getAny());
+        dataFi = dataInici.afegirDies(periodeVisualitzacio);
     }
 
     /**
