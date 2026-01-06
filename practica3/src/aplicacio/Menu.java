@@ -29,6 +29,7 @@ public class Menu {
     public static void main(String[] args) throws IOException {
 
         int numLinies = llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
+        llistaAct = new LlistaActivitats(numLinies);
 
         afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
 
@@ -710,7 +711,7 @@ public class Menu {
             int i=0;
 
             linia = lectura.readLine();
-            while(linia!=null && i>numActivitats){
+            while(linia!=null && i<numActivitats){
                     trossos = linia.split(";");
 
                     Activitats activitat;
@@ -721,7 +722,7 @@ public class Menu {
                     String nom = trossos[1];
                     trossosCol = trossos[2].split(",");
                     col = new String[trossosCol.length];
-                    for(int j=0; i<trossosCol.length; j++){
+                    for(int j=0; j<trossosCol.length; j++){
                         col[j]=trossosCol[j];
                     }
 

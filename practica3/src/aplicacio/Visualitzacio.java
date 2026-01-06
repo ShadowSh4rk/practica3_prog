@@ -9,6 +9,7 @@ import java.io.IOException;
 
 // IMPORTS PAQUETS LOCALS
 import dades.*;
+import aplicacio.Menu;
 
 
 /**
@@ -378,6 +379,10 @@ public class Visualitzacio extends JFrame {
         llistaAct.afegir(aud);
         llistaAct.afegir(ao);
         llistaAct.afegir(ap);
+        System.out.println("DEBUG: Activitats carregades a la llista: " + llistaAct.getNumActivitats());
+
+        int numLinies = Menu.llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
+        Menu.afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
         System.out.println("DEBUG: Activitats carregades a la llista: " + llistaAct.getNumActivitats());
 
         // Per a començar el codi, primer esperem a que l'usuari indiqui un any valid per a visualitzar.

@@ -51,7 +51,7 @@ private String tipus; // UnDia, Periodica, Online
         this.colectius = colectius; 
         this.dataIniciInscripcio = dataIniciInscripcio; 
         this.dataFiInscripcio = dataFiInscripcio;
-        this.limitPlaces = Integer.MAX_VALUE;
+        this.limitPlaces = 50; // Integer.MAX_VALUE peta
         this.tipus = tipus;
 
         //inicialitzem llistes (inscripcions i espera)
