@@ -776,14 +776,13 @@ public class Menu {
         }
     }
 
-    public static double mitjanaValoracions(int[] llistaValoracions, int numValoracions){
+    public static double mitjanaValoracions(int[] llistaValoracions){
         int sumatori = 0;
-        for(int i=0; i<numValoracions; i++){
+        for(int i=0; i<llistaValoracions.length; i++){
             sumatori += llistaValoracions[i];
         }
     
-        return ((double)(sumatori/numValoracions));
-
+        return (double)sumatori/llistaValoracions.length;
     }
     
 }
