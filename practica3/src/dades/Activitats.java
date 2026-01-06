@@ -2,6 +2,8 @@ package dades;
 
 import java.io.*;
 
+import excepcions.*;
+
 /**
  * Classe abstracta que representa una activitat genèrica.
  * 
@@ -196,10 +198,22 @@ private String tipus; // UnDia, Periodica, Online
      * afegeix una nova inscripcio a la llista
      * @param dada
      */
-    public void afegir(Inscripcio dada) throws IOException {
+    public void afegir(Inscripcio dada) throws NoAcceptaCol, ForaPeriodeInscripcio, NoQuedenPlaces {
 
         Activitats activitat = dada.getActivitats();
+        Usuari usuari = dada.getUsuari();
+
         Data n1 = dada.getDataInscripcio();
+
+        //mirem si ens podem inscriure
+            if(!activitat.esEnPeriodeInscripcio(dada.getDataInscripcio())){
+                throw new ForaPeriodeInscripcio();
+            }
+
+            if(!activitat.acceptaColectiu(usuari.getColectiu())){
+                throw new NoAcceptaCol();
+            }
+
         if (nIns<activitat.getLimitPlaces()){ //si hi ha lloc dins la llista d'inscripcions, afegim l'inscripcio
             //AFEGIM PER DATA D'INSCRIPCIO
             //pas 1: buscar el lloc 
@@ -220,9 +234,7 @@ private String tipus; // UnDia, Periodica, Online
             nIns++;
 
 
-        }else{ //si no hi ha lloc, mirem si la podem afegir a la llista d'espera
-
-            if(nEsp<limitEspera){ 
+        }else if(nEsp<limitEspera){ //si no hi ha lloc, mirem si la podem afegir a la llista d'espera
                 //AFEGIM PER DATA D'INSCRIPCIO
                 //pas 1: buscar el lloc 
                 int i=0;
@@ -240,7 +252,8 @@ private String tipus; // UnDia, Periodica, Online
                 //pas 3: col·locar la dada a afegir i incrementar nombre d'elements
                 llistaEspera[i] = dada.copia();
                 nEsp++;
-            }
+        }else{
+            throw new NoQuedenPlaces();
         }
     }
     
@@ -355,5 +368,20 @@ private String tipus; // UnDia, Periodica, Online
         return trobat;
     }
 
+    public String buscaAliesInscripcio(String nom){
+        String alies = "Desconegut";
+        boolean trobat = false;
+        int i=0;
+        while (i<llistaInscri.length && !trobat) {
+            if(llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)){
+                alies = llistaInscri[i].getUsuari().getAlies();
+                trobat = true;
+            }
+            else{
+                i++;
+            }
+        }
+        return alies;
+    }
     }
     

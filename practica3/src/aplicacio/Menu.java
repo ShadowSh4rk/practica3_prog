@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import dades.*;
+import excepcions.*;
 
 public class Menu {
     static Scanner teclat = new Scanner(System.in);
@@ -358,12 +359,46 @@ public class Menu {
         
     }
 
-    public static void opcio10() {
+    public static void opcio10(){
         // 10. Inscriure's a una activitat. Ens podem inscriure si estem dins el termini i l'activitat s'ofereix a usuaris del col·lectiu on pertanyem.
         //  L'usuari que es vol inscriure pot estar ja a la llista, llavors només caldrà indicar el seu alies. Si no el tenim a la llista li haurem de 
         //  demanar tota la resta d'informació per afegir-lo. Haurem de controlar si en el moment de fer la inscripció encara hi ha places disponibles,
         //  o bé, es passa a llista d'espera. També es podria donar el cas que la llista d'espera ja està plena i ja no es permet cap tipus d'inscripció.
-        
+
+        // Demanem a l'usuari quina activitat vol consultar
+        System.out.println("Introdueix el nom de l'activitat:");
+        String nomAct = teclat.nextLine();
+
+        try {
+            // Busquem l'activitat dins de la llista
+            Activitats act = llistaAct.obtenirPerNom(nomAct); //llença ActivitatInexistentException
+
+            //Demanem nom de l'usuari
+            System.out.println("Introdueix el teu nom:");
+            String nomUsu = teclat.nextLine();
+            if(act.estaInscrit(nomUsu)){
+                System.out.println("ja estas inscrit. el teu alies es: "+act.buscaAliesInscripcio(nomUsu));
+            }else{
+                Inscripcio inscri = new Inscripcio(nomAct, nomUsu, avui);
+
+                try {
+                    act.afegir(inscri);
+
+                } catch (ForaPeriodeInscripcio e){
+                    System.out.println(e.getMessage());
+
+                } catch (NoAcceptaCol e){
+                    System.out.println(e.getMessage());
+
+                } catch (NoQuedenPlaces e){
+                    System.out.println(e.getMessage());
+                }
+            }
+
+        } catch (ActivitatInexistentException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void opcio11() {

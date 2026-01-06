@@ -20,6 +20,12 @@ public class Inscripcio implements Serializable{
         return activitat;
     }
 
+    private Usuari usuari;
+
+    public Usuari getUsuari() {
+        return usuari;
+    }
+
     /**
      * constructor de la classe inscripcio
      * 

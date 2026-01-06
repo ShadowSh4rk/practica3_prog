@@ -17,7 +17,7 @@ public class PDI extends Usuari {
      * @param campus el campus on treballa
      */
     public PDI(String alies, String adrecaCorreu, String nomDepartament, String campus) {
-        super(alies, adrecaCorreu);
+        super(alies, adrecaCorreu, "PDI");
         this.nomDepartament = nomDepartament;
         this.campus = campus;
     }

@@ -15,7 +15,7 @@ public class PTGAS extends Usuari {
      * 
      */
     public PTGAS(String alies, String adrecaCorreu, String campus) {
-        super(alies, adrecaCorreu);
+        super(alies, adrecaCorreu, "PTGAS");
         this.campus = campus;
     }
 

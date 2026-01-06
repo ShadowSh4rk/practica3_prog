@@ -13,15 +13,17 @@ package dades;
 public abstract class Usuari {
     protected String alies;
     protected String adrecaCorreu; 
+    private String colectiu; // PDI, PTGAS, Estudiants
 
     /**
      * 
      * @param alies identifica a l'usuari.
      * @param adrecaCorreu nom de l'adreça del correu electrònic fins abans de l'@
      */
-    public Usuari(String alies, String adrecaCorreu) {
+    public Usuari(String alies, String adrecaCorreu, String colectiu) {
         this.alies = alies;
         this.adrecaCorreu = adrecaCorreu;
+        this.colectiu = colectiu;
     }
 
     /**
@@ -38,6 +40,10 @@ public abstract class Usuari {
     */
     public String getCorreu() {
         return adrecaCorreu;
+    }
+
+    public String getColectiu() {
+        return colectiu;
     }
 
     /**

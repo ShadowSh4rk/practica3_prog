@@ -18,7 +18,7 @@ public class Estudiant extends Usuari {
      * @param anyInici
      */
     public Estudiant(String alies, String adrecaCorreu, String ensenyament, int anyInici) {
-        super(alies, adrecaCorreu);
+        super(alies, adrecaCorreu, "Estudiants");
         this.ensenyament = ensenyament;
         this.anyInici = anyInici;
     }
