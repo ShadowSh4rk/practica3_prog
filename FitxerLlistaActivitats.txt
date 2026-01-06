@@ -1,7 +1,3 @@
-Online;Classe Virtual;null,null;11;9;2001;5;5;2005;50;1;1;2026;20;https://meet.com/miaumiaumiau;
-UnDia;Visita al Museo Picasso;Arte,Cultura,Museo;15;10;2024;30;10;2024;25;25;10;2024;10:00-14:00;Barcelona;12.50
-Periodica;Clases de Yoga;Salud,Deporte,Relajación;1;9;2024;15;12;2024;20;Lunes;18:00-19:30;2;9;2024;12;Centro Cívico;Girona;150.00
-Online;Curso de Java;Programación,Tecnología,Formación;1;10;2024;31;10;2024;50;15;10;2024;30;https://meet.google.com/abc-defg-hij
-Undia;Senderismo Montaña;Naturaleza,Deporte,Aire Libre;10;11;2024;20;11;2024;15;23;11;2024;08:30-17:00;Puigcerdà;5.00
-Periodica;Taller de Pintura;Arte,Creatividad,Cultura;5;11;2024;10;12;2024;10;Miércoles;16:00-18:00;6;11;2024;5;Escuela de Arte;Lleida;75.00
-Online;Webinar Marketing Digital;Empresa,Tecnología,Marketing;20;11;2024;10;12;2024;100;25;11;2024;15;https://zoom.us/j/123456789
+undia;Visita al Museo Picasso;Arte,Cultura,Museo;15;10;2024;30;10;2024;50;25;10;2024;10:00-14:00;Barcelona;12.50
+periodica;Clases de Yoga;Salud,Deporte,Relajación;1;9;2024;15;12;2024;20;Lunes;18:00-19:30;2;9;2024;12;Centro Cívico;Girona;150.00
+online;Curso de Java;Programación,Tecnología,Formación;1;10;2024;31;10;2024;15;10;2024;30;https://meet.google.com/abc-defg-hij

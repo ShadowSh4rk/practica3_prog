@@ -729,13 +729,13 @@ public class Menu {
                     Data iniciInscri = new Data(Integer.parseInt(trossos[3]), Integer.parseInt(trossos[4]), Integer.parseInt(trossos[5]));
                     Data fiInscri = new Data(Integer.parseInt(trossos[6]), Integer.parseInt(trossos[7]), Integer.parseInt(trossos[8]));
 
-                    int limPlaces = Integer.parseInt(trossos[9]);
+                    int limPlaces;
 
                     //====== per separat ====
 
                     if (tipus.equalsIgnoreCase("undia")){
                         Data data = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
-
+                        limPlaces = Integer.parseInt(trossos[9]);
                         String horari = trossos[13];
                         String ciutat = trossos[14];
                         double preu = Double.parseDouble(trossos[15]);
@@ -743,6 +743,7 @@ public class Menu {
                         activitat = new ActivitatUnDia(nom, col, iniciInscri, fiInscri, data, horari, ciutat, limPlaces, preu);
                         
                     }else if(tipus.equalsIgnoreCase("periodica")){
+                        limPlaces = Integer.parseInt(trossos[9]);
                         String diaSetmana = trossos[10];
                         String horari = trossos[11];
                         Data dataIni = new Data(Integer.parseInt(trossos[12]), Integer.parseInt(trossos[13]), Integer.parseInt(trossos[14]));
@@ -754,10 +755,10 @@ public class Menu {
                         activitat = new ActivitatPeriodica(nom, col, iniciInscri, fiInscri, diaSetmana, horari, dataIni, numSetmanes, centre, ciutat, limPlaces, preuTotal);
 
                     }else{ //activitatOnline
-                        Data dataIni = new Data(Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]), Integer.parseInt(trossos[12]));
+                        Data dataIni = new Data(Integer.parseInt(trossos[9]), Integer.parseInt(trossos[10]), Integer.parseInt(trossos[11]));
 
-                        int periodeVis = Integer.parseInt(trossos[13]);
-                        String enllac = trossos[14];
+                        int periodeVis = Integer.parseInt(trossos[12]);
+                        String enllac = trossos[13];
 
                         activitat = new ActivitatOnline(nom, col, iniciInscri, fiInscri, dataIni, periodeVis, enllac);
                     }
