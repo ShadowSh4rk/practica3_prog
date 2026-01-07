@@ -212,7 +212,14 @@ public class UsaBenestarTest {
         System.out.println("\n--- TEST 9: Cancel·lació i llista d'espera ---");
 
         System.out.println("Abans: nIns=" + poquesPlaces.getnIns() + ", nEsp=" + poquesPlaces.getnEsp());
-        poquesPlaces.cancelar(poquesPlaces.llistaInscri[0]);
+        try{
+            poquesPlaces.cancelar(poquesPlaces.llistaInscri[0]);
+        }catch (LlistaInscripcionsBuida e){
+            System.out.println(e.getMessage());
+        }catch(InscripcioNoTrobada e){
+            System.out.println(e.getMessage());
+        }
+        
         System.out.println("Després: nIns=" + poquesPlaces.getnIns() + ", nEsp=" + poquesPlaces.getnEsp());
 
         // ===============================
