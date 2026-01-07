@@ -195,8 +195,8 @@ private String tipus; // UnDia, Periodica, Online
 //GESTIO DE LA LLISTA D'INSCRIPCIONS
 
 /**
-     * afegeix una nova inscripcio indicada per parametre a la llista en ordre cronologic
-     * @param dada inscripcio a afegir
+     * afegeix una nova inscripcio a la llista en ordre cronologic
+     * @param dada
      */
     public void afegir(Inscripcio dada) throws NoAcceptaCol, ForaPeriodeInscripcio, NoQuedenPlaces {
 
@@ -260,8 +260,8 @@ private String tipus; // UnDia, Periodica, Online
     
 
     /**
-     * Elimina la inscripcio especificada per parametre de la llista d'inscripcions. Si hi havia alguna inscripcio a la llista d'espera, afegeix la primera instancia de la llista d'espera a la llista d'inscripcions
-     * @param dada inscripcio a cancelar
+     * Elimina una inscripcio rebuda per parametre de la llista d'inscripcions. Si havia llista d'espera, trasllada el primer element de la llista a la llista d'inscripcions.
+     * @param dada inscripcio a eliminar
      * @throws LlistaInscripcionsBuida
      * @throws InscripcioNoTrobada
      */
@@ -316,7 +316,7 @@ private String tipus; // UnDia, Periodica, Online
 
     /**
      * Crea una llista de les valoracions d'una activitat
-     * @param nom nom de l'activitat
+     * @param nom
      * @return llista de valoracions de l'activitat
      */
     public int[] valoracionsperActivitat(String nom) {
@@ -330,9 +330,9 @@ private String tipus; // UnDia, Periodica, Online
     }
 
     /**
-     * Crea una llista de les valoracions de l'activitat fetes per usuaris d'un colectiu en especific
-     * @param nomCol nom del colectiu
-     * @return llista de les valoracions de l'activitat
+     * Crea una llista de valoracions de l'activitat fetes per membres d'un col·lectiu en específic
+     * @param nomCol nom del col·lectiu
+     * @return llista de valoracions
      */
     public int[] valoracionsPerColectiu(String nomCol){
         int[] aux = new int[nIns];
@@ -354,23 +354,16 @@ private String tipus; // UnDia, Periodica, Online
      * @return la inscripcio buscada dins la llista d'inscripcions
      * @throws NoInscrit
      */
-    public Inscripcio obtenirInscripcioPerNom(String nomUsu) throws NoInscrit{
-        Inscripcio aux = new Inscripcio(nom, nomUsu, new Data(1, 1, 2100));
-        boolean trobat = false;
-        int i=0;
-        while(i<nIns){
-            if((llistaInscri[i].getNomInscrit().equals(nomUsu))){
-                aux = llistaInscri[i].copia();
-                trobat = true;
-            }else{
-                i++;
-            }
+ // MÉTODO obtenirInscripcioPerNom CORREGIDO
+public Inscripcio obtenirInscripcioPerNom(String nomUsu) throws NoInscrit{
+    for (int i = 0; i < nIns; i++) {
+        if (llistaInscri[i] != null && 
+            llistaInscri[i].getNomInscrit().equalsIgnoreCase(nomUsu)) {
+            return llistaInscri[i].copia();
         }
-        if(trobat == false){
-            throw new NoInscrit();
-        }
-        return aux;
     }
+    throw new NoInscrit();
+}
 
     //GESTIO FITXER SERIALITZAT
 
@@ -421,40 +414,27 @@ private String tipus; // UnDia, Periodica, Online
      * @param nom Nom de l'usuari a comprovar
      * @return true si l'usuari esta inscrit, false altrament
      */
-    public boolean estaInscrit(String nom){
-        boolean trobat = false;
-        int i=0;
-        while (i<llistaInscri.length && !trobat) {
-            if(llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)){
-                trobat = true;
-            }
-            else{
-                i++;
-            }
+  // MÉTODO estaInscrit CORREGIDO
+public boolean estaInscrit(String nom){
+    for (int i = 0; i < nIns; i++) {
+        if (llistaInscri[i] != null && 
+            llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)) {
+            return true;
         }
-        return trobat;
     }
+    return false;
+}
 
-    /**
-     * Busca l'alies d'un usuari en base al nom que ha escrit en la seva inscripcio de l'activitat
-     * @param nom nom de l'usuari
-     * @return alies de l'usuari
-     */
-    public String buscaAliesInscripcio(String nom){
-        String alies = "Desconegut";
-        boolean trobat = false;
-        int i=0;
-        while (i<llistaInscri.length && !trobat) {
-            if(llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)){
-                alies = llistaInscri[i].getUsuari().getAlies();
-                trobat = true;
-            }
-            else{
-                i++;
-            }
+  // MÉTODO buscaAliesInscripcio CORREGIDO
+public String buscaAliesInscripcio(String nom){
+    for (int i = 0; i < nIns; i++) {
+        if (llistaInscri[i] != null && 
+            llistaInscri[i].getNomInscrit().equalsIgnoreCase(nom)) {
+            Usuari u = llistaInscri[i].getUsuari();
+            return (u != null) ? u.getAlies() : "UsuariNull";
         }
-        return alies;
     }
+    return "Desconegut";
+}
 
     }
-    
