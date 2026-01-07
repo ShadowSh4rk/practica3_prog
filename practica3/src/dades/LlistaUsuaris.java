@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import excepcions.*;
+
 /**
  * Classe de gestió de la llista d'usuaris.
  * 
@@ -86,5 +88,20 @@ public class LlistaUsuaris {
         }
 
         return usuari;
+    }
+
+    /**
+     * Obte un usuari pel nom i llença excepcio si no existeix 
+     * 
+     * @param alies Alies de l'usuari
+     * @return Usuari trobat
+     * @throws UsuariInexistentException Si l'usuari no existeix
+     */
+    public Usuari obtenirPerAlies(String alies) throws UsuariInexistentException{
+        Usuari u = buscarPerNom(alies);
+        if(u==null){
+            throw new UsuariInexistentException(alies);
+        }
+        return u; 
     }
 }

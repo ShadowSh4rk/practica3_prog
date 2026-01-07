@@ -194,7 +194,7 @@ public class Menu {
         System.out.println("\t22. Sortir");
     }
 
-    public static void opcio1() {
+    public static void opcio1() { 
         // 1. Indicar la data del dia d'avui, és a dir, hem de poder escriure en quina data volem estar
         System.out.println("indica el dia");
         avui.setDia(Integer.parseInt(teclat.nextLine()));
@@ -262,8 +262,9 @@ public class Menu {
                     break;
                 
                 case 2:
-                    System.out.println("printeja usuaris");
-                    //...
+                    for(int i=0; i<llistaUsu.getNumUsuaris(); i++){
+                                System.out.println(llistaUsu.getUsuari(i));
+                            }
                     break;
                 
                 default:
@@ -281,8 +282,9 @@ public class Menu {
 
         for(int i=0; i<llistaAct.getNumActivitats(); i++){
             if(llistaAct.getActivitat(i).esEnPeriodeInscripcio(avui)){
-                System.out.println(llistaAct.getActivitat(i));
-                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns();
+                System.out.println(llistaAct.getActivitat(i)); //printeja l'activitat
+                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns(); 
+                //menciona les places que queden, (si queden 0, no te places disponibles)
                 if(places!=0){
                     System.out.println("te "+places+" places disponibles");
                 }else{
@@ -345,20 +347,29 @@ public class Menu {
     public static void opcio7() {
         // 7. Mostrar el detall d'informació d'una activitat a partir del seu nom
         System.out.println("\tintrodueix el nom de l'activitat:");
-        llistaAct.buscarPerNom(teclat.nextLine());
+        try {
+            System.out.println(llistaAct.obtenirPerNom(teclat.nextLine()));
+        } catch (ActivitatInexistentException e) {
+            System.out.println(e.getMessage());
+        }
+        
         
     }
     
     public static void opcio8() {
         // 8. Mostrar el detall d'informació d'un usuari a partir del seu nom
         System.out.println("\tintrodueix el nom de l'usuari:");
-        llistaUsu.buscarPerNom(teclat.nextLine());
+        try {
+            System.out.println(llistaUsu.obtenirPerAlies(teclat.nextLine()));
+        } catch (UsuariInexistentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void opcio9() {
         // 9. Mostrar les activitats a les que està apuntat un usuari 
         System.out.println("\tintrodueix el nom de l'usuari:");
-        llistaAct.activitatsUsuari(teclat.nextLine());
+        System.out.println(llistaAct.activitatsUsuari(teclat.nextLine()));;
         
     }
 
@@ -382,10 +393,9 @@ public class Menu {
             if(act.estaInscrit(nomUsu)){
                 System.out.println("ja estas inscrit. el teu alies es: "+act.buscaAliesInscripcio(nomUsu));
             }else{
-                Inscripcio inscri = new Inscripcio(nomAct, nomUsu, avui);
 
                 try {
-                    act.afegir(inscri);
+                    act.afegir(new Inscripcio(nomAct, nomUsu, avui));
 
                 } catch (ForaPeriodeInscripcio e){
                     System.out.println(e.getMessage());
@@ -652,7 +662,8 @@ public class Menu {
         for(int i=0; i<llistaAct.getNumActivitats(); i++){
             Activitats act = llistaAct.getActivitat(i);
             if(act.haAcabat(avui)){ //seleccionem les que han acabat
-                act.valoracionsperActivitat(act.getNom()); //obtenim la llista de valoracions
+                double mitj = mitjanaValoracions(act.valoracionsperActivitat(act.getNom())); //el parametre de la funcio es la llista de valoracions
+                System.out.println("mitjana de les valoracions de l'activitat "+act.getNom()+": "+mitj);
             }
         }
         
@@ -661,20 +672,25 @@ public class Menu {
     public static void opcio18() {
         // 18. Mostrar el resum de valoracions que ha fet un usuari
         System.out.println("introdueix el nom d'usuari: ");
-        llistaAct.valoracionsperUsuari(teclat.nextLine());
+        String nomUsu = teclat.nextLine();
+        double mitj = mitjanaValoracions(llistaAct.valoracionsperUsuari(nomUsu));
+        System.out.println("mitjana de les valoracions de l'usuari "+nomUsu+": "+mitj);
         
     }
 
     public static void opcio19() {
         // 19. Valoren iguals els usuaris dels diferents col·lectius? Calcula i mostra la mitja de valoracions que han fet els usuaris de cada col·lectiu
         for(int i=0; i<llistaAct.getNumActivitats(); i++){
-            llistaAct.getActivitat(i).valoracionsPerColectiu("PDI");
+            double mitj1 = mitjanaValoracions(llistaAct.getActivitat(i).valoracionsPerColectiu("PDI"));
+            System.out.println("mitjana de les valoracions dels usuaris del col·lectiu PDI: "+mitj1);
         }
         for(int i=0; i<llistaAct.getNumActivitats(); i++){
-            llistaAct.getActivitat(i).valoracionsPerColectiu("PTGAS");
+            double mitj2 = mitjanaValoracions(llistaAct.getActivitat(i).valoracionsPerColectiu("PTGAS"));
+            System.out.println("mitjana de les valoracions dels usuaris del col·lectiu PTGAS: "+mitj2);
         }
         for(int i=0; i<llistaAct.getNumActivitats(); i++){
-            llistaAct.getActivitat(i).valoracionsPerColectiu("Estudiants");
+            double mitj3 = mitjanaValoracions(llistaAct.getActivitat(i).valoracionsPerColectiu("Estudiants"));
+            System.out.println("mitjana de les valoracions dels usuaris del col·lectiu Estudiants: "+mitj3);
         }
         
     }
@@ -685,14 +701,18 @@ public class Menu {
         System.out.println("introdueix el nom del col·lectiu: ");
         String col = teclat.nextLine();
         int max = 0;
+        String nomMesActiu = "Desconegut";
         for(int i=0; i<llistaUsu.getNumUsuaris(); i++){
             Usuari usu = llistaUsu.getUsuari(i);
             if(usu.getColectiu().equalsIgnoreCase(col)){
                 if(llistaAct.nombreActivitatsInscrit(usu.getAlies())>max){
                     max = llistaAct.nombreActivitatsInscrit(usu.getAlies());
+                    nomMesActiu = usu.getAlies();
                 }
             }
         }
+
+        System.out.println("L'usuari mes actiu del col·lectiu "+col+"es "+nomMesActiu);
     }
 
     public static void opcio21() {
