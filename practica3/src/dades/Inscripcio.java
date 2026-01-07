@@ -35,8 +35,20 @@ public class Inscripcio implements Serializable{
         this.nomActivitat = nomActivitat;
         this.nomInscrit = nomInscrit;
         this.dataInscripcio = dataInscripcio;
-        valoracio = 11;
+        this.valoracio = 11;
+
+        this.activitat=null;
+        this.usuari=null;
     }
+
+   public Inscripcio(String nomActivitat, String nomInscrit, Data dataInscripcio, Usuari usuari, Activitats activitat) { 
+    this.nomActivitat = nomActivitat; 
+    this.nomInscrit = nomInscrit; 
+    this.dataInscripcio = dataInscripcio; 
+    this.valoracio = 11; 
+    this.usuari = usuari; 
+    this.activitat = activitat; 
+}
 
     public Data getDataInscripcio() {
         return dataInscripcio;
@@ -63,8 +75,8 @@ public class Inscripcio implements Serializable{
     //control valoracio
         public void assignarValoracio (int valoracio, Data avui) throws ActivitatNoFinalitzada, ForaDeRang{
 
-            if(!this.getActivitats().haAcabat(avui)){
-                throw new ActivitatNoFinalitzada();
+            if (this.activitat == null || !this.activitat.haAcabat(avui)) { 
+                throw new ActivitatNoFinalitzada(); 
             }
 
             if ((valoracio<0)||(valoracio>10)){
@@ -76,9 +88,10 @@ public class Inscripcio implements Serializable{
         }
 
 
-    public Inscripcio copia(){
-        Inscripcio duplicat = new Inscripcio(nomActivitat, nomInscrit, dataInscripcio);
-        return duplicat;
+    public Inscripcio copia() { 
+        Inscripcio dup = new Inscripcio(nomActivitat, nomInscrit, dataInscripcio, usuari, activitat); 
+        dup.valoracio = this.valoracio; 
+        return dup; 
     }
 
     
