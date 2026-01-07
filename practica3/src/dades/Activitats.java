@@ -263,44 +263,51 @@ private String tipus; // UnDia, Periodica, Online
      * 
      * @param dada Inscipcio a cancel·lar
      */
-    public void cancelar(Inscripcio dada){
+    public void cancelar(Inscripcio dada) throws LlistaInscripcionsBuida, InscripcioNoTrobada{
+        if(nIns==0){
+            throw new LlistaInscripcionsBuida();
+        }
         //busquem la dada
         int i=0;
         boolean trobat = false;
         while(i<nIns && trobat == false){
-            if(llistaInscri[i]==dada){
+            if((llistaInscri[i]!=null)&&(llistaInscri[i].getNomInscrit().equalsIgnoreCase(dada.getNomInscrit()))){
                 trobat = true;
             }
             i++;
         }
 
-        //desplaçem les dades a l'esquerra
-        while (i<nIns){
-            llistaInscri[i]=llistaInscri[i+1];
-            i++;
-        }
-
-        //si hi ha inscripcions a la llista d'espera, n'afegim una 
-        if(nEsp>0){
-            Data n1 = llistaEspera[0].getDataInscripcio();
-            i=0;
-            trobat = false;
-            while(i<nIns && trobat == false){
-                if(n1.esPosterior(llistaInscri[i].getDataInscripcio()) && n1.esAnterior(llistaInscri[i+1].getDataInscripcio())){
-                    trobat = true;
-                }
+        if(trobat){
+            //desplaçem les dades a l'esquerra
+            while (i<nIns-1){
+                llistaInscri[i]=llistaInscri[i+1];
                 i++;
             }
-            //pas 2: crear el lloc (desplaçar les dades de després cap a la dreta)
-            for (int j=nIns; j>i; j--){
-                llistaInscri[i+1]=llistaInscri[i];
-            }
-            //pas 3: col·locar la dada a afegir i decrementar elements de la llista d'espera
-            llistaInscri[i] = llistaEspera[0].copia();
-            nEsp--;
 
-        }else{ //si no, decrementem el nombre d'elements a la llista d'inscripcions
-            nIns--;
+            //si hi ha inscripcions a la llista d'espera, n'afegim una 
+            if(nEsp>0){
+                Data n1 = llistaEspera[0].getDataInscripcio();
+                i=0;
+                trobat = false;
+                while(i<nIns && trobat == false){
+                    if(n1.esPosterior(llistaInscri[i].getDataInscripcio()) && n1.esAnterior(llistaInscri[i+1].getDataInscripcio())){
+                        trobat = true;
+                    }
+                    i++;
+                }
+                //pas 2: crear el lloc (desplaçar les dades de després cap a la dreta)
+                for (int j=nIns; j>i; j--){
+                    llistaInscri[i+1]=llistaInscri[i];
+                }
+                //pas 3: col·locar la dada a afegir i decrementar elements de la llista d'espera
+                llistaInscri[i] = llistaEspera[0].copia();
+                nEsp--;
+
+            }else{ //si no, decrementem el nombre d'elements a la llista d'inscripcions
+                nIns--;
+            }
+        }else{
+            throw new InscripcioNoTrobada();
         }
 
     }

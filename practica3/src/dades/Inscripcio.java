@@ -35,7 +35,7 @@ public class Inscripcio implements Serializable{
         this.nomActivitat = nomActivitat;
         this.nomInscrit = nomInscrit;
         this.dataInscripcio = dataInscripcio;
-        this.valoracio = 11;
+        this.valoracio = 11; //placeholder per distingir les inscripcions valorades de les no valorades
 
         this.activitat=null;
         this.usuari=null;
