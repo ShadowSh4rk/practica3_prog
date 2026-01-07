@@ -726,6 +726,7 @@ public class Menu {
 
             boolean baixa=false;
 
+            //Comprovem si ha acabat el periode d'inscripcio
             if(!act.esEnPeriodeInscripcio(avui)){
                 if(act.getTipus().equalsIgnoreCase("online")){
                     if(act.getnIns()<20){
