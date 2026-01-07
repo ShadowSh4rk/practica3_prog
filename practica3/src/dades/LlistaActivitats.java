@@ -233,6 +233,17 @@ public class LlistaActivitats {
         return aux;
     }
 
+    public int nombreActivitatsInscrit(String nomUsu){
+        int compt = 0;
+        for(int i=0; i<numActivitats; i++){
+            if(llista[i].estaInscrit(nomUsu)){
+                compt++;
+            }
+        }
+        
+        return compt;
+    }
+
     /**
      * Escriu la llista completa d'activitats en un fitxer de text.
      * 

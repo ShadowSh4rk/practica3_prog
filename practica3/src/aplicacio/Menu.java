@@ -666,13 +666,32 @@ public class Menu {
 
     public static void opcio19() {
         // 19. Valoren iguals els usuaris dels diferents col·lectius? Calcula i mostra la mitja de valoracions que han fet els usuaris de cada col·lectiu
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            llistaAct.getActivitat(i).valoracionsPerColectiu("PDI");
+        }
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            llistaAct.getActivitat(i).valoracionsPerColectiu("PTGAS");
+        }
+        for(int i=0; i<llistaAct.getNumActivitats(); i++){
+            llistaAct.getActivitat(i).valoracionsPerColectiu("Estudiants");
+        }
         
     }
 
     public static void opcio20() {
         // Calcular l'usuari més actiu d'un cert col·lectiu, és a dir, el què s'ha apuntat a més activitats. En cas d'empat s'escull qualsevol dels
         //  usuaris que compleixen els requisits
-        
+        System.out.println("introdueix el nom del col·lectiu: ");
+        String col = teclat.nextLine();
+        int max = 0;
+        for(int i=0; i<llistaUsu.getNumUsuaris(); i++){
+            Usuari usu = llistaUsu.getUsuari(i);
+            if(usu.getColectiu().equalsIgnoreCase(col)){
+                if(llistaAct.nombreActivitatsInscrit(usu.getAlies())>max){
+                    max = llistaAct.nombreActivitatsInscrit(usu.getAlies());
+                }
+            }
+        }
     }
 
     public static void opcio21() {

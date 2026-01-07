@@ -320,6 +320,20 @@ private String tipus; // UnDia, Periodica, Online
         return aux;
     }
 
+    public int[] valoracionsPerColectiu(String nomCol){
+        int[] aux = new int[nIns];
+        int j=0;
+        for(int i=0; i<nIns; i++){
+            if((llistaInscri[i].getUsuari().getColectiu().equalsIgnoreCase(nomCol))){
+                if(llistaInscri[i].getValoracio()!=11){
+                    aux[j] = llistaInscri[i].getValoracio();
+                    j++;
+                }
+            }
+        }
+        return aux;
+    }
+
     /**
      * obte una inscripcio de la llista d'inscripcions d'una activitat en base al nom de l'usuari
      * @param nomUsu nom de l'usuari
