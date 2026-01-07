@@ -718,7 +718,39 @@ public class Menu {
     public static void opcio21() {
         // Donar de baixa les activitats que ja han acabat el període d'inscripció i no han arribat a omplir el 10% de les places que s'oferien.
         //  En cas de les activitats en línia donar de baixa si el número d'inscrits és inferior a 20 persones.
-        
+        System.out.println("Donant de baixa activitats amb baixa participacio...");
+
+        //Fem un recorregut de final cap al principi per poder eliminar elements sense perdre l'index
+        for(int i=llistaAct.getNumActivitats()-1; i>=0; i--){
+            Activitats act = llistaAct.getActivitat(i);
+
+            boolean baixa=false;
+
+            if(!act.esEnPeriodeInscripcio(avui)){
+                if(act.getTipus().equalsIgnoreCase("online")){
+                    if(act.getnIns()<20){
+                        baixa=true;
+                    } 
+                }else{
+                    double percentOcupat=((double) act.getnIns()/act.getLimitPlaces())*100;
+                    if(percentOcupat<10.0){
+                        baixa=true;
+                    }
+                }
+            }
+
+            if (baixa) {
+            System.out.println("Donant de baixa l'activitat: " + act.getNom() + " (" + act.getTipus() + ")");
+            try {
+                llistaAct.eliminar(i);
+            } catch (IOException e) {
+                System.out.println("Error al donar de baixa l'activitat: " + act.getNom() + " - " + e.getMessage());
+            }
+        }
+    }
+
+        System.out.println("Proces de baixa finalitzat");
+
     }
 
     public static int llegeixLiniesFitxer(String nomFitxer) throws IOException{
