@@ -71,7 +71,7 @@ public class LlistaActivitats {
         llista[pos]=activitat; 
         numActivitats++; 
         //important: actualitzar fitxer de dades
-        escriuFitxerActivitats();
+        //escriuFitxerActivitats(); // He comentat això perq no em funciona el Menu per a llegir activitats amb això
 
     }
 

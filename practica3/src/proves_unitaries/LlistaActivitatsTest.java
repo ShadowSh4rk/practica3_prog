@@ -185,7 +185,7 @@ public class LlistaActivitatsTest {
             llista.afegir(ao);
 
             Data avui = new Data(15,1,2026);
-            if (llista.hiHaActivitat(avui)) {
+            if (llista.hiHaActivitat(avui, false, false, false)) {
                 System.out.println("provaHiHaActivitat CORRECTE");
             }
         } catch (IOException e) {

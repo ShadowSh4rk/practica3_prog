@@ -34,7 +34,7 @@ public class ActivitatOnline extends Activitats {
         this.periodeVisualitzacio = periodeVisualitzacio;
         this.enllac = enllac; 
 
-        dataFi=new Data(dataInici.getDia()+periodeVisualitzacio, dataInici.getMes(), dataInici.getAny());
+        dataFi = dataInici.afegirDies(periodeVisualitzacio);
     }
 
     /**
@@ -51,6 +51,14 @@ public class ActivitatOnline extends Activitats {
      */
     public Data getDataInici() {
         return dataInici;
+    }
+
+    /**
+     * Retorna la data de fi de l'activitat.
+     * @return Data de fi de l'activitat
+     */
+    public Data getDataFi() {
+        return dataFi;
     }
 
     /**

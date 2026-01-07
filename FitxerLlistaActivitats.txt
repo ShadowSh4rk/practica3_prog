@@ -1,1 +1,50 @@
-Online;Classe Virtual;null,null;11;9;2001;5;5;2005;50;1;1;2026;20;https://meet.com/miaumiaumiau;Periodica;Classes de Cuina;null,null;7;11;1917;30;12;1922;5;Dilluns;2;2;2026;3;Sescelades;Tarragona;4.98;UnDia;Yoga;null,null;11;9;2001;22;7;2004;8;22;10;2025;9:00-18:00;Barcelona;1.99;
+undia;Visita al Museu Picasso;Estudiants,PDI;15;10;2024;30;10;2024;50;25;10;2024;10:00-14:00;Barcelona;12.50
+periodica;Classes de Ioga;Estudiants,PDI,PTGAS;1;9;2024;15;12;2024;20;Dilluns;18:00-19:30;2;9;2024;12;Centre Cívic;Girona;150.00
+online;Curs de Java;Estudiants;1;10;2024;31;10;2024;15;10;2024;30;https://meet.google.com/abc-defg-hij
+undia;Concert al Liceu;PDI;1;10;2024;31;10;2024;100;15;10;2024;20:00-23:00;Barcelona;45.00
+periodica;Curs de Fotografia;Estudiants;1;9;2024;30;11;2024;15;Dimecres;19:00-21:00;1;9;2024;10;Escola d'Art;Tarragona;200.00
+online;Taller de Python;Estudiants;1;10;2024;15;11;2024;20;10;10;2024;30;https://meet.google.com/xyz-abc-def
+undia;Ruta de Senderisme;PTGAS;1;9;2024;20;9;2024;25;21;9;2024;09:00-18:00;Montserrat;12.00
+periodica;Classes de Piano;Estudiants;1;10;2024;20;12;2024;10;Dijous;17:00-18:30;3;10;2024;12;Conservatori;Lleida;180.00
+undia;Tast de Vins;PDI;5;10;2024;25;10;2024;20;18;10;2024;19:30-22:00;Priorat;35.00
+online;Webinar de Màrqueting Digital;Estudiants;1;11;2024;30;11;2024;5;11;2024;15;https://zoom.us/j/123456789
+periodica;Ioga a la Platja;Estudiants,PTGAS;1;6;2024;30;8;2024;30;Dissabte;08:00-09:30;1;6;2024;13;Platja de la Barceloneta;Barcelona;120.00
+undia;Visita al Camp Nou;PTGAS;1;1;2024;31;12;2024;50;12;10;2024;10:00-13:00;Barcelona;28.00
+undia;Taller de Ceràmica;Estudiants;10;10;2024;20;10;2024;12;22;10;2024;16:00-20:00;Girona;40.00
+periodica;Classes de Cuina Mediterrània;Estudiants,PTGAS;1;10;2024;17;12;2024;12;Dimarts;18:30-21:00;1;10;2024;10;Escola de Cuina;Reus;250.00
+online;Curs d’Anglès B2;Estudiants,PTGAS,PDI;1;9;2024;20;12;2024;25;2;9;2024;16;https://teams.microsoft.com/l/meetup
+undia;Observació d’Estrelles;Estudiants,PDI;1;10;2024;15;10;2024;25;12;10;2024;21:00-24:00;Parc Natural del Montseny;15.00
+periodica;Taller de Teatre;Estudiants;1;10;2024;10;12;2024;15;Divendres;17:00-20:00;4;10;2024;10;Teatre Principal;Tarragona;160.00
+undia;Fira del Llibre;Estudiants,PDI,PDGAS;20;10;2024;22;10;2024;1000;21;10;2024;10:00-21:00;Barcelona;0.00
+online;Seminari d’Intel·ligència Artificial;Estudiants,PDI;10;10;2024;25;10;2024;12;10;2024;20;https://meet.google.com/ai-tech-seminar
+periodica;Pilates;PTGAS;1;9;2024;20;12;2024;20;Dilluns i Dimecres;09:00-10:00;2;9;2024;16;Centre Esportiu;Sitges;140.00
+undia;Ruta en Bicicleta;PDI;1;9;2024;30;9;2024;30;25;9;2024;08:00-14:00;Costa Brava;18.00
+undia;Visita a la Sagrada Família;PDGAS;1;1;2024;31;12;2024;40;15;10;2024;09:00-11:00;Barcelona;26.00
+periodica;Classes de Ball Llatí;Estudiants;1;10;2024;19;12;2024;20;Dijous;20:00-22:00;3;10;2024;12;Acadèmia de Ball;Barcelona;130.00
+online;Curs de Fotografia Digital;Estudiants;5;10;2024;30;11;2024;30;8;10;2024;25;https://meet.google.com/foto-digital
+undia;Mercat Medieval;Estudiants,PDI,PDGAS;1;10;2024;5;10;2024;500;4;10;2024;10:00-20:00;Tortosa;0.00
+periodica;Taller de Jardineria;PDGAS;1;3;2024;30;6;2024;15;Dissabte;10:00-12:00;2;3;2024;17;Viver Municipal;Reus;95.00
+undia;Conferència sobre Canvi Climàtic;Estudiants,PDI;10;10;2024;15;10;2024;80;17;10;2024;18:00-20:30;Barcelona;10.00
+online;Masterclass de Finances Personals;Estudiants;1;11;2024;30;11;2024;5;11;2024;10;https://zoom.us/j/finanzas123
+periodica;Classes de Natació;Estudiants,PDGAS;1;5;2024;30;9;2024;15;Dimarts i Dijous;17:00-18:00;7;5;2024;20;Piscina Municipal;Tarragona;220.00
+undia;Degustació de Formatges;PDI;5;10;2024;20;10;2024;25;18;10;2024;19:00-21:30;Lleida;28.00
+undia;Excursió als Volcans;Estudiants;1;9;2024;30;9;2024;35;28;9;2024;08:00-19:00;Garrotxa;22.00
+periodica;Taller d’Escriptura Creativa;Estudiants;1;10;2024;17;12;2024;12;Dimecres;18:00-20:00;2;10;2024;10;Biblioteca Central;Girona;120.00
+online;Curs de Disseny Gràfic;Estudiants;10;10;2024;30;11;2024;15;10;2024;20;https://meet.google.com/diseno-grafico
+undia;Visita al Museu d’Història;Estudiants,PDI;1;1;2024;31;12;2024;60;19;10;2024;10:00-13:00;Barcelona;6.00
+periodica;Meditació Guiada;PDGAS;1;9;2024;20;12;2024;25;Dilluns;20:00-21:00;2;9;2024;16;Centre de Benestar;Sitges;90.00
+undia;Taller de Marroquineria;PDI;8;10;2024;18;10;2024;15;20;10;2024;16:00-20:00;Reus;45.00
+online;Webinar d’Emprenedoria;Estudiants;15;10;2024;30;10;2024;18;10;2024;25;https://zoom.us/j/emprendedores
+periodica;Classes de Guitarra;Estudiants,PDI,PDGAS;1;10;2024;19;12;2024;15;Divendres;17:30-19:00;4;10;2024;12;Escola de Música;Tarragona;170.00
+undia;Ruta dels Castells;Estudiants,PDI;1;9;2024;30;9;2024;40;29;9;2024;09:00-18:00;Terra Alta;25.00
+undia;Mercat de Productors Locals;Estudiants,PDI,PDGAS;1;10;2024;31;10;2024;300;26;10;2024;09:00-15:00;Valls;0.00
+periodica;Taller de Robòtica;Estudiants;1;10;2024;17;12;2024;20;Dissabte;10:00-13:00;5;10;2024;10;Espai Tech;Lleida;190.00
+online;Curs de Francès A1;Estudiants,PDGAS;1;11;2024;20;12;2024;30;4;11;2024;20;https://teams.microsoft.com/francais
+undia;Nit d’Observació Lunar;Estudiants,PDI;1;10;2024;10;10;2024;30;8;10;2024;22:00-02:00;Prades;12.00
+periodica;Classes de Tennis;Estudiants;1;4;2024;30;9;2024;12;Dimarts i Dijous;18:00-19:30;2;4;2024;24;Club de Tennis;Cambrils;300.00
+undia;Visita a Celler amb Tast; ;1;9;2024;30;9;2024;25;27;9;2024;11:00-15:00;Priorat;32.00
+online;Seminari de Nutrició;Estudiants;10;10;2024;25;10;2024;15;10;2024;15;https://meet.google.com/nutricion-salud
+periodica;Taller de Pintura a l’Oli;Estudiants,PDI,PDGAS;1;10;2024;10;12;2024;12;Dijous;16:00-19:00;3;10;2024;10;Estudi d’Art;Barcelona;210.00
+undia;Fira d’Artesania;Estudiants,PDI,PDGAS;15;10;2024;20;10;2024;200;18;10;2024;10:00-20:00;Tarragona;0.00
+undia;Ruta en Caiac;PDI,PDGAS;1;6;2024;30;9;2024;20;22;9;2024;09:00-13:00;Costa Daurada;35.00
+periodica;Classes de Cant;Estudiants,PDI,PDGAS;1;10;2024;19;12;2024;10;Dimecres;19:00-20:30;2;10;2024;12;Conservatori;Girona;160.00
