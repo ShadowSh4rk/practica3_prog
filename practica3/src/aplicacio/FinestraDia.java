@@ -4,6 +4,8 @@ package aplicacio;
 // IMPORTS JAVA
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 // IMPORTS PAQUETS LOCALS
@@ -105,9 +107,11 @@ public class FinestraDia extends JFrame {
             botoDetalls.setForeground(Color.WHITE);
 
             // ActionListener que obre la finestra de detalls
-            botoDetalls.addActionListener(e -> {
-                Activitats activitatSeleccionada = llistaData.getActivitat(index);
-                new FinestraDetallActivitat(activitatSeleccionada);
+            botoDetalls.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Activitats activitatSeleccionada = llistaData.getActivitat(index);
+                    new FinestraDetallActivitat(activitatSeleccionada);
+                }
             });
                 
             // Afegir components al panel de l'activitat

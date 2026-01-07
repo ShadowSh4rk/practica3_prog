@@ -5,6 +5,8 @@ package aplicacio;
 // IMPORTS JAVA
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // IMPORTS PAQUETS LOCALS
 import dades.*;
@@ -39,7 +41,11 @@ public class FinestraDetallActivitat extends JFrame {
         // Creem el botó per a tancar
         panellSud = new JPanel(new FlowLayout(FlowLayout.CENTER));
         botoTancar = new JButton("Tancar");
-        botoTancar.addActionListener(e -> dispose());
+        botoTancar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
         panellSud.add(botoTancar);
         add(panellSud, BorderLayout.SOUTH);
 
