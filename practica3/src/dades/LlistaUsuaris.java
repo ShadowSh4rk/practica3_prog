@@ -60,6 +60,10 @@ public class LlistaUsuaris {
         return numUsuaris;
     }
 
+    /**
+     * escriu la llista d'usuaris en un fitxer
+     * @throws IOException
+     */
     public void escriuFitxerUsuaris() throws IOException{
         BufferedWriter escriptura = new BufferedWriter(new FileWriter("FitxerLlistaUsuaris.txt"));
 

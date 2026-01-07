@@ -233,6 +233,11 @@ public class LlistaActivitats {
         return aux;
     }
 
+    /**
+     * Compta el nombre d'activitats a les que esta inscrit un usuari
+     * @param nomUsu nom de l'usuari
+     * @return nombre d'activitats a les que esta inscrit l'usuari
+     */
     public int nombreActivitatsInscrit(String nomUsu){
         int compt = 0;
         for(int i=0; i<numActivitats; i++){

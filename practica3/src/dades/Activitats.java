@@ -195,8 +195,8 @@ private String tipus; // UnDia, Periodica, Online
 //GESTIO DE LA LLISTA D'INSCRIPCIONS
 
 /**
-     * afegeix una nova inscripcio a la llista
-     * @param dada
+     * afegeix una nova inscripcio indicada per parametre a la llista en ordre cronologic
+     * @param dada inscripcio a afegir
      */
     public void afegir(Inscripcio dada) throws NoAcceptaCol, ForaPeriodeInscripcio, NoQuedenPlaces {
 
@@ -260,8 +260,10 @@ private String tipus; // UnDia, Periodica, Online
     
 
     /**
-     * 
-     * @param dada Inscipcio a cancel·lar
+     * Elimina la inscripcio especificada per parametre de la llista d'inscripcions. Si hi havia alguna inscripcio a la llista d'espera, afegeix la primera instancia de la llista d'espera a la llista d'inscripcions
+     * @param dada inscripcio a cancelar
+     * @throws LlistaInscripcionsBuida
+     * @throws InscripcioNoTrobada
      */
     public void cancelar(Inscripcio dada) throws LlistaInscripcionsBuida, InscripcioNoTrobada{
         if(nIns==0){
@@ -314,7 +316,7 @@ private String tipus; // UnDia, Periodica, Online
 
     /**
      * Crea una llista de les valoracions d'una activitat
-     * @param nom
+     * @param nom nom de l'activitat
      * @return llista de valoracions de l'activitat
      */
     public int[] valoracionsperActivitat(String nom) {
@@ -327,6 +329,11 @@ private String tipus; // UnDia, Periodica, Online
         return aux;
     }
 
+    /**
+     * Crea una llista de les valoracions de l'activitat fetes per usuaris d'un colectiu en especific
+     * @param nomCol nom del colectiu
+     * @return llista de les valoracions de l'activitat
+     */
     public int[] valoracionsPerColectiu(String nomCol){
         int[] aux = new int[nIns];
         int j=0;
@@ -428,6 +435,11 @@ private String tipus; // UnDia, Periodica, Online
         return trobat;
     }
 
+    /**
+     * Busca l'alies d'un usuari en base al nom que ha escrit en la seva inscripcio de l'activitat
+     * @param nom nom de l'usuari
+     * @return alies de l'usuari
+     */
     public String buscaAliesInscripcio(String nom){
         String alies = "Desconegut";
         boolean trobat = false;

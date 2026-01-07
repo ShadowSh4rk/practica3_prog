@@ -42,6 +42,10 @@ public abstract class Usuari {
         return adrecaCorreu;
     }
 
+    /**
+     * 
+     * @return colectiu
+     */
     public String getColectiu() {
         return colectiu;
     }
