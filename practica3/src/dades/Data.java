@@ -198,39 +198,50 @@
         }
 
         /**
-         * Retorna el dia de la setmana de la data
+        * Calcula i retorna el dia de la setmana corresponent a la data.
          * 
-         * @return Nom del dia de la setmana
-         */
-        public String getDiaSetmana() {
-            int diaMes = dia;
-            int mesAny = mes;
-            int anyComplet = any;
+        * Utilitza la fórmula de Zeller per obtenir el dia de la setmana.
+        * La fórmula tracta gener i febrer com a mesos 13 i 14 de l'any anterior.
+        * El resultat és un número entre 0 i 6 que correspon a:
+        * 0 -> Dissabte
+        * 1 -> Diumenge
+        * 2 -> Dilluns
+        * 3 -> Dimarts
+        * 4 -> Dimecres
+        * 5 -> Dijous
+        * 6 -> Divendres
+        * 
+        * @return Nom del dia de la setmana en català
+        */
+    public String getDiaSetmana() {
+        int diaMes = dia;
+        int mesAny = mes;
+        int anyComplet = any;
 
-            // Ajustar enero y febrero como meses 13 y 14 del año anterior
-            if (mesAny < 3) {
-                mesAny += 12;
-                anyComplet--;
-            }
-
-            int anyDelSegle = anyComplet % 100;   // k
-            int segle = anyComplet / 100;         // j
-
-            // Fórmula de Zeller
-            int resultat = (diaMes 
-                            + (13 * (mesAny + 1)) / 5 
-                            + anyDelSegle 
-                            + (anyDelSegle / 4) 
-                            + (segle / 4) 
-                            + (5 * segle)) % 7;
-
-            String[] dies = {
-                "Dissabte", "Diumenge", "Dilluns", 
-                "Dimarts", "Dimecres", "Dijous", "Divendres"
-            };
-
-            return dies[resultat];
+        // Ajustar gener i febrer com mesos 13 i 14 de l'any anterior
+        if (mesAny < 3) {
+            mesAny += 12;
+            anyComplet--;
         }
+
+        int anyDelSegle = anyComplet % 100;   // k = dos últims dígits de l'any
+        int segle = anyComplet / 100;         // j = segle
+
+        // Aplicar fórmula de Zeller
+        int resultat = (diaMes 
+                    + (13 * (mesAny + 1)) / 5 
+                    + anyDelSegle 
+                    + (anyDelSegle / 4) 
+                    + (segle / 4) 
+                    + (5 * segle)) % 7;
+
+        String[] dies = {
+            "Dissabte", "Diumenge", "Dilluns", 
+            "Dimarts", "Dimecres", "Dijous", "Divendres"
+        };
+
+        return dies[resultat];
+    }
 
         /**
          * Mètode per a obtenir el nom d'un mes respecte el seu index, on 1 és gener i 12 és desembre.
