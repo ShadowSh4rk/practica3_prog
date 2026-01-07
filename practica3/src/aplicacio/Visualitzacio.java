@@ -31,10 +31,10 @@ public class Visualitzacio extends JFrame {
     private Data dataActual;                        // Data seleccionada a la finestra
     private boolean mesClicat;
 
-    private LlistaActivitats llistaAct;
-    private boolean ocultarUnDia;
-    private boolean ocultarPeriodic;
-    private boolean ocultarOnline;
+    private LlistaActivitats llistaAct;             // Llista d'activitats que tenim carregades al programa
+    private boolean ocultarUnDia;                   // Booleà que indica si hem aplicat un filtre per ocultar les activitats d'un dia
+    private boolean ocultarPeriodic;                // Booleà que indica si hem aplicat un filtre per ocultar les activitats periòdiques
+    private boolean ocultarOnline;                  // Booleà que indica si hem aplicat un filtre per ocultar les activitats online
 
 
     /**

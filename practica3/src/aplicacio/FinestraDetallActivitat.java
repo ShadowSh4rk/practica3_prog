@@ -14,204 +14,130 @@ import dades.*;
  * Classe amb la visualització gràfica per a mostrar els detalls complets d'una activitat d'un dia.
  */
 public class FinestraDetallActivitat extends JFrame {
-    private JPanel panellTitol; //
-    private JLabel etiquetaNom; //
+    private JPanel panellTitol;     // Panell que contindrá el títol (nom) de l'activitat corresponent
+    private JPanel panellPrincipal; // Panell que contindrá la informació de l'activitat corresponent
+    private JPanel panellSud;       // Panell que contindrá el botó inferior
+    private JLabel titol;           // Text que contindrá el títol (nom) de l'activitat corresponent
+    private JButton botoTancar;     // Botó que utilitzarem per a tancar l'activitat
+
 
     /**
-     * Constructor
+     * Mètode constructor per a crear una finestra de visualització de l'informació de la activitat determinada.
      * @param activitat
      */
     public FinestraDetallActivitat(Activitats activitat) {
-        super("Detalls de l'activitat: "+activitat.getNom());
-        setSize(420, 550);
-        setLayout(new BorderLayout());
-        
-        // 
-        etiquetaNom = new JLabel(activitat.getNom());
-        etiquetaNom.setFont(new Font("Dialog", Font.BOLD, 18));
-        etiquetaNom.setForeground(new Color(0, 0, 139));
-        etiquetaNom.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        panellTitol = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panellTitol.add(etiquetaNom);
-        this.add(panellTitol, BorderLayout.NORTH);
-        
-        // Panel principal per la resta de contingut
-        JPanel panellPrincipal = new JPanel(new GridLayout(0, 1, 0, 5));
+        super("Detalls de l'activitat: "+activitat.getNom());   // Assignem el títol de la finestra
+        setSize(420, 550);                        // Tamany de la finestra
+        setLayout(new BorderLayout());                          // Disposició dels elements en direccions cardinals
 
-        // Tipus d'activitat
-        String tipus = activitat.getClass().getSimpleName();
-        tipus = tipus.replace("Activitat", "").replace("Online", "En línia");
-        JLabel etiquetaTipus = new JLabel("Tipus: " + tipus);
-        etiquetaTipus.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaTipus.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        // Categories
-        JLabel etiquetaCategories = new JLabel("Col·lectius: " + String.join(", ", activitat.getColectius()));
-        etiquetaCategories.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaCategories.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        // Dates d'inscripció
-        JLabel etiquetaInscripcio = new JLabel("Període d'inscripció: " + 
-            activitat.getDataIniciInscripcio().toString() + " - " + activitat.getDataFiInscripcio().toString());
-        etiquetaInscripcio.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaInscripcio.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        // Afegir camps comuns
-        panellPrincipal.add(etiquetaTipus);
-        panellPrincipal.add(new JLabel(" "));
-        panellPrincipal.add(etiquetaCategories);
-        panellPrincipal.add(new JLabel(" "));
-        panellPrincipal.add(etiquetaInscripcio);
-        panellPrincipal.add(new JLabel(" "));
-        panellPrincipal.add(new JLabel(" ")); // Espai extra
-        
-        // Informació específica segons el tipus
-        if (activitat instanceof ActivitatUnDia) {
-            afegirDetallsUnDia(panellPrincipal, (ActivitatUnDia) activitat);
-        } else if (activitat instanceof ActivitatPeriodica) {
-            afegirDetallsPeriodica(panellPrincipal, (ActivitatPeriodica) activitat);
-        } else if (activitat instanceof ActivitatOnline) {
-            afegirDetallsOnline(panellPrincipal, (ActivitatOnline) activitat);
-        }
-        
-        // Crear un panel contenidor per centrar el contingut
-        JPanel panelCentre = new JPanel(new BorderLayout());
-        panelCentre.add(panellPrincipal, BorderLayout.NORTH);
-        
-        // Afegir panel principal al CENTER
-        this.add(panelCentre, BorderLayout.CENTER);
+        crearTitol(activitat);              // Creem el títol de l'activitat
+        crearPanellPrincipal(activitat);    // Creem el panell principal
 
-        // Botó de tancar
-        JPanel panelSud = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton botoTancar = new JButton("Tancar");
+        add(panellTitol, BorderLayout.NORTH);       // Afegim el títol a dalt de la finestra
+        add(panellPrincipal, BorderLayout.CENTER);  // Afegim la informació de l'activitat a la resta de la finestra
+
+        // Creem el botó per a tancar
+        panellSud = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        botoTancar = new JButton("Tancar");
         botoTancar.addActionListener(e -> dispose());
-        botoTancar.setBackground(new Color(192, 192, 192));
-        botoTancar.setPreferredSize(new Dimension(100, 30));
-        panelSud.add(botoTancar);
-        
-        this.add(panelSud, BorderLayout.SOUTH);
-        
+        panellSud.add(botoTancar);
+        add(panellSud, BorderLayout.SOUTH);
+
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
-    
-    private void afegirDetallsUnDia(JPanel panel, ActivitatUnDia activitat) {
-        // Separador
-        JLabel separador = new JLabel("_________________________");
-        separador.setHorizontalAlignment(SwingConstants.LEFT);
-        panel.add(separador);
-        panel.add(new JLabel(" "));
-        
-        JLabel etiquetaData = new JLabel("Data: " + activitat.getData().toString());
-        etiquetaData.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaData.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaHorari = new JLabel("Horari: " + activitat.getHorari());
-        etiquetaHorari.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaHorari.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaCiutat = new JLabel("Ciutat: " + activitat.getCiutat());
-        etiquetaCiutat.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaCiutat.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaPlaces = new JLabel("Places disponibles: " + activitat.getLimitPlaces());
-        etiquetaPlaces.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaPlaces.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaPreu = new JLabel("Preu: " + activitat.getPreu() + "€");
-        etiquetaPreu.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaPreu.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        panel.add(etiquetaData);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaHorari);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaCiutat);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaPlaces);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaPreu);
+
+
+    // MÉTODES AUXILIARS PER A GESTIONAR LA FINESTRA DE VISUALITZACIÓ DE LA INFORMACIÓ DE L'ACTIVITAT
+    /**
+     * Mètode per a crear el panell del títol de l'activitat i centrar el text.
+     * @param activitat activitat de la qual volem visualitzar el seu títol
+     */
+    private void crearTitol(Activitats activitat) {
+        panellTitol = new JPanel(new FlowLayout(FlowLayout.CENTER));    // Utilitzem un FlowLayout.CENTER per centrar el titol
+        titol = new JLabel(activitat.getNom());                         // El títol correspon al nom de l'activitat corresponent
+        titol.setFont(new Font("Dialog", Font.BOLD, 18));    // Assignem una font de text destacable respecte a la resta
+        panellTitol.add(titol);                                         // Afegim el títol per a centrarlo en el panell
     }
-    
-    private void afegirDetallsPeriodica(JPanel panel, ActivitatPeriodica activitat) {
-        JLabel separador = new JLabel("_________________________");
-        separador.setHorizontalAlignment(SwingConstants.LEFT);
-        panel.add(separador);
-        panel.add(new JLabel(" "));
-        
-        JLabel etiquetaDia = new JLabel("Dia de la setmana: " + activitat.getDiaSetmana());
-        etiquetaDia.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaDia.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaHorari = new JLabel("Horari: " + activitat.getHorari());
-        etiquetaHorari.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaHorari.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaDataIni = new JLabel("Data d'inici: " + activitat.getDataInici().toString());
-        etiquetaDataIni.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaDataIni.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaSetmanes = new JLabel("Nombre de setmanes: " + activitat.getNumSetmanes());
-        etiquetaSetmanes.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaSetmanes.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaCentre = new JLabel("Centre: " + activitat.getCentre());
-        etiquetaCentre.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaCentre.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaCiutat = new JLabel("Ciutat: " + activitat.getCiutat());
-        etiquetaCiutat.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaCiutat.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaPlaces = new JLabel("Places disponibles: " + activitat.getLimitPlaces());
-        etiquetaPlaces.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaPlaces.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaPreu = new JLabel("Preu total: " + activitat.getPreu() + "€");
-        etiquetaPreu.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaPreu.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        panel.add(etiquetaDia);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaHorari);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaDataIni);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaSetmanes);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaCentre);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaCiutat);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaPlaces);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaPreu);
+
+    /**
+     * Mètode per a crear el panell principal que contindrá la informació de l'activitat.
+     * @param activitat activitat de la qual volem visualitzar la seva informació
+     */
+    private void crearPanellPrincipal(Activitats activitat) {
+        // Incializem el panell principal com un GridLayout amb una sola columna i 0 files (permet ilimitades)
+        panellPrincipal = new JPanel(new GridLayout(0, 1, 0, 6));
+
+        // Afegim el tipus d'activitat
+        String tipus = activitat.getTipus();
+        panellPrincipal.add(crearText("Tipus: " + tipus));
+
+        // Aconseguim la llista de col·lectius als que va dirigida l'activitat i els afegim
+        String colectiu[] = activitat.getColectius();
+        String colectius = colectiu[0];
+        for (int i = 1; i < colectiu.length; i++) colectius += (", "+colectiu[i]);
+        panellPrincipal.add(crearText(("Col·lectius: "+colectius)));
+
+        // Afegim les dades entre les que està actiu el periode d'inscripció
+        panellPrincipal.add(crearText("Període d'inscripció: "+activitat.getDataIniciInscripcio()+" - "+activitat.getDataFiInscripcio()));
+
+        // Segons el tipus d'activitat corresponent, afegim la informació que contingui
+        if (activitat instanceof ActivitatUnDia) afegirUnDia(panellPrincipal, (ActivitatUnDia) activitat);
+        else if (activitat instanceof ActivitatPeriodica) afegirPeriodica(panellPrincipal, (ActivitatPeriodica) activitat);
+        else if (activitat instanceof ActivitatOnline) afegirOnline(panellPrincipal, (ActivitatOnline) activitat);
     }
-    
-    private void afegirDetallsOnline(JPanel panel, ActivitatOnline activitat) {
-        JLabel separador = new JLabel("_________________________");
-        separador.setHorizontalAlignment(SwingConstants.LEFT);
-        panel.add(separador);
-        panel.add(new JLabel(" "));
-        
-        JLabel etiquetaDataIni = new JLabel("Data d'inici: " + activitat.getDataInici().toString());
-        etiquetaDataIni.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaDataIni.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaPeriode = new JLabel("Període de visibilitat: " + activitat.getPeriodeVisualitzacio() + " dies");
-        etiquetaPeriode.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaPeriode.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        JLabel etiquetaEnllac = new JLabel("Enllaç: " + activitat.getEnllac());
-        etiquetaEnllac.setFont(new Font("Dialog", Font.PLAIN, 14));
-        etiquetaEnllac.setHorizontalAlignment(SwingConstants.LEFT);
-        
-        panel.add(etiquetaDataIni);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaPeriode);
-        panel.add(new JLabel(" "));
-        panel.add(etiquetaEnllac);
+
+    /**
+     * Mètode per afegir al panell principal les dades d'una activitat d'un dia.
+     * @param panell panell on hem d'afegir la informació d'una activitat d'un dia
+     * @param aud activitat d'un dia corresponent
+     */
+    private void afegirUnDia(JPanel panell, ActivitatUnDia aud) {
+        panell.add(crearText("Data: "+aud.getData()));                      // Data quan es realitza l'activitat
+        panell.add(crearText("Horari: "+aud.getHorari()));                  // Horari en el que es realitza l'activitat
+        panell.add(crearText("Ciutat: "+aud.getCiutat()));                  // Ciutat en la que es realitza l'activitat
+        panell.add(crearText("Places disponibles: "+aud.getLimitPlaces())); // Places disponibles de l'activitat
+        panell.add(crearText("Preu: "+aud.getPreu()+"€"));                  // Preu de l'activitat
+    }
+
+    /**
+     * Mètode per afegir al panell principal les dades d'una activitat periòdica.
+     * @param panell panell on hem d'afegir la informació d'una activitat periòdica.
+     * @param ap activitat periòdica corresponent
+     */
+    private void afegirPeriodica(JPanel p, ActivitatPeriodica ap) {
+        p.add(crearText("Dia de la setmana: "+ap.getDiaSetmana()));     // Dia de la setmana en el que es realitza l'activitat
+        p.add(crearText("Horari: "+ap.getHorari()));                    // Horari en el que es realitza l'activitat
+        p.add(crearText("Data d'inici: "+ap.getDataInici()));           // Dia en el que es comença a realitzar l'activitat
+        p.add(crearText("Nombre de setmanes: "+ap.getNumSetmanes()));   // Nombre de setmanes des de la data inicial en les que es realitza l'activitat
+        p.add(crearText("Centre: "+ap.getCentre()));                    // Centre en el que es realitza l'activitat
+        p.add(crearText("Ciutat: "+ap.getCiutat()));                    // Ciutat en la que es realitza l'activitat
+        p.add(crearText("Places disponibles: "+ap.getLimitPlaces()));   // Límit de places de l'activitat
+        p.add(crearText("Preu total: "+ap.getPreu() + "€"));            // Preu de l'activitat
+    }
+
+    /**
+     * Mètode per afegir al panell principal les dades d'una activitat online.
+     * @param panell panell on hem d'afegir la informació d'una activitat online
+     * @param ao activitat online corresponent
+     */
+    private void afegirOnline(JPanel panell, ActivitatOnline ao) {
+        panell.add(crearText("Data d'inici: "+ao.getDataInici()));                              // Data en la que comença a ser visible l'activitat
+        panell.add(crearText("Període de visibilitat: "+ao.getPeriodeVisualitzacio()+" dies")); // Nombre de dies en les que l'activitat es manté visible
+        panell.add(crearText("Data final: "+ao.getDataFi()));                                   // Data en la que deixa de ser visible l'activitat
+        panell.add(crearText("Enllaç: "+ao.getEnllac()));                                       // Enllaç de l'activitat
+    }
+
+    /**
+     * Mètode auxiliar per a crear una JTextArea amb el text que volem mostrar a la finestra
+     * @param text String que conté la informació corresponent
+     * @return una JTextArea amb el String que li hem passat per paràmetre
+     */
+    private JTextArea crearText(String text) {
+        JTextArea area = new JTextArea(text);                           // Creem la JTextArea amb el String corresponent
+        area.setOpaque(false);
+        area.setFont(new Font("Dialog", Font.PLAIN, 14));    // Li donem una font determinada
+        return area;
     }
 }

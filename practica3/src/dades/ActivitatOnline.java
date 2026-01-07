@@ -54,6 +54,14 @@ public class ActivitatOnline extends Activitats {
     }
 
     /**
+     * Retorna la data de fi de l'activitat.
+     * @return Data de fi de l'activitat
+     */
+    public Data getDataFi() {
+        return dataFi;
+    }
+
+    /**
      * Retorna el periode de visualització de l'activitat (nombre de dies).
      * @return Nombre de dies de visualització de l'activitat després de la seva data d'inici
      */
