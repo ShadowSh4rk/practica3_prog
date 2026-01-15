@@ -27,11 +27,17 @@ public class Menu {
     public static LlistaUsuaris llistaUsu;
 
     public static void main(String[] args) throws IOException {
+        int numLinies;
 
-        int numLinies = llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
+        // Llegim la llista d'activitats del fitxer "FitxerLlistaActivitats.txt"
+        numLinies = llegeixLiniesFitxer("FitxerLlistaActivitats.txt");
         llistaAct = new LlistaActivitats(numLinies);
-
         afegeixActivitatsDesdeFitxer(numLinies, llistaAct);
+
+        // Llegim la llista d'usuaris del fitxer "FitxerLlistaUsuaris.txt"
+        numLinies = llegeixLiniesFitxer("FitxerLlistaUsuaris.txt");
+        llistaUsu = new LlistaUsuaris(numLinies);
+        //afegeixUsuarisDesdeFitxer(numLinies, llistaUsu);
 
         avui = new Data(31, 12, 2025);
 
@@ -856,6 +862,47 @@ public class Menu {
                     }
 
                     llista.afegir(activitat);   // Afegim l'activitat corresponent
+                    i++;                        // Incrementem índex
+
+                    linia = lectura.readLine(); // Llegim línia seguent
+            }
+
+            // Tanquem lectura
+            lectura.close();
+
+        // Gestió de posibles excepcions
+        } catch (FileNotFoundException e) {
+            System.out.println("Fitxer no trobat, no es pot llegir: "+e);
+        } catch(IOException e) {
+            System.out.println("Altres errors al llegir el fitxer: "+e);
+        }
+    }
+
+    /**
+     * Métode per a afegir els usuaris detallats a un fitxer de text a una LlistaUsuaris
+     * @param numUsuaris nombre d'Usuaris que hi ha a la llista
+     * @param llista llista de fitxers on volem afegir els usuaris
+     * @throws IOException
+     */
+    public static void afegeixUsuarisDesdeFitxer(int numUsuaris, LlistaUsuaris llista) throws IOException{
+        BufferedReader lectura;
+
+        // Control per a obrir el fitxer
+        try {
+            lectura = new BufferedReader(new FileReader("FitxerLlistaUsuaris.txt"));
+            String linia;   // Línia del fitxer
+            String[] trossos, trossosCol, col; 
+            int i = 0;      // Índex de línia
+
+            linia = lectura.readLine(); // Llegim línia, mentre línia no sigui null i tinguem usuaris al fitxer
+            while((linia != null) && (i < numUsuaris)){
+                    trossos = linia.split(";");
+
+                    Usuari usuari;              // Usuari que afegirem a la llista
+
+                    // TO-DO: CODI PER LLEGIR
+
+                    llista.afegir(usuari);      // Afegim l'usuari corresponent
                     i++;                        // Incrementem índex
 
                     linia = lectura.readLine(); // Llegim línia seguent
