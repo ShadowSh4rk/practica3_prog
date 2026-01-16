@@ -327,4 +327,12 @@
                 modificarAny(-1);
             }
         }
+
+        /**
+         * Mètode per a modificar una data en un nombre de setmanes determinat (incrementar o decrementar)
+         * @param valor
+         */
+        public Data afegirSetmanes(int valor) {
+            return this.afegirDies(7*valor);
+        }
     }

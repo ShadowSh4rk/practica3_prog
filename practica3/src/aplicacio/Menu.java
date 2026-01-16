@@ -1,5 +1,5 @@
 /**
- * Codi per a implementar el Menú, encara molt abstracte
+ * Codi per a implementar el Menú
  * 
  * Tasques:
  *  - Carregar les dades dels fitxers
@@ -286,16 +286,14 @@ public class Menu {
         // 3. Mostrar la informació de les activitats que es troben en període d'inscripció i si encara hi ha places disponibles
         System.out.println("activitats que es troben en període d'inscripcio:");
 
-        for(int i=0; i<llistaAct.getNumActivitats(); i++){
-            if(llistaAct.getActivitat(i).esEnPeriodeInscripcio(avui)){
+        for(int i = 0; i < llistaAct.getNumActivitats(); i++){
+            if (llistaAct.getActivitat(i).esEnPeriodeInscripcio(avui)){
                 System.out.println(llistaAct.getActivitat(i)); //printeja l'activitat
-                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns(); 
+                int places = llistaAct.getActivitat(i).getLimitPlaces()-llistaAct.getActivitat(i).getnIns();
+                 
                 //menciona les places que queden, (si queden 0, no te places disponibles)
-                if(places!=0){
-                    System.out.println("te "+places+" places disponibles");
-                }else{
-                    System.out.println("no te places disponibles");
-                }
+                if (places!=0) System.out.println("te "+places+" places disponibles");
+                else System.out.println("no te places disponibles");
             }
         }
     }

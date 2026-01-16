@@ -113,14 +113,14 @@ public class FinestraDetallActivitat extends JFrame {
      * @param ap activitat periòdica corresponent
      */
     private void afegirPeriodica(JPanel p, ActivitatPeriodica ap) {
-        p.add(crearText("Dia de la setmana: "+ap.getDiaSetmana()));     // Dia de la setmana en el que es realitza l'activitat
-        p.add(crearText("Horari: "+ap.getHorari()));                    // Horari en el que es realitza l'activitat
-        p.add(crearText("Data d'inici: "+ap.getDataInici()));           // Dia en el que es comença a realitzar l'activitat
-        p.add(crearText("Nombre de setmanes: "+ap.getNumSetmanes()));   // Nombre de setmanes des de la data inicial en les que es realitza l'activitat
-        p.add(crearText("Centre: "+ap.getCentre()));                    // Centre en el que es realitza l'activitat
-        p.add(crearText("Ciutat: "+ap.getCiutat()));                    // Ciutat en la que es realitza l'activitat
-        p.add(crearText("Places disponibles: "+ap.getLimitPlaces()));   // Límit de places de l'activitat
-        p.add(crearText("Preu total: "+ap.getPreu() + "€"));            // Preu de l'activitat
+        p.add(crearText("Dia de la setmana: "+ap.getDiaSetmana()));                             // Dia de la setmana en el que es realitza l'activitat
+        p.add(crearText("Horari: "+ap.getHorari()));                                            // Horari en el que es realitza l'activitat
+        p.add(crearText("Data d'inici: "+ap.getDataInici()));                                   // Data en la que es comença a realitzar l'activitat
+        p.add(crearText("Data de fi: "+ap.getDataInici().afegirSetmanes(ap.getNumSetmanes()))); // Data en la que es deia de realitzar l'activitat
+        p.add(crearText("Centre: "+ap.getCentre()));                                            // Centre en el que es realitza l'activitat
+        p.add(crearText("Ciutat: "+ap.getCiutat()));                                            // Ciutat en la que es realitza l'activitat
+        p.add(crearText("Places disponibles: "+ap.getLimitPlaces()));                           // Límit de places de l'activitat
+        p.add(crearText("Preu total: "+ap.getPreu() + "€"));                                    // Preu de l'activitat
     }
 
     /**
