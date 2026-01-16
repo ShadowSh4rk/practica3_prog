@@ -48,8 +48,8 @@ public class Estudiant extends Usuari {
         return (
             super.toString()+"\n"+  // Crida al toString() d'usuari
             "Tipus: Estudiant"+
-            "Ensenyament"+ensenyament+
-            "Any inici:"+anyInici
+            " - Ensenyament"+ensenyament+
+            " - Any inici:"+anyInici
         );
     }
 }

@@ -47,8 +47,8 @@ public class PDI extends Usuari {
         return (
             super.toString()+"\n"+  // Crida al toString() d'usuari
             "Tipus: PDI (Professorat)"+
-            "Nom Departament: "+nomDepartament+
-            "Campus Treball: "+campus
+            " - Nom Departament: "+nomDepartament+
+            " - Campus Treball: "+campus
         );
     }
 }

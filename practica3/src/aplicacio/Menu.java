@@ -37,7 +37,7 @@ public class Menu {
         // Llegim la llista d'usuaris del fitxer "FitxerLlistaUsuaris.txt"
         numLinies = llegeixLiniesFitxer("FitxerLlistaUsuaris.txt");
         llistaUsu = new LlistaUsuaris(numLinies);
-        //afegeixUsuarisDesdeFitxer(numLinies, llistaUsu);
+        afegeixUsuarisDesdeFitxer(numLinies, llistaUsu);
 
         avui = new Data(31, 12, 2025);
 
@@ -268,9 +268,9 @@ public class Menu {
                     break;
                 
                 case 2:
-                    for(int i=0; i<llistaUsu.getNumUsuaris(); i++){
-                                System.out.println(llistaUsu.getUsuari(i));
-                            }
+                    for (int i = 0; i < llistaUsu.getNumUsuaris(); i++){
+                        System.out.println(llistaUsu.getUsuari(i)+"\n");
+                    }
                     break;
                 
                 default:
@@ -801,9 +801,8 @@ public class Menu {
 
                     Activitats activitat;       // Activitat que afegirem a la llista
 
-                    String tipus = trossos [0]; // El primer parámetre indica el tipus d'activitat que tenim (Un Dia / Periodica / Online)
-
                     // Valors en comú entre tipus d'activitats
+                    String tipus = trossos [0]; // El primer parámetre indica el tipus d'activitat que tenim (Un Dia / Periodica / Online)
                     String nom = trossos[1];                    // Nom de l'activitat
 
                     // Col·lectius als que interessa l'activitat
@@ -891,21 +890,50 @@ public class Menu {
         try {
             lectura = new BufferedReader(new FileReader("FitxerLlistaUsuaris.txt"));
             String linia;   // Línia del fitxer
-            String[] trossos, trossosCol, col; 
+            String[] trossos; 
             int i = 0;      // Índex de línia
 
             linia = lectura.readLine(); // Llegim línia, mentre línia no sigui null i tinguem usuaris al fitxer
             while((linia != null) && (i < numUsuaris)){
                     trossos = linia.split(";");
 
-                    Usuari usuari;              // Usuari que afegirem a la llista
+                    Usuari usuari;                  // Usuari que afegirem a la llista
 
-                    // TO-DO: CODI PER LLEGIR
+                    // Valors en comú entre diferents usuaris
+                    String colectiu = trossos[0];   // El primer paràmetre indica el tipus d'usuari que tenim (Estudiant / PDI / PDGAS)
+                    String alies = trossos[1];      // El segon paràmetre indica l'alies d'identificació de l'usuari
+                    String correu = trossos[2];     // El tercer paràmetre indica el correu electrònic del corresponent usuari
 
-                    llista.afegir(usuari);      // Afegim l'usuari corresponent
-                    i++;                        // Incrementem índex
+                    // Valors per separat entre usuaris: Estudiants
+                    if (colectiu.equalsIgnoreCase("Estudiant")) {
+                        String ensenyament = trossos[3];                // El quart paràmetre indica l'ensenyament que estudia l'usuari estudiant
+                        int anyInici = Integer.parseInt(trossos[4]);    // El cinqué paràmetre indica l'any en el que l'usuari va començar l'ensenyament
 
-                    linia = lectura.readLine(); // Llegim línia seguent
+                        // Creem l'usuari estudiant
+                        usuari = new Estudiant(alies, correu, ensenyament, anyInici);
+                    }
+
+                    // Valors per separat entre usuaris: PDI
+                    else if (colectiu.equalsIgnoreCase("PDI")) {
+                        String nomDepartament = trossos[3];     // El quart paràmetre indica el departament de treball de l'usuari PDI
+                        String campus = trossos[4];             // El cinqué paràmetre indica el campus de treball de l'usuari PDI
+
+                        // Creem l'usuari PDI
+                        usuari = new PDI(alies, correu, nomDepartament, campus);
+                    }
+
+                    // Valors per separat entre usuaris: PTGAS
+                    else {
+                        String campus = trossos[3];     // El quart parámetre indica el campus de treball de l'usuari PTGAS
+
+                        // Creem l'usuari PTGAS
+                        usuari = new PTGAS(alies, correu, campus);
+                    }
+
+                    llista.afegir(usuari);          // Afegim l'usuari corresponent
+                    i++;                            // Incrementem índex
+
+                    linia = lectura.readLine();     // Llegim línia seguent
             }
 
             // Tanquem lectura

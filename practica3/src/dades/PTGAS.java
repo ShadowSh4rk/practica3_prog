@@ -36,7 +36,7 @@ public class PTGAS extends Usuari {
         return (
             super.toString()+"\n"+  // Crida al toString() d'usuari
             "Tipus: PTGAS (Personal Tècnic i de Gestió)"+
-            "Campus Treball: "+campus
+            "- Campus Treball: "+campus
         );
     }
 }
